@@ -1,74 +1,84 @@
 package org.gruzdov.solution.test_solution.controller;
 
-import org.gruzdov.solution.test_solution.entity.Client;
-import org.gruzdov.solution.test_solution.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api")
+import org.gruzdov.solution.test_solution.entity.Client;
+import org.gruzdov.solution.test_solution.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@Controller
 public class ClientController {
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
-    @GetMapping("/clients")
-    public List<Client> showAllClients() {
-        List<Client> allClients = clientService.getAllClients();
-
-        return allClients;
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        return findPaginated(1, "fio", "asc", model);
     }
 
-    @GetMapping("/clients/{id}")
-    public Client getClient(@PathVariable UUID id) {
+    @GetMapping("/showNewClientForm")
+    public String showNewEmployeeForm(Model model) {
+        Client client = new Client();
+        model.addAttribute("client", client);
+        return "new_client";
+    }
+
+    @PostMapping("/saveClient")
+    public String saveEmployee(@ModelAttribute("client") Client client) {
+        clientService.saveClient(client);
+        return "redirect:/";
+    }
+
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
+
         Client client = clientService.getClient(id);
 
-        //if (client == null)
-            //throw new NoSuchEmployeeException("There is no employee with ID = " +
-                    //id + " int Database");
-
-        return client;
+        model.addAttribute("client", client);
+        return "update_client";
     }
 
-    @PostMapping("/clients")
-    public Client addNewClient(@RequestBody Client client) {
-        clientService.saveClient(client);
+    @GetMapping("/deleteClient/{id}")
+    public String deleteClient(@PathVariable (value = "id") UUID id) {
 
-        return client;
+        this.clientService.deleteClient(id);
+        return "redirect:/";
     }
 
-    @PutMapping("/clients")
-    public Client updateClient(@RequestBody Client client) {
-        clientService.saveClient(client);
 
-        return client;
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        int pageSize = 5;
+
+        Page<Client> page = clientService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Client> listClients = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listClients", listClients);
+        return "index";
     }
-
-    @DeleteMapping("/clients/{id}")
-    public String deleteClient(@PathVariable UUID id) {
-        Client client = clientService.getClient(id);
-       /* if (client == null)
-            throw new NoSuchEmployeeException("There is no employee with ID = " +
-                    id + " in Database");
-
-        */
-
-        clientService.deleteClient(id);
-
-        return "Employee with ID = " + id + " was deleted";
-    }
-
-    @GetMapping("/clients/name/{fio}")
-    public List<Client> showAllClientByName(@PathVariable String fio) {
-        List<Client> clients = clientService.findAllByFio(fio);
-
-        return clients;
-    }
-
 }

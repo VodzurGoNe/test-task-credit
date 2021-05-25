@@ -20,10 +20,10 @@ public class Bank {
     @Column(name = "TITLE")
     private String title;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CREDITS")
-    private List<Credit> credits;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CREDITS")
+//    private List<Credit> credits;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CLIENTS")
-    private List<Client> clients;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CLIENTS")
+//    private List<Client> clients;
 }
 

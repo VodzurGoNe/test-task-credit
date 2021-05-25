@@ -1,5 +1,6 @@
 package org.gruzdov.solution.test_solution.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "CLIENTS")
@@ -28,9 +30,9 @@ public class Client {
     @Column(name = "PASSPORTNUMBER")
     private Integer passportNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "BANK_ID")
-    private Bank bank;
+//    @ManyToOne
+//    @JoinColumn(name = "BANK_ID")
+//    private Bank bank;
 
     public Client(String fio, String phoneNumber, String email, Integer passportNumber) {
         this.fio = fio;
