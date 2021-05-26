@@ -10,20 +10,28 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "BANKS")
+@Table(name = "BANK")
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "BANK_ID")
     private UUID id;
 
-    @Column(name = "TITLE")
+    @Column(name = "BANK_TITLE")
     private String title;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CREDITS")
-//    private List<Credit> credits;
+    //@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    //@JoinTable(name = "credit")//, joinColumns = @JoinColumn(name = "credit_id"))//, mappedBy = "bank")
+    //@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    //@OneToMany
+    ///@JoinColumn(name = "credit_id")
+    //@Column(nullable = false)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    private List<Credit> credits;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "CLIENTS")
-//    private List<Client> clients;
+    //@Column(nullable = false)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    private List<Client> clients;
+
 }
 

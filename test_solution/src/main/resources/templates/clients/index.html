@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Bank Management System</title>
+    <title>Client Management System</title>
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -13,26 +13,40 @@
 <body>
 
 <div class="container my-2">
-    <h1>Bank List</h1>
+    <h1>Client List</h1>
 
-    <a th:href = "@{/showNewBankForm}" class="btn btn-primary btn-sm mb-3"> Add Bank</a>
+
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                    Bank Title</a>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=fio&sortDir=' + ${reverseSortDir}}">
+                    Client FIO</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=phoneNumber&sortDir=' + ${reverseSortDir}}">
+                    Client Phone Number</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                    Client Email</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=passportNumber&sortDir=' + ${reverseSortDir}}">
+                    Client Passport Number</a>
             </th>
             <th> Actions </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bank : ${listBanks}">
-            <td th:text="${bank.title}"></td>
-            <td> <a th:href="@{/showBank/{id}(id=${bank.id})}" class="btn btn-primary">Show</a>
-                <a th:href="@{/showFormForUpdate/{id}(id=${bank.id})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/deleteBank/{id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
+        <tr th:each="client : ${listClients}">
+            <td th:text="${client.fio}"></td>
+            <td th:text="${client.phoneNumber}"></td>
+            <td th:text="${client.email}"></td>
+            <td th:text="${client.passportNumber}"></td>
+            <td> <a th:href="@{/clients/showFormForUpdate/{id}(id=${client.getId()})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/clients/deleteClient/{clientId}(clientId=${client.getId()})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

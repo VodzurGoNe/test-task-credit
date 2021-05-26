@@ -14,7 +14,7 @@
     <hr>
     <h2>Save Client</h2>
 
-    <form action="#" th:action="@{/saveClient}" th:object="${client}"
+    <form action="#" th:action="@{/clients/saveClient}" th:object="${client}"
           method="POST">
         <input type="text" th:field="*{fio}"
                placeholder="Client FIO" class="form-control mb-4 col-4">
@@ -33,7 +33,7 @@
 
     <hr>
 
-    <a th:href = "@{/}"> Back to Client List</a>
+    <a th:href = "@{/clients/clientsList}"> Back to Client List</a>
 </div>
 </body>
 </html>

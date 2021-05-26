@@ -1,67 +1,71 @@
 package org.gruzdov.solution.test_solution.controller;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.gruzdov.solution.test_solution.entity.Client;
+import org.gruzdov.solution.test_solution.entity.Credit;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.gruzdov.solution.test_solution.service.ClientService;
+import org.gruzdov.solution.test_solution.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 
 @Controller
-@RequestMapping("/clients")
-public class ClientController {
+@RequestMapping("/credits")
+public class CreditController {
     private final ClientService clientService;
     private final BankService bankService;
+    private final CreditService creditService;
 
     @Autowired
-    public ClientController(ClientService clientService, BankService bankService) {
+    public CreditController(ClientService clientService, BankService bankService
+            , CreditService creditService) {
         this.clientService = clientService;
         this.bankService = bankService;
+        this.creditService = creditService;
     }
 
-    @GetMapping("/clientsList")
+    @GetMapping("/creditsList")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "fio", "asc", model);
+        return findPaginated(1, "title", "asc", model);
     }
 
-    @GetMapping("/showNewClientForm/{bankId}")
-    public String showNewClientForm(Model model
+    @GetMapping("/showNewCreditForm/{bankId}")
+    public String showNewCreditForm(Model model
             , @PathVariable("bankId") UUID bankId) {
 
-        Client client = new Client();
-        client.setBank(bankService.getBank(bankId));
-//        System.out.println(client.toString());
-        model.addAttribute("client", client);
+        Credit credit = new Credit();
+        credit.setBank(bankService.getBank(bankId));
+        model.addAttribute("credit", credit);
 
-        return "clients/new_client";
+        return "credits/new_credit";
     }
 
-    @PostMapping("/saveClient")
-    public String saveClient(@ModelAttribute("client") Client client) {
-        clientService.saveClient(client);
-        return "redirect:/clients/clientsList";
+    @PostMapping("/saveCredit")
+    public String saveCredit(@ModelAttribute("credit") Credit credit) {
+        creditService.saveCredit(credit);
+        return "redirect:/credits/creditsList";
     }
+
 
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
 
-        Client client = clientService.getClient(id);
+        Credit credit = creditService.getCredit(id);
 
-        model.addAttribute("client", client);
-        return "clients/update_client";
+        model.addAttribute("credit", credit);
+        return "credits/update_credit";
     }
 
-    @GetMapping("/deleteClient/{id}")
-    public String deleteClient(@PathVariable (value = "id") UUID id) {
+    @GetMapping("/deleteCredit/{id}")
+    public String deleteCredit(@PathVariable (value = "id") UUID id) {
 
-        this.clientService.deleteClient(id);
-        return "redirect:/clients/clientsList";
+        this.creditService.deleteCredit(id);
+        return "redirect:/credits/creditsList";
     }
 
 
@@ -72,8 +76,8 @@ public class ClientController {
                                 Model model) {
         int pageSize = 5;
 
-        Page<Client> page = clientService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Client> listClients = page.getContent();
+        Page<Credit> page = creditService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Credit> listCredits = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -83,8 +87,8 @@ public class ClientController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
-        model.addAttribute("listClients", listClients);
+        model.addAttribute("listCredits", listCredits);
 
-        return "/clients/index";
+        return "/credits/index";
     }
 }

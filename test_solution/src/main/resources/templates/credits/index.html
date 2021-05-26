@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Bank Management System</title>
+    <title>Credit Management System</title>
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -13,26 +13,35 @@
 <body>
 
 <div class="container my-2">
-    <h1>Bank List</h1>
+    <h1>Credit List</h1>
 
-    <a th:href = "@{/showNewBankForm}" class="btn btn-primary btn-sm mb-3"> Add Bank</a>
+    <a th:href = "@{/credits/showNewCreditForm}" class="btn btn-primary btn-sm mb-3"> Create Credit </a>
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
             <th>
                 <a th:href="@{'/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                    Bank Title</a>
+                    Credit Title</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=limit&sortDir=' + ${reverseSortDir}}">
+                    Credit Limit</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=percent&sortDir=' + ${reverseSortDir}}">
+                    Credit Percent</a>
             </th>
             <th> Actions </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bank : ${listBanks}">
-            <td th:text="${bank.title}"></td>
-            <td> <a th:href="@{/showBank/{id}(id=${bank.id})}" class="btn btn-primary">Show</a>
-                <a th:href="@{/showFormForUpdate/{id}(id=${bank.id})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/deleteBank/{id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
+        <tr th:each="credit : ${listCredits}">
+            <td th:text="${credit.title}"></td>
+            <td th:text="${credit.limit}"></td>
+            <td th:text="${credit.percent}"></td>
+            <td> <a th:href="@{/credits/showFormForUpdate/{id}(id=${credit.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/credits/deleteCredit/{id}(id=${credit.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

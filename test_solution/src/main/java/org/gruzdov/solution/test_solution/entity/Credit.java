@@ -4,24 +4,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "CREDITS")
+@Table(name = "CREDIT")
 public class Credit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "CREDIT_ID")
     private UUID id;
 
-    @Column(name = "LIMIT")
-    private Integer limit;
+    @Column(name = "CREDIT_TITLE")
+    private String title;
 
-    @Column(name = "PERCENT")
-    private Integer percent;
+    @Column(name = "CREDIT_LIMIT")
+    private BigDecimal limit;
 
+    @Column(name = "CREDIT_PERCENT")
+    private BigDecimal percent;
+
+    @ManyToOne
+    @JoinColumn(name = "BANK_ID")
+    private Bank bank;
 
 }
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Client Management System</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Bank Management System</h1>
+    <hr>
+    <h2>Show Bank</h2>
+
+    <a th:href = "@{/clients/showNewClientForm/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Add Client</a>
+
+    <a th:href = "@{/credits/showNewCreditForm/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Create Credit</a>
+
+    <hr>
+
+    <a th:href = "@{/bankList}"> Back to Bank List</a>
+</div>
+</body>
+</html>

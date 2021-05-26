@@ -7,4 +7,5 @@ import java.util.UUID;
 
 
 public interface CreditRepository extends JpaRepository<Credit, UUID> {
+    Credit findByTitle(String title);
 }

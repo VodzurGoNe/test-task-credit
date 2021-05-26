@@ -5,34 +5,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "CLIENTS")
+@Table(name = "CLIENT")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "CLIENT_ID")
     private UUID id;
 
-    @Column(name = "FIO")
+    @Column(name = "CLIENT_FIO")
     private String fio;
 
-    @Column(name = "PHONENUMBER")
+    @Column(name = "CLIENT_PHONENUMBER")
     private String phoneNumber;
 
-    @Column(name = "EMAIL")
+    @Column(name = "CLIENT_EMAIL")
     private String email;
 
-    @Column(name = "PASSPORTNUMBER")
+    @Column(name = "CLIENT_PASSPORTNUMBER")
     private Integer passportNumber;
 
-//    @ManyToOne
-//    @JoinColumn(name = "BANK_ID")
-//    private Bank bank;
+    @ManyToOne
+    @JoinColumn(name = "BANK_ID")
+    private Bank bank;
+//    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+//    List<Credit> creditList;
 
     public Client(String fio, String phoneNumber, String email, Integer passportNumber) {
         this.fio = fio;

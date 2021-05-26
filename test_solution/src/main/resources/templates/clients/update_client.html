@@ -9,11 +9,11 @@
 </head>
 <body>
 <div class="container">
-    <h1>Client  Management System</h1>
+    <h1>Client Management System</h1>
     <hr>
     <h2>Update Client</h2>
 
-    <form action="#" th:action="@{/saveClient}" th:object="${client}"
+    <form action="#" th:action="@{/clients/saveClient}" th:object="${client}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
@@ -27,12 +27,12 @@
 
         <input type="text" th:field="*{passportNumber}" class="form-control mb-4 col-4">
 
-        <button type="submit" class="btn btn-info col-2"> Update Employee</button>
+        <button type="submit" class="btn btn-info col-2"> Update Client</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/}"> Back to Client List</a>
+    <a th:href = "@{/clients/clientsList}"> Back to Client List</a>
 </div>
 </body>
 </html>
