@@ -2,11 +2,11 @@ package org.gruzdov.solution.test_solution.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Data
@@ -14,9 +14,9 @@ import java.util.UUID;
 @Table(name = "PAYMENTSCHEDULE")
 public class PaymentSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PAYMENTSCHEDULE_ID")
-    private UUID id;
+    private Integer id;
 
     @Column(name = "PAYMENTSCHEDULE_PAYMENT_DATE")
     private LocalDate paymentDate;
@@ -30,7 +30,11 @@ public class PaymentSchedule {
     @Column(name = "PAYMENTSCHEDULE_AMOUNT_OF_THE_PERCENT")
     private BigDecimal amountOfThePercent;
 
-    @ManyToOne
+    @Column(name = "PAYMENTSCHEDULE_REMAINS")
+    private BigDecimal remains;
+
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // тут всё верно
     @JoinColumn(name = "CREDITOFFER_ID")
     private CreditOffer creditOffer;
 

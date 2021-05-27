@@ -2,6 +2,7 @@ package org.gruzdov.solution.test_solution.controller;
 
 import org.gruzdov.solution.test_solution.entity.Client;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
+import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.gruzdov.solution.test_solution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,46 +15,54 @@ import java.util.UUID;
 
 
 @Controller
-@RequestMapping("/creditsOffers")
-public class CreditOfferController {
+@RequestMapping("/paymentSchedules")
+public class PaymentScheduleController {
     private final ClientService clientService;
     private final BankService bankService;
+    private final CreditService creditService;
     private final CreditOfferService creditOfferService;
     private final CalculationPaymentService calculationPaymentService;
+    private final PaymentScheduleService paymentScheduleService;
 
     @Autowired
-    public CreditOfferController(ClientService clientService
+    public PaymentScheduleController(ClientService clientService
             , BankService bankService
+            , CreditService creditService
             , CreditOfferService creditOfferService
-            , CalculationPaymentService calculationPaymentService) {
+            , CalculationPaymentService calculationPaymentService
+            , PaymentScheduleService paymentScheduleService) {
 
         this.clientService = clientService;
         this.bankService = bankService;
+        this.creditService = creditService;
         this.creditOfferService = creditOfferService;
         this.calculationPaymentService = calculationPaymentService;
+        this.paymentScheduleService = paymentScheduleService;
     }
 
-    @GetMapping("/creditOffersList")
+    @GetMapping("/paymentSchedulesList")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "named", "asc", model);
+        return findPaginated(1, "paymentDate", "asc", model);
     }
 
-    @GetMapping("/showNewCreditOfferForm/{clientId}")
-    public String showNewCreditOfferForm(Model model
+
+
+    @GetMapping("/showNewPaymentScheduleForm/{clientId}")
+    public String showNewPaymentScheduleForm(Model model
             , @PathVariable("clientId") UUID clientId) {
 
         Client client = clientService.getClient(clientId);
 
-        CreditOffer creditOffer = new CreditOffer();
-        creditOffer.setClient(client);
-        creditOffer.setBank(bankService.getBank(client.getBank().getId()));
-        model.addAttribute("creditOffer", creditOffer);
+//        CreditOffer creditOffer = new CreditOffer();
+//        creditOffer.setClient(client);
+//        creditOffer.setBank(bankService.getBank(client.getBank().getId()));
+//        model.addAttribute("creditOffer", creditOffer);
 
         return "credit_offers/new_credit_offer";
     }
 
-    @PostMapping("/saveCreditOffer")
-    public String saveCreditOffer(@ModelAttribute("creditOffer") CreditOffer creditOffer) {
+    @PostMapping("/savePaymentSchedule")
+    public String savePaymentSchedule(@ModelAttribute("creditOffer") CreditOffer creditOffer) {
 
         creditOfferService.saveCreditOffer(creditOffer);
         calculationPaymentService.calculationPaymentSchedule(creditOffer);
@@ -68,14 +77,14 @@ public class CreditOfferController {
         CreditOffer creditOffer = creditOfferService.getCreditOffer(id);
 
         model.addAttribute("creditOffer", creditOffer);
-        return "credit_offers/update_credit_offer";
+        return "payment_schedules/update_payment_schedule";
     }
 
-    @GetMapping("/deleteCreditOffer/{id}")
-    public String deleteCreditOffer(@PathVariable (value = "id") UUID id) {
+    @GetMapping("/deletePaymentSchedule/{id}")
+    public String deletePaymentSchedule(@PathVariable (value = "id") UUID id) {
 
         this.creditOfferService.deleteCreditOffer(id);
-        return "redirect:/creditsOffers/creditOffersList";
+        return "redirect:/creditsOffers/paymentSchedulessList";
     }
 
 
@@ -86,8 +95,8 @@ public class CreditOfferController {
                                 Model model) {
         int pageSize = 5;
 
-        Page<CreditOffer> page = creditOfferService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<CreditOffer> listCreditOffers = page.getContent();
+        Page<PaymentSchedule> page = paymentScheduleService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<PaymentSchedule> listPaymentSchedules = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -97,8 +106,10 @@ public class CreditOfferController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
-        model.addAttribute("listCreditOffers", listCreditOffers);
+        model.addAttribute("listPaymentSchedules", listPaymentSchedules);
 
-        return "/credit_offers/index";
+        return "/payment_schedules/index";
     }
+
+
 }

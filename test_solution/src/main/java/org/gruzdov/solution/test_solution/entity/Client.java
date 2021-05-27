@@ -1,17 +1,11 @@
 package org.gruzdov.solution.test_solution.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "CLIENT")
@@ -33,19 +27,10 @@ public class Client {
     @Column(name = "CLIENT_PASSPORTNUMBER")
     private Integer passportNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
-//    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-//    List<Credit> creditList;
-
-    public Client(String fio, String phoneNumber, String email, Integer passportNumber) {
-        this.fio = fio;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.passportNumber = passportNumber;
-    }
-
 
 }
 

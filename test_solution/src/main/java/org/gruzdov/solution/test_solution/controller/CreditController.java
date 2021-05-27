@@ -22,8 +22,10 @@ public class CreditController {
     private final CreditService creditService;
 
     @Autowired
-    public CreditController(ClientService clientService, BankService bankService
+    public CreditController(ClientService clientService
+            , BankService bankService
             , CreditService creditService) {
+
         this.clientService = clientService;
         this.bankService = bankService;
         this.creditService = creditService;
@@ -47,6 +49,8 @@ public class CreditController {
 
     @PostMapping("/saveCredit")
     public String saveCredit(@ModelAttribute("credit") Credit credit) {
+
+        System.out.println(credit.getBank());
         creditService.saveCredit(credit);
         return "redirect:/credits/creditsList";
     }

@@ -1,8 +1,6 @@
 package org.gruzdov.solution.test_solution.service;
 
-
 import org.gruzdov.solution.test_solution.dao.CreditOfferRepository;
-import org.gruzdov.solution.test_solution.entity.Client;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,8 +53,6 @@ public class CreditOfferServiceImpl implements CreditOfferService {
 
 //        return creditOffer;
 //    }
-
-
 
     @Override
     public Page<CreditOffer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {

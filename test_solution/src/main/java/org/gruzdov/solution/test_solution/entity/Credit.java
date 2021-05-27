@@ -2,6 +2,7 @@ package org.gruzdov.solution.test_solution.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,7 +27,8 @@ public class Credit {
     @Column(name = "CREDIT_PERCENT")
     private BigDecimal percent;
 
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 

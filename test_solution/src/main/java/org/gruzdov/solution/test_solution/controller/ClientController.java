@@ -20,7 +20,9 @@ public class ClientController {
     private final BankService bankService;
 
     @Autowired
-    public ClientController(ClientService clientService, BankService bankService) {
+    public ClientController(ClientService clientService
+            , BankService bankService) {
+
         this.clientService = clientService;
         this.bankService = bankService;
     }
@@ -44,6 +46,7 @@ public class ClientController {
     @PostMapping("/saveClient")
     public String saveClient(@ModelAttribute("client") Client client) {
 
+        System.out.println(client.getBank());
         clientService.saveClient(client);
         return "redirect:/clients/clientsList";
     }

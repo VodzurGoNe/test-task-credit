@@ -1,6 +1,5 @@
 package org.gruzdov.solution.test_solution.service;
 
-
 import org.gruzdov.solution.test_solution.dao.CreditRepository;
 import org.gruzdov.solution.test_solution.entity.Credit;
 import org.springframework.beans.factory.annotation.Autowired;

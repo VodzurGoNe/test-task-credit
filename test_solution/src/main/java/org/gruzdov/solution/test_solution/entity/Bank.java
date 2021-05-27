@@ -2,6 +2,7 @@ package org.gruzdov.solution.test_solution.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,16 +21,11 @@ public class Bank {
     @Column(name = "BANK_TITLE")
     private String title;
 
-    //@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
-    //@JoinTable(name = "credit")//, joinColumns = @JoinColumn(name = "credit_id"))//, mappedBy = "bank")
-    //@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
-    //@OneToMany
-    ///@JoinColumn(name = "credit_id")
-    //@Column(nullable = false)
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
     private List<Credit> credits;
 
-    //@Column(nullable = false)
+    @ToString.Exclude
     @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
     private List<Client> clients;
 
