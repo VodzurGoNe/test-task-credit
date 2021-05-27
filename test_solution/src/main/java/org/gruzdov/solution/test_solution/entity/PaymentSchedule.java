@@ -30,7 +30,8 @@ public class PaymentSchedule {
     @Column(name = "PAYMENTSCHEDULE_AMOUNT_OF_THE_PERCENT")
     private BigDecimal amountOfThePercent;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CREDITOFFER_ID")
-//    private CreditOffer creditOffer;
+    @ManyToOne
+    @JoinColumn(name = "CREDITOFFER_ID")
+    private CreditOffer creditOffer;
+
 }

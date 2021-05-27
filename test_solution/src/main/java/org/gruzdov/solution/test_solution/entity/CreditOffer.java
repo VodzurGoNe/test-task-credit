@@ -23,13 +23,13 @@ public class CreditOffer {
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID")
-    private Client client;
+    private List<Client> clients;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREDIT_ID")
-    private Credit credit;
+    private List<Credit> credits;
 
 //    @OneToMany(mappedBy = "CREDITOFFERS", cascade = CascadeType.ALL)
 //    @JoinTable(name = "monthlypayments")
