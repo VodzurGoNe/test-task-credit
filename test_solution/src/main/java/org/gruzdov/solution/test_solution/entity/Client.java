@@ -1,6 +1,7 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -31,7 +33,7 @@ public class Client {
     @Column(name = "CLIENT_PASSPORTNUMBER")
     private Integer passportNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 //    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
@@ -43,6 +45,8 @@ public class Client {
         this.email = email;
         this.passportNumber = passportNumber;
     }
+
+
 }
 
 

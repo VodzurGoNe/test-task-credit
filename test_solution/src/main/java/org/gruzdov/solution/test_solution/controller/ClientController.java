@@ -36,7 +36,6 @@ public class ClientController {
 
         Client client = new Client();
         client.setBank(bankService.getBank(bankId));
-//        System.out.println(client.toString());
         model.addAttribute("client", client);
 
         return "clients/new_client";
@@ -44,6 +43,7 @@ public class ClientController {
 
     @PostMapping("/saveClient")
     public String saveClient(@ModelAttribute("client") Client client) {
+
         clientService.saveClient(client);
         return "redirect:/clients/clientsList";
     }

@@ -16,6 +16,9 @@
 
     <form action="#" th:action="@{/clients/saveClient}" th:object="${client}"
           method="POST">
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{bank}" />
+
         <input type="text" th:field="*{fio}"
                placeholder="Client FIO" class="form-control mb-4 col-4">
 

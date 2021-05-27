@@ -16,6 +16,9 @@
 
     <form action="#" th:action="@{/credits/saveCredit}" th:object="${credit}"
           method="POST">
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{bank}" />
+
         <input type="text" th:field="*{title}"
                placeholder="Credit Title" class="form-control mb-4 col-4">
 
