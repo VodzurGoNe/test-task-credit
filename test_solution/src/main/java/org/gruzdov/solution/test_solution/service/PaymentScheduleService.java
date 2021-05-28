@@ -11,9 +11,9 @@ public interface PaymentScheduleService {
 
     void savePaymentSchedule(PaymentSchedule paymentSchedule);
 
-    PaymentSchedule getPaymentSchedule(Integer id);
+    PaymentSchedule getPaymentSchedule(UUID id);
 
-    void deletePaymentSchedule(Integer id);
+    void deletePaymentSchedule(UUID id);
 
     Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 

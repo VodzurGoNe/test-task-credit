@@ -55,9 +55,10 @@ public class CreditOfferController {
     @PostMapping("/saveCreditOffer")
     public String saveCreditOffer(@ModelAttribute("creditOffer") CreditOffer creditOffer) {
 
-        creditOfferService.saveCreditOffer(creditOffer);
-        calculationPaymentService.calculationPaymentSchedule(creditOffer);
-
+        //creditOfferService.saveCreditOffer(creditOffer);
+        //if (creditOffer.getPercentSum().intValue() == 0)
+            calculationPaymentService.calculationPaymentSchedule(creditOffer);
+        //else creditOfferService.saveCreditOffer(creditOffer);
         return "redirect:/creditsOffers/creditOffersList";
     }
 

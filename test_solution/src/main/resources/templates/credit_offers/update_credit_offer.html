@@ -25,11 +25,11 @@
 
         <input type="text" th:field="*{periodInMonths}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{bank}" class="form-control mb-4 col-4">
+        <input type="hidden" th:field="*{bank}" />
 
-        <input type="text" th:field="*{credit}" class="form-control mb-4 col-4">
+        <input type="hidden" th:field="*{credit}" />
 
-        <input type="text" th:field="*{client}" class="form-control mb-4 col-4">
+        <input type="hidden" th:field="*{client}" />
 
         <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
     </form>

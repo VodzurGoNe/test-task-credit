@@ -13,10 +13,11 @@
     <h1>Bank Management System</h1>
     <hr>
     <h2>Show Bank</h2>
+    <a th:text="${bank.title}"> VALUE</a>
+
+    <a th:href = "@{/credits/showNewCreditForm/{id}(id=${bank.getId()})}" class="btn btn-success btn-sm mb-3"> Create Credit</a>
 
     <a th:href = "@{/clients/showNewClientForm/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Add Client</a>
-
-    <a th:href = "@{/credits/showNewCreditForm/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Create Credit</a>
 
     <hr>
 

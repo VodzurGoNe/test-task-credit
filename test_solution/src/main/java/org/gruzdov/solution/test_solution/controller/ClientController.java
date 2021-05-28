@@ -68,7 +68,7 @@ public class ClientController {
     }
 
 
-    @GetMapping("/page/{pageNo}")
+    @GetMapping("/clients/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,

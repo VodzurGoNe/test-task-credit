@@ -28,7 +28,8 @@ public class Credit {
     private BigDecimal percent;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
+            , CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 

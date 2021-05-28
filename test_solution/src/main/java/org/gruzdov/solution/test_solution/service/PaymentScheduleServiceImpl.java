@@ -33,7 +33,7 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     }
 
     @Override
-    public PaymentSchedule getPaymentSchedule(Integer id) {
+    public PaymentSchedule getPaymentSchedule(UUID id) {
         PaymentSchedule paymentSchedule = null;
         Optional<PaymentSchedule> optional = paymentScheduleRepository.findById(id);
         if (optional.isPresent())
@@ -43,7 +43,7 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     }
 
     @Override
-    public void deletePaymentSchedule(Integer id) {
+    public void deletePaymentSchedule(UUID id) {
         paymentScheduleRepository.deleteById(id);
     }
 

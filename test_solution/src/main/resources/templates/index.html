@@ -30,8 +30,8 @@
         <tbody>
         <tr th:each="bank : ${listBanks}">
             <td th:text="${bank.title}"></td>
-            <td> <a th:href="@{/showBank/{id}(id=${bank.id})}" class="btn btn-primary">Show</a>
-                <a th:href="@{/showFormForUpdate/{id}(id=${bank.id})}" class="btn btn-primary">Update</a>
+            <td> <a th:href="@{/showBank/{id}(id=${bank.id})}" class="btn btn-success">Show</a>
+                <a th:href="@{/showFormForUpdate/{id}(id=${bank.id})}" class="btn btn-warning">Update</a>
                 <a th:href="@{/deleteBank/{id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>

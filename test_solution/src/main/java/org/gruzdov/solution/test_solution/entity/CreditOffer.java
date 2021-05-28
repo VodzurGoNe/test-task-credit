@@ -33,22 +33,31 @@ public class CreditOffer {
     @Column(name = "CREDITOFFER_FIRSTPAY")
     private BigDecimal firstPay;
 
+    @Column(name = "CREDITOFFER_PERCENTSUM")
+    private BigDecimal percentSum;
+
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // тут всё верно
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
+            , CascadeType.DETACH, CascadeType.MERGE }
+            , fetch = FetchType.LAZY)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // тут всё верно
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
+            , CascadeType.DETACH, CascadeType.MERGE }
+            , fetch = FetchType.LAZY)
     @JoinColumn(name = "CREDIT_ID")
     private Credit credit;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // тут всё верно
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
+            , CascadeType.DETACH, CascadeType.MERGE }
+            , fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-//    @OneToMany(mappedBy = "CREDITOFFER", cascade = CascadeType.ALL)
-//    private List<PaymentSchedule> paymentScheduleList;
-
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creditOffer")
+    private List<PaymentSchedule> paymentSchedules;
 }

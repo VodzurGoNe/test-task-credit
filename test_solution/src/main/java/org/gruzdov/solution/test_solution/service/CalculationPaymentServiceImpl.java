@@ -12,9 +12,12 @@ import java.time.LocalDate;
 @Service
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
     private final PaymentScheduleRepository paymentScheduleRepository;
+    private final CreditOfferService creditOfferService;
 
-    public CalculationPaymentServiceImpl(PaymentScheduleRepository paymentScheduleRepository) {
+    public CalculationPaymentServiceImpl(PaymentScheduleRepository paymentScheduleRepository
+            , CreditOfferService creditOfferService) {
         this.paymentScheduleRepository = paymentScheduleRepository;
+        this.creditOfferService = creditOfferService;
     }
 
     @Override
@@ -29,30 +32,36 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         Integer periodInMonths = creditOffer.getPeriodInMonths();
         //Срок кредитования
         BigDecimal remains = amount.subtract(firstPay);
-
+        //Перерасчёт с учётом первого платежа
         BigDecimal repaymentInMonth = remains.divide(BigDecimal.valueOf(periodInMonths)
                 ,2, RoundingMode.HALF_EVEN);
-        //Перерасчёт с учётом первого платежа
+        //Ежемесячная сумма гашения тела кредита
         BigDecimal percentMonth = percent.divide(BigDecimal.valueOf(12)
                 ,4, RoundingMode.HALF_EVEN);
-        //Ежемесяный платёж без процентов
+        //Ежемесячный процент
 
         PaymentSchedule paymentSchedule;
 
         BigDecimal monthPay;
+        BigDecimal monthPayForPercent = remains.multiply(percentMonth)
+                .divide(BigDecimal.valueOf(100)
+                        , 2
+                        , RoundingMode.HALF_EVEN);
+        //Отчисления по процентам
+        BigDecimal percentSum = new BigDecimal("0");
         for (int i = 0; i < periodInMonths; i++) {
-            BigDecimal monthPayForPercent = remains.multiply(percentMonth)
-                    .divide(BigDecimal.valueOf(100)
-                            ,2
-                            ,RoundingMode.HALF_EVEN);
-            //Отчисления по процентам
+            percentSum = percentSum.add(monthPayForPercent);
+            //Расчет итоговой суммы процентов по кредиту
             monthPay = repaymentInMonth.add(monthPayForPercent);
             //Общий платёж
+
+            //Ежемесяный платёж без процентов
+
             remains = remains.subtract(repaymentInMonth);
             //Остаток
             paymentSchedule = new PaymentSchedule();
 
-            paymentSchedule.setId(i + 1);
+            //paymentSchedule.setId(i + 1);
             paymentSchedule.setPaymentAmount(monthPay);
 
             paymentSchedule.setPaymentDate(LocalDate.now().plusMonths(i + 1));
@@ -63,5 +72,8 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
 
             paymentScheduleRepository.save(paymentSchedule);
         }
+
+        creditOffer.setPercentSum(percentSum);
+        creditOfferService.saveCreditOffer(creditOffer);
     }
 }

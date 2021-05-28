@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,14 +21,36 @@ public class Bank {
 
     @Column(name = "BANK_TITLE")
     private String title;
+/*
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+ */
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
     private List<Credit> credits;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
     private List<Client> clients;
 
+    public void addCreditToBank(Credit credit) {
+        if (credits == null)
+            credits = new ArrayList<>();
+
+        credit.setBank(this);
+        credits.add(credit);
+    }
+
+    public void addClientToBank(Client client) {
+        if (credits == null)
+            credits = new ArrayList<>();
+
+        client.setBank(this);
+        clients.add(client);
+    }
 }
 

@@ -67,7 +67,7 @@ public class PaymentScheduleController {
         creditOfferService.saveCreditOffer(creditOffer);
         calculationPaymentService.calculationPaymentSchedule(creditOffer);
 
-        return "redirect:/creditsOffers/creditOffersList";
+        return "redirect:/paymentSchedules/paymentSchedulesList";
     }
 
 
@@ -84,11 +84,11 @@ public class PaymentScheduleController {
     public String deletePaymentSchedule(@PathVariable (value = "id") UUID id) {
 
         this.creditOfferService.deleteCreditOffer(id);
-        return "redirect:/creditsOffers/paymentSchedulessList";
+        return "redirect:/paymentSchedules/paymentSchedulesList";
     }
 
 
-    @GetMapping("/page/{pageNo}")
+    @GetMapping("/paymentSchedules/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
@@ -110,6 +110,5 @@ public class PaymentScheduleController {
 
         return "/payment_schedules/index";
     }
-
 
 }

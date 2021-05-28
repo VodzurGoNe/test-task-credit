@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Data
@@ -14,9 +15,9 @@ import java.time.LocalDate;
 @Table(name = "PAYMENTSCHEDULE")
 public class PaymentSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PAYMENTSCHEDULE_ID")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "PAYMENTSCHEDULE_PAYMENT_DATE")
     private LocalDate paymentDate;
@@ -32,9 +33,17 @@ public class PaymentSchedule {
 
     @Column(name = "PAYMENTSCHEDULE_REMAINS")
     private BigDecimal remains;
-
+/*
     @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // тут всё верно
+    @OneToOne(cascade = CascadeType.ALL //{ CascadeType.PERSIST, CascadeType.REFRESH
+            //, CascadeType.DETACH, CascadeType.MERGE }
+            , fetch = FetchType.LAZY)
+    @JoinColumn(name = "CREDITOFFER_ID")
+
+ */
+    @ToString.Exclude
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
+        , CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "CREDITOFFER_ID")
     private CreditOffer creditOffer;
 

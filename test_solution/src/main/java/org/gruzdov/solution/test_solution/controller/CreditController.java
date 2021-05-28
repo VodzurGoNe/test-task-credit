@@ -2,7 +2,6 @@ package org.gruzdov.solution.test_solution.controller;
 
 import org.gruzdov.solution.test_solution.entity.Credit;
 import org.gruzdov.solution.test_solution.service.BankService;
-import org.gruzdov.solution.test_solution.service.ClientService;
 import org.gruzdov.solution.test_solution.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,16 +16,13 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/credits")
 public class CreditController {
-    private final ClientService clientService;
     private final BankService bankService;
     private final CreditService creditService;
 
     @Autowired
-    public CreditController(ClientService clientService
-            , BankService bankService
+    public CreditController(BankService bankService
             , CreditService creditService) {
 
-        this.clientService = clientService;
         this.bankService = bankService;
         this.creditService = creditService;
     }
@@ -50,7 +46,7 @@ public class CreditController {
     @PostMapping("/saveCredit")
     public String saveCredit(@ModelAttribute("credit") Credit credit) {
 
-        System.out.println(credit.getBank());
+//        System.out.println(credit.getBank());
         creditService.saveCredit(credit);
         return "redirect:/credits/creditsList";
     }
@@ -73,7 +69,7 @@ public class CreditController {
     }
 
 
-    @GetMapping("/page/{pageNo}")
+    @GetMapping("/credits/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
