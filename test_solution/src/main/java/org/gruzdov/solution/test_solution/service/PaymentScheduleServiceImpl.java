@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,13 +48,20 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         paymentScheduleRepository.deleteById(id);
     }
 
+    @Override
+    public List<PaymentSchedule> findByCreditOfferId(UUID creditOfferId) {
+        return paymentScheduleRepository.findByCreditOfferId(creditOfferId);
+    }
 
     @Override
-    public Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection
+            , UUID id // creditOfferId
+    ) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        //return findAllByCreditOfferId(id);
         return this.paymentScheduleRepository.findAll(pageable);
     }
 }

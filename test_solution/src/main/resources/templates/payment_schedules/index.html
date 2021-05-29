@@ -15,7 +15,7 @@
 <div class="container my-2">
     <h1>Payment Schedule</h1>
 
-    <a th:href = "@{/creditsOffers/showNewCreditOfferForm}" class="btn btn-primary btn-sm mb-3"> Create Credit Offer</a>
+    <a th:href = "@{/creditsOffers/showNewCreditOfferForm/{clientId}(clientId=${listPaymentSchedules.get(0).creditOffer.getClient()})}" class="btn btn-primary btn-sm mb-3"> Create Credit Offer</a>
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>

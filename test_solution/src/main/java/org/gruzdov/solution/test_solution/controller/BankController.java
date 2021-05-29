@@ -23,7 +23,11 @@ public class BankController {
 
     @GetMapping("/bankList")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "title", "asc", model);
+        //return findPaginated(1, "title", "asc", model);
+
+        model.addAttribute("listBanks", bankService.getAllBanks());
+
+        return "index";
     }
 
     @GetMapping("/showNewBankForm")
@@ -66,7 +70,7 @@ public class BankController {
         return "redirect:/bankList";
     }
 
-
+/*
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
@@ -89,4 +93,6 @@ public class BankController {
 
         return "index";
     }
+
+ */
 }

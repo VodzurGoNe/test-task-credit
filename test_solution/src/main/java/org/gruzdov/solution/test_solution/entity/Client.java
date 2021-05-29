@@ -3,6 +3,7 @@ package org.gruzdov.solution.test_solution.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -32,6 +33,10 @@ public class Client {
             , CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private List<CreditOffer> creditOffers;
 
 }
 

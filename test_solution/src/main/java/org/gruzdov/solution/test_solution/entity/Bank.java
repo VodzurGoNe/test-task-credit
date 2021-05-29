@@ -21,13 +21,6 @@ public class Bank {
 
     @Column(name = "BANK_TITLE")
     private String title;
-/*
-    @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
-    private Client client;
-
- */
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")

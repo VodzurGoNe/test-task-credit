@@ -15,7 +15,7 @@
 <div class="container my-2">
     <h1>Credit Offers List</h1>
 
-    <a th:href = "@{/creditsOffers/showNewCreditOfferForm}" class="btn btn-primary btn-sm mb-3"> Create Credit Offer</a>
+    <a th:href = "@{/creditsOffers/showNewCreditOfferForm/{clientId}(clientId=${listCreditOffers.get(0).client.getId()})}" class="btn btn-primary btn-sm mb-3"> Create Credit Offer</a>
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
@@ -60,8 +60,8 @@
             <td th:text="${creditOffer.bank}"></td>
             <td th:text="${creditOffer.credit}"></td>
             <td th:text="${creditOffer.client}"></td>
-            <td>    <a th:href="@{/paymentSchedules/paymentSchedulesList}" class="btn btn-success">Show</a>
-                <a th:href="@{/creditsOffers/showFormForUpdate/{id}(id=${creditOffer.id})}" class="btn btn-primary">Update</a>
+            <td>    <a th:href="@{/paymentSchedules/paymentSchedulesList/{id}(id=${creditOffer.id})}" class="btn btn-success">Show</a>
+                <a th:href="@{/creditsOffers/showFormForUpdate/{id}(id=${creditOffer.id})}" class="btn btn-warning">Update</a>
                 <a th:href="@{/creditsOffers/deleteCreditOffer/{id}(id=${creditOffer.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>

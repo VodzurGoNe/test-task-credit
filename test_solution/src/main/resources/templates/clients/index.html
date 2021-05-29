@@ -46,7 +46,7 @@
             <td th:text="${client.email}"></td>
             <td th:text="${client.passportNumber}"></td>
             <td> <a th:href="@{/creditsOffers/showNewCreditOfferForm/{id}(id=${client.getId()})}" class="btn btn-success">CreditOffer</a>
-                <a th:href="@{/clients/showFormForUpdate/{id}(id=${client.getId()})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/clients/showFormForUpdate/{id}(id=${client.getId()})}" class="btn btn-warning">Update</a>
                 <a th:href="@{/clients/deleteClient/{clientId}(clientId=${client.getId()})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>

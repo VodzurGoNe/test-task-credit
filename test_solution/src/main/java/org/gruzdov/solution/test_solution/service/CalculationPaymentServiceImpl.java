@@ -40,7 +40,6 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                 ,4, RoundingMode.HALF_EVEN);
         //Ежемесячный процент
 
-        PaymentSchedule paymentSchedule;
 
         BigDecimal monthPay;
         BigDecimal monthPayForPercent = remains.multiply(percentMonth)
@@ -49,6 +48,8 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                         , RoundingMode.HALF_EVEN);
         //Отчисления по процентам
         BigDecimal percentSum = new BigDecimal("0");
+
+        PaymentSchedule paymentSchedule;
         for (int i = 0; i < periodInMonths; i++) {
             percentSum = percentSum.add(monthPayForPercent);
             //Расчет итоговой суммы процентов по кредиту

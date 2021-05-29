@@ -33,17 +33,11 @@ public class PaymentSchedule {
 
     @Column(name = "PAYMENTSCHEDULE_REMAINS")
     private BigDecimal remains;
-/*
-    @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL //{ CascadeType.PERSIST, CascadeType.REFRESH
-            //, CascadeType.DETACH, CascadeType.MERGE }
-            , fetch = FetchType.LAZY)
-    @JoinColumn(name = "CREDITOFFER_ID")
 
- */
     @ToString.Exclude
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
-        , CascadeType.DETACH, CascadeType.MERGE })
+        , CascadeType.DETACH, CascadeType.MERGE }
+        , fetch = FetchType.LAZY)
     @JoinColumn(name = "CREDITOFFER_ID")
     private CreditOffer creditOffer;
 

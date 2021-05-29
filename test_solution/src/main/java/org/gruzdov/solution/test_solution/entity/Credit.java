@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -32,6 +33,10 @@ public class Credit {
             , CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
+    private List<CreditOffer> creditOffers;
 
 }
 

@@ -40,12 +40,14 @@
             <td th:text="${credit.title}"></td>
             <td th:text="${credit.limit}"></td>
             <td th:text="${credit.percent}"></td>
-            <td> <a th:href="@{/credits/showFormForUpdate/{id}(id=${credit.id})}" class="btn btn-primary">Update</a>
+            <td> <a th:href="@{/credits/showFormForUpdate/{id}(id=${credit.id})}" class="btn btn-warning">Update</a>
                 <a th:href="@{/credits/deleteCredit/{id}(id=${credit.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <a th:href = "@{/showBank/{id}(id=${listCredits.get(0).getBank().getId()})}" class="btn btn-success btn-sm mb-3"> Show Bank </a>
 
     <div th:if = "${totalPages > 1}">
         <div class = "row col-sm-10">

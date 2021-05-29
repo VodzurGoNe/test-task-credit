@@ -40,9 +40,14 @@ public class PaymentScheduleController {
         this.paymentScheduleService = paymentScheduleService;
     }
 
-    @GetMapping("/paymentSchedulesList")
-    public String viewHomePage(Model model) {
-        return findPaginated(1, "paymentDate", "asc", model);
+    @GetMapping("/paymentSchedulesList/{id}")
+    public String viewHomePage(Model model
+            , @PathVariable("id") UUID id) {
+
+        model.addAttribute("listPaymentSchedules"
+                , paymentScheduleService.findByCreditOfferId(id));
+        return "/payment_schedules/index";
+        //return findPaginated(1, "paymentDate", "asc", id, model);
     }
 
 
@@ -87,15 +92,16 @@ public class PaymentScheduleController {
         return "redirect:/paymentSchedules/paymentSchedulesList";
     }
 
-
+/*
     @GetMapping("/paymentSchedules/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
+                                UUID id, // creditOfferId
                                 Model model) {
         int pageSize = 5;
 
-        Page<PaymentSchedule> page = paymentScheduleService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<PaymentSchedule> page = paymentScheduleService.findPaginated(pageNo, pageSize, sortField, sortDir, id);
         List<PaymentSchedule> listPaymentSchedules = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
@@ -110,5 +116,7 @@ public class PaymentScheduleController {
 
         return "/payment_schedules/index";
     }
+
+ */
 
 }
