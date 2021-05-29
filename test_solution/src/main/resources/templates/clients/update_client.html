@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Client Management System</title>
 
     <link rel="stylesheet"
@@ -13,26 +13,40 @@
     <hr>
     <h2>Update Client</h2>
 
-    <form action="#" th:action="@{/clients/saveClient}" th:object="${client}"
+    <form action="#" th:action="@{/clients/save_client/}" th:object="${client}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
 
+        <input type="hidden" th:field="*{bank}" />
+
         <input type="text" th:field="*{fio}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">fio error</div>
+
 
         <input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">phoneNumber error</div>
+
+
         <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
+
+
         <input type="text" th:field="*{passportNumber}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">passportNumber error</div>
+
 
         <button type="submit" class="btn btn-info col-2"> Update Client</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/clients/clientsList}"> Back to Client List</a>
+    <a th:href = "@{/clients/clients_list/{id}(id=${client.bank.id})}"> Back to Client List</a>
 </div>
 </body>
 </html>

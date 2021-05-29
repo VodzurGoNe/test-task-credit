@@ -1,8 +1,11 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
+import org.gruzdov.solution.test_solution.validation.CheckEmail;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,17 +19,32 @@ public class Client {
     @Column(name = "CLIENT_ID")
     private UUID id;
 
+    @NotBlank(message = "FIO is required field")
+    @Pattern(regexp = "^([\\w]+) (\\w{1})* (\\w{1})*$"
+            , message = "please use pattern \"Last name First name Patronymic\"")
+
     @Column(name = "CLIENT_FIO")
     private String fio;
+
+    @NotBlank(message = "phoneNumber is required field")
+    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{2}-\\d{2}"
+            , message = "please use pattern XXX-XXX-XX-XX")
 
     @Column(name = "CLIENT_PHONENUMBER")
     private String phoneNumber;
 
+    @CheckEmail(value = "random.com"
+            , message = "email must ends with \"random.com\"")
+
     @Column(name = "CLIENT_EMAIL")
     private String email;
 
+    @NotBlank(message = "passportNumber is required field")
+    @Pattern(regexp = "\\d{2}-\\d{2}-\\d{6}"
+            , message = "please use pattern XX-XX-XXXXXX")
+
     @Column(name = "CLIENT_PASSPORTNUMBER")
-    private Integer passportNumber;
+    private String passportNumber;
 
     @ToString.Exclude
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH

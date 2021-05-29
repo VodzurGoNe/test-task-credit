@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Credit Management System</title>
 
     <link rel="stylesheet"
@@ -13,24 +13,37 @@
     <hr>
     <h2>Update Credit</h2>
 
-    <form action="#" th:action="@{/saveCredit}" th:object="${credit}"
+    <form action="#" th:action="@{/credits/save_credit}" th:object="${credit}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
 
+        <input type="hidden" th:field="*{bank}" />
+
         <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+
 
         <input type="text" th:field="*{limit}" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">limit error</div>
+
+
+
         <input type="text" th:field="*{percent}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('percent')}" th:errors="*{percent}">percent error</div>
+
+
 
         <button type="submit" class="btn btn-info col-2"> Update Credit</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/credits/creditsList}"> Back to Credit List</a>
+    <a th:href = "@{/credits/credits_list/{id}(id=${credit.bank.id})}"> Back to Credit List</a>
 </div>
 </body>
 </html>

@@ -4,12 +4,12 @@ import org.gruzdov.solution.test_solution.entity.Credit;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.gruzdov.solution.test_solution.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.UUID;
 
 
@@ -27,12 +27,15 @@ public class CreditController {
         this.creditService = creditService;
     }
 
-    @GetMapping("/creditsList")
-    public String viewHomePage(Model model) {
-        return findPaginated(1, "title", "asc", model);
+    @GetMapping("/credits_list/{bankId}")
+    public String viewHomePage(@PathVariable("bankId") UUID bankId
+            , Model model) {
+
+        model.addAttribute("listCredits", creditService.findByBankId(bankId));
+        return "/credits/index";
     }
 
-    @GetMapping("/showNewCreditForm/{bankId}")
+    @GetMapping("/show_new_credit_form/{bankId}")
     public String showNewCreditForm(Model model
             , @PathVariable("bankId") UUID bankId) {
 
@@ -43,52 +46,34 @@ public class CreditController {
         return "credits/new_credit";
     }
 
-    @PostMapping("/saveCredit")
-    public String saveCredit(@ModelAttribute("credit") Credit credit) {
+    @PostMapping("/save_credit")
+    public String saveCredit(@ModelAttribute("credit") @Valid Credit credit
+            , BindingResult bindingResult) {
 
-//        System.out.println(credit.getBank());
+        if (bindingResult.hasErrors())
+            return "/credits/new_credit";
+
+        String bankId = credit.getBank().getId().toString();
         creditService.saveCredit(credit);
-        return "redirect:/credits/creditsList";
+        return "redirect:/credits/credits_list/" + bankId;
     }
 
 
-    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
+    @GetMapping("/show_form_for_update/{creditId}")
+    public String showFormForUpdate(@PathVariable("creditId") UUID creditId
+            , Model model) {
 
-        Credit credit = creditService.getCredit(id);
-
-        model.addAttribute("credit", credit);
+        model.addAttribute("credit", creditService.getCredit(creditId));
         return "credits/update_credit";
     }
 
-    @GetMapping("/deleteCredit/{id}")
-    public String deleteCredit(@PathVariable (value = "id") UUID id) {
+    @GetMapping("/delete_credit/{creditId}")
+    public String deleteCredit(@PathVariable("creditId") UUID creditId) {
 
-        this.creditService.deleteCredit(id);
-        return "redirect:/credits/creditsList";
+        String bankId = creditService.getCredit(creditId)
+                .getBank().getId().toString();
+        creditService.deleteCredit(creditId);
+        return "redirect:/credits/credits_list/" + bankId;
     }
 
-
-    @GetMapping("/credits/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-
-        Page<Credit> page = creditService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Credit> listCredits = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listCredits", listCredits);
-
-        return "/credits/index";
-    }
 }

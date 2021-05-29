@@ -13,17 +13,11 @@
     <hr>
     <h2>Update Credit Offer</h2>
 
-    <form action="#" th:action="@{/creditsOffers/saveCreditOffer}" th:object="${creditOffer}"
+    <form action="#" th:action="@{/credit_offers/save_credit_offer}" th:object="${creditOffer}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
-
-        <input type="text" th:field="*{named}" class="form-control mb-4 col-4">
-
-        <input type="text" th:field="*{amount}" class="form-control mb-4 col-4">
-
-        <input type="text" th:field="*{periodInMonths}" class="form-control mb-4 col-4">
 
         <input type="hidden" th:field="*{bank}" />
 
@@ -31,12 +25,28 @@
 
         <input type="hidden" th:field="*{client}" />
 
+
+        <input type="text" th:field="*{named}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('named')}" th:errors="*{named}">named error</div>
+
+
+        <input type="text" th:field="*{amount}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount error</div>
+
+
+        <input type="text" th:field="*{periodInMonths}" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('periodInMonths')}" th:errors="*{periodInMonths}">periodInMonths error</div>
+
+
         <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/creditsOffers/creditOffersList}"> Back to Credit Offers List</a>
+    <a th:href = "@{/credit_offers/credit_offers_list}"> Back to Credit Offers List</a>
 </div>
 </body>
 </html>

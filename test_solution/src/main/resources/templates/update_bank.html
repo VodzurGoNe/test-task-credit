@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Bank Management System</title>
 
     <link rel="stylesheet"
@@ -13,8 +13,10 @@
     <hr>
     <h2>Update Bank</h2>
 
-    <form action="#" th:action="@{/saveBank}" th:object="${bank}"
+    <form action="#" th:action="@{/save_bank}" th:object="${bank}"
           method="POST">
+
+        <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
@@ -26,7 +28,7 @@
 
     <hr>
 
-    <a th:href = "@{/bankList}"> Back to Bank List</a>
+    <a th:href = "@{/bank_list}"> Back to Bank List</a>
 </div>
 </body>
 </html>

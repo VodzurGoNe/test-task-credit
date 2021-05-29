@@ -47,13 +47,17 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         creditOfferRepository.deleteById(id);
     }
 
-//    @Override
-//    public CreditOffer findByTitle(String title) {
-//        CreditOffer creditOffer = creditOfferRepository.findByTitle(title);
+    @Override
+    public List<CreditOffer> findByBankId(UUID bankId) {
+        return creditOfferRepository.findByBankId(bankId);
+    }
 
-//        return creditOffer;
-//    }
+    @Override
+    public List<CreditOffer> findByClientId(UUID clientId) {
+        return creditOfferRepository.findByClientId(clientId);
+    }
 
+/*
     @Override
     public Page<CreditOffer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -62,4 +66,6 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.creditOfferRepository.findAll(pageable);
     }
+
+ */
 }

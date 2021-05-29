@@ -3,14 +3,13 @@ package org.gruzdov.solution.test_solution.controller;
 import org.gruzdov.solution.test_solution.entity.Bank;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.UUID;
-
 
 @Controller
 public class BankController {
@@ -21,78 +20,68 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @GetMapping("/bankList")
+    @GetMapping("/bank_list")
     public String viewHomePage(Model model) {
-        //return findPaginated(1, "title", "asc", model);
 
         model.addAttribute("listBanks", bankService.getAllBanks());
 
         return "index";
     }
 
-    @GetMapping("/showNewBankForm")
+    @GetMapping("/show_new_bank_form")
     public String showNewBankForm(Model model) {
 
-        Bank bank = new Bank();
-        model.addAttribute("bank", bank);
-
+        model.addAttribute("bank", new Bank());
         return "new_bank";
     }
 
-    @PostMapping("/saveBank")
-    public String saveBank(@ModelAttribute("bank") Bank bank) {
+    @PostMapping("/save_bank")
+    public String saveBank(@ModelAttribute("bank") @Valid Bank bank
+            , BindingResult bindingResult) {
+
+            if (bindingResult.hasErrors())
+                return "new_bank";
+
         bankService.saveBank(bank);
-        return "redirect:/bankList";
+        return "redirect:/bank_list";
     }
 
-    @GetMapping("/showBank/{id}")
-    public String showBank(@PathVariable ( value = "id") UUID id, Model model) {
+    @GetMapping("/show_bank/{bankId}")
+    public String showBank(@PathVariable("bankId") UUID bankId
+            , Model model) {
 
-        Bank bank = bankService.getBank(id);
-
-        model.addAttribute("bank", bank);
+        model.addAttribute("bank", bankService.getBank(bankId));
         return "show_bank";
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
+    @GetMapping("/show_form_for_update/{bankId}")
+    public String showFormForUpdate(@PathVariable("bankId") UUID bankId
+            , Model model) {
 
-        Bank bank = bankService.getBank(id);
-
-        model.addAttribute("bank", bank);
+        model.addAttribute("bank", bankService.getBank(bankId));
         return "update_bank";
     }
 
-    @GetMapping("/deleteBank/{id}")
-    public String deleteBank(@PathVariable (value = "id") UUID id) {
+    @GetMapping("/delete_bank/{bankId}")
+    public String deleteBank(@PathVariable("bankId") UUID bankId) {
 
-        this.bankService.deleteBank(id);
-        return "redirect:/bankList";
+        bankService.deleteBank(bankId);
+        return "redirect:/bank_list";
     }
-
 /*
-    @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-
-        Page<Bank> page = bankService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Bank> listBanks = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listBanks", listBanks);
-
-        return "index";
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 
  */
+
 }

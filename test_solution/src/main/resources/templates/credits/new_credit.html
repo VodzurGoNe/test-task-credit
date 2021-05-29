@@ -14,26 +14,35 @@
     <hr>
     <h2>Create Credit</h2>
 
-    <form action="#" th:action="@{/credits/saveCredit}" th:object="${credit}"
+    <form action="#" th:action="@{/credits/save_credit}" th:object="${credit}"
           method="POST">
+
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{bank}" />
 
         <input type="text" th:field="*{title}"
                placeholder="Credit Title" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+
+
         <input type="text" th:field="*{limit}"
                placeholder="Credit Limit" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">limit error</div>
+
+
         <input type="text" th:field="*{percent}"
-               placeholder="Процентная ставка по кредиту" class="form-control mb-4 col-4">
+               placeholder="Loan Interest Rate" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('percent')}" th:errors="*{percent}">percent error</div>
 
         <button type="submit" class="btn btn-info col-2"> Create Credit</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/credits/creditsList}"> Back to Credit List</a>
+    <a th:href = "@{/credits/credits_list/{id}(id=${credit.bank.id})}"> Back to Credit List</a>
 </div>
 </body>
 </html>

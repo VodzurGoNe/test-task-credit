@@ -17,6 +17,8 @@ public interface CreditService {
 
     Credit findByTitle(String title);
 
-    Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    List<Credit> findByBankId(UUID bankId);
+
+//    Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
 }

@@ -1,7 +1,6 @@
 package org.gruzdov.solution.test_solution.service;
 
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,8 +14,10 @@ public interface CreditOfferService {
 
     void deleteCreditOffer(UUID id);
 
-//    CreditOffer findByTitle(String title);
+    List<CreditOffer> findByBankId(UUID bankId);
 
-    Page<CreditOffer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    List<CreditOffer> findByClientId(UUID clientId);
+
+//    Page<CreditOffer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
 }

@@ -13,7 +13,7 @@
     <hr>
     <h2>Update Credit Offer</h2>
 
-    <form action="#" th:action="@{/creditsOffers/saveCreditOffer}" th:object="${creditOffer}"
+    <form action="#" th:action="@{/credits_offers/save_credit_offer}" th:object="${creditOffer}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
@@ -36,7 +36,7 @@
 
     <hr>
 
-    <a th:href = "@{/creditsOffers/creditOffersList}"> Back to Credit Offers List</a>
+    <a th:href = "@{/credits_offers/credit_offers_list}"> Back to Credit Offers List</a>
 </div>
 </body>
 </html>

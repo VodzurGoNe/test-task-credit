@@ -2,62 +2,53 @@ package org.gruzdov.solution.test_solution.controller;
 
 import org.gruzdov.solution.test_solution.entity.Client;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
-import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.gruzdov.solution.test_solution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 
 @Controller
-@RequestMapping("/paymentSchedules")
+@RequestMapping("/payment_schedules")
 public class PaymentScheduleController {
     private final ClientService clientService;
-    private final BankService bankService;
-    private final CreditService creditService;
     private final CreditOfferService creditOfferService;
     private final CalculationPaymentService calculationPaymentService;
     private final PaymentScheduleService paymentScheduleService;
 
     @Autowired
     public PaymentScheduleController(ClientService clientService
-            , BankService bankService
-            , CreditService creditService
             , CreditOfferService creditOfferService
             , CalculationPaymentService calculationPaymentService
             , PaymentScheduleService paymentScheduleService) {
 
         this.clientService = clientService;
-        this.bankService = bankService;
-        this.creditService = creditService;
         this.creditOfferService = creditOfferService;
         this.calculationPaymentService = calculationPaymentService;
         this.paymentScheduleService = paymentScheduleService;
     }
 
-    @GetMapping("/paymentSchedulesList/{id}")
-    public String viewHomePage(Model model
-            , @PathVariable("id") UUID id) {
+    @GetMapping("/payment_schedules_list/{creditOfferId}")
+    public String viewHomePage(@PathVariable("creditOfferId") UUID creditOfferId
+            , Model model) {
 
         model.addAttribute("listPaymentSchedules"
-                , paymentScheduleService.findByCreditOfferId(id));
+                , paymentScheduleService.findByCreditOfferId(creditOfferId));
         return "/payment_schedules/index";
-        //return findPaginated(1, "paymentDate", "asc", id, model);
     }
 
 
 
-    @GetMapping("/showNewPaymentScheduleForm/{clientId}")
-    public String showNewPaymentScheduleForm(Model model
-            , @PathVariable("clientId") UUID clientId) {
+    @GetMapping("/show_new_payment_schedule_form/{clientId}")
+    public String showNewPaymentScheduleForm(@PathVariable("clientId") UUID clientId
+            , Model model) {
 
         Client client = clientService.getClient(clientId);
 
+       // PaymentSchedule paySchedule = new PaymentSchedule();
 //        CreditOffer creditOffer = new CreditOffer();
 //        creditOffer.setClient(client);
 //        creditOffer.setBank(bankService.getBank(client.getBank().getId()));
@@ -66,17 +57,17 @@ public class PaymentScheduleController {
         return "credit_offers/new_credit_offer";
     }
 
-    @PostMapping("/savePaymentSchedule")
+    @PostMapping("/save_payment_schedule")
     public String savePaymentSchedule(@ModelAttribute("creditOffer") CreditOffer creditOffer) {
 
         creditOfferService.saveCreditOffer(creditOffer);
         calculationPaymentService.calculationPaymentSchedule(creditOffer);
 
-        return "redirect:/paymentSchedules/paymentSchedulesList";
+        return "redirect:/payment_schedules/payment_schedules_list";
     }
 
 
-    @GetMapping("/showFormForUpdate/{id}")
+    @GetMapping("/show_form_for_update/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
 
         CreditOffer creditOffer = creditOfferService.getCreditOffer(id);
@@ -85,38 +76,11 @@ public class PaymentScheduleController {
         return "payment_schedules/update_payment_schedule";
     }
 
-    @GetMapping("/deletePaymentSchedule/{id}")
+    @GetMapping("/delete_payment_schedule/{id}")
     public String deletePaymentSchedule(@PathVariable (value = "id") UUID id) {
 
         this.creditOfferService.deleteCreditOffer(id);
-        return "redirect:/paymentSchedules/paymentSchedulesList";
+        return "redirect:/payment_schedules/payment_schedules_list";
     }
-
-/*
-    @GetMapping("/paymentSchedules/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                UUID id, // creditOfferId
-                                Model model) {
-        int pageSize = 5;
-
-        Page<PaymentSchedule> page = paymentScheduleService.findPaginated(pageNo, pageSize, sortField, sortDir, id);
-        List<PaymentSchedule> listPaymentSchedules = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listPaymentSchedules", listPaymentSchedules);
-
-        return "/payment_schedules/index";
-    }
-
- */
 
 }

@@ -55,6 +55,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
+    public List<Credit> findByBankId(UUID bankId) {
+        return creditRepository.findByBankId(bankId);
+    }
+/*
+    @Override
     public Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
@@ -62,4 +67,6 @@ public class CreditServiceImpl implements CreditService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.creditRepository.findAll(pageable);
     }
+
+ */
 }

@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     List<Client> findAllByFio(String fio);
+    List<Client> findByBankId(UUID bankId);
 }

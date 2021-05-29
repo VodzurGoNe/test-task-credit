@@ -49,11 +49,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAllByFio(String fio) {
-        List<Client> clients = clientRepository.findAllByFio(fio);
-
-        return clients;
+        return clientRepository.findAllByFio(fio);
     }
 
+    @Override
+    public List<Client> findByBankId(UUID bankId) {
+        return clientRepository.findByBankId(bankId);
+    }
+/*
     @Override
     public Page<Client> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -62,5 +65,7 @@ public class ClientServiceImpl implements ClientService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.clientRepository.findAll(pageable);
     }
+
+ */
 
 }

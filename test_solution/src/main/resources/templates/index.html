@@ -15,7 +15,7 @@
 <div class="container my-2">
     <h1>Bank List</h1>
 
-    <a th:href = "@{/showNewBankForm}" class="btn btn-primary btn-sm mb-3"> Add Bank</a>
+    <a th:href = "@{/show_new_bank_form}" class="btn btn-primary btn-sm mb-3"> Add Bank</a>
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
@@ -30,9 +30,9 @@
         <tbody>
         <tr th:each="bank : ${listBanks}">
             <td th:text="${bank.title}"></td>
-            <td> <a th:href="@{/showBank/{id}(id=${bank.id})}" class="btn btn-success">Show</a>
-                <a th:href="@{/showFormForUpdate/{id}(id=${bank.id})}" class="btn btn-warning">Update</a>
-                <a th:href="@{/deleteBank/{id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
+            <td> <a th:href="@{/show_bank/{id}(id=${bank.id})}" class="btn btn-success">Show</a>
+                <a th:href="@{/show_form_for_update/{id}(id=${bank.id})}" class="btn btn-warning">Update</a>
+                <a th:href="@{/delete_bank/{id}(id=${bank.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

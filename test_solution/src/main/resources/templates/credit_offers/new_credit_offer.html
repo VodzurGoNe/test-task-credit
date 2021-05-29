@@ -14,18 +14,24 @@
     <hr>
     <h2>Create Credit Offer</h2>
 
-    <form action="#" th:action="@{/creditsOffers/saveCreditOffer}" th:object="${creditOffer}"
+    <form action="#" th:action="@{/credit_offers/save_credit_offer}" th:object="${creditOffer}"
           method="POST">
-        <!-- Add hidden form field to handle update -->
-        <input type="hidden" th:field="*{client}" />
-        <input type="hidden" th:field="*{bank}" />
 
-        <select class="form-control" id="addTeam">
+        <select class="form-control" id="choice-box-menu-item">
             <option value="0">Select Credit</option>
             <option th:each="credit : ${creditOffer.getBank().getCredits()}" th:value="${creditOffer.setCredit(credit)}" th:text="${credit.getTitle()}"></option>
         </select>
 
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{client}" />
+
+        <input type="hidden" th:field="*{bank}" />
+
         <input type="hidden" th:field="*{credit}" />
+
+        <br>
+
+        <a th:href = "@{/credits/show_new_credit_form/{id}(id=${creditOffer.bank.id})}" class="btn btn-secondary btn-sm mb-3"> Create Credit</a>
 
         <br>
         <br>
@@ -33,21 +39,33 @@
         <input type="text" th:field="*{named}"
                placeholder="Named" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('named')}" th:errors="*{named}">named error</div>
+
+
         <input type="text" th:field="*{amount}"
                placeholder="Amount" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount error</div>
+
 
         <input type="text" th:field="*{periodInMonths}"
                placeholder="Period In Months" class="form-control mb-4 col-4">
 
+        <div style="color:red" th:if="${#fields.hasErrors('periodInMonths')}" th:errors="*{periodInMonths}">periodInMonths error</div>
+
+
         <input type="text" th:field="*{firstPay}"
                placeholder="First Pay" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
+
 
         <button type="submit" class="btn btn-info col-2"> Create Credit Offer</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/creditsOffers/creditsOffersList}"> Back to Credit Offer List</a>
+    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Back to Credit Offer List</a>
 </div>
 </body>
 </html>

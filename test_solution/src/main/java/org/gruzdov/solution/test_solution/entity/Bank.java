@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +20,9 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BANK_ID")
     private UUID id;
+
+    @NotBlank(message = "Bank Title is required field")
+    @Size(min = 2, message = "Title must be min 2 symbols")
 
     @Column(name = "BANK_TITLE")
     private String title;
