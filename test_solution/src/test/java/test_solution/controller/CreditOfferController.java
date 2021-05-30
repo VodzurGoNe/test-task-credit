@@ -1,13 +1,16 @@
-package org.gruzdov.solution.test_solution.controller;
+package test_solution.controller;
 
-import org.gruzdov.solution.test_solution.entity.Client;
-import org.gruzdov.solution.test_solution.entity.CreditOffer;
-import org.gruzdov.solution.test_solution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import test_solution.entity.Client;
+import test_solution.entity.CreditOffer;
+import test_solution.service.BankService;
+import test_solution.service.CalculationPaymentServiceTest;
+import test_solution.service.ClientService;
+import test_solution.service.CreditOfferService;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -19,18 +22,18 @@ public class CreditOfferController {
     private final ClientService clientService;
     private final BankService bankService;
     private final CreditOfferService creditOfferService;
-    private final CalculationPaymentService calculationPaymentService;
+    private final CalculationPaymentServiceTest calculationPaymentServiceTest;
 
     @Autowired
     public CreditOfferController(ClientService clientService
             , BankService bankService
             , CreditOfferService creditOfferService
-            , CalculationPaymentService calculationPaymentService) {
+            , CalculationPaymentServiceTest calculationPaymentServiceTest) {
 
         this.clientService = clientService;
         this.bankService = bankService;
         this.creditOfferService = creditOfferService;
-        this.calculationPaymentService = calculationPaymentService;
+        this.calculationPaymentServiceTest = calculationPaymentServiceTest;
     }
 
     @GetMapping("/credit_offers_list/{clientId}")
@@ -64,8 +67,12 @@ public class CreditOfferController {
                         : "/credit_offers/update_credit_offer";
             }
 
-            calculationPaymentService.calculationPaymentSchedule(creditOffer);
+        //creditOfferService.saveCreditOffer(creditOffer);
+        //if (creditOffer.getPercentSum().intValue() == 0)
 
+        //if (creditOffer.getPaymentSchedules().isEmpty())
+            calculationPaymentServiceTest.calculationPaymentSchedule(creditOffer);
+        //else creditOfferService.saveCreditOffer(creditOffer);
         String clientId = creditOffer.getClient().getId().toString();
         return "redirect:/credit_offers/credit_offers_list/" + clientId;
     }

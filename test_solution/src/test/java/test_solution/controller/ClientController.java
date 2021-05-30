@@ -1,14 +1,14 @@
-package org.gruzdov.solution.test_solution.controller;
+package test_solution.controller;
 
-import org.gruzdov.solution.test_solution.entity.Client;
-import org.gruzdov.solution.test_solution.service.BankService;
-import org.gruzdov.solution.test_solution.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import test_solution.entity.Client;
+import test_solution.service.BankService;
+import test_solution.service.ClientService;
 
 import javax.validation.Valid;
 import java.util.List;

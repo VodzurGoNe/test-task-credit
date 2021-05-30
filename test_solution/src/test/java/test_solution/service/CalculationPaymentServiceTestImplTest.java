@@ -1,20 +1,20 @@
-package org.gruzdov.solution.test_solution.service;
+package test_solution.service;
 
-import org.gruzdov.solution.test_solution.dao.PaymentScheduleRepository;
-import org.gruzdov.solution.test_solution.entity.CreditOffer;
-import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.springframework.stereotype.Service;
+import test_solution.dao.PaymentScheduleRepository;
+import test_solution.entity.CreditOffer;
+import test_solution.entity.PaymentSchedule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Service
-public class CalculationPaymentServiceImpl implements CalculationPaymentService {
+public class CalculationPaymentServiceTestImplTest implements CalculationPaymentServiceTest {
     private final PaymentScheduleRepository paymentScheduleRepository;
     private final CreditOfferService creditOfferService;
 
-    public CalculationPaymentServiceImpl(PaymentScheduleRepository paymentScheduleRepository
+    public CalculationPaymentServiceTestImplTest(PaymentScheduleRepository paymentScheduleRepository
             , CreditOfferService creditOfferService) {
         this.paymentScheduleRepository = paymentScheduleRepository;
         this.creditOfferService = creditOfferService;
@@ -22,10 +22,6 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
 
     @Override
     public void calculationPaymentSchedule(CreditOffer creditOffer) {
-
-        if (creditOffer.getPaymentSchedules() != null) {
-            paymentScheduleRepository.deleteByCreditOfferId(creditOffer.getId());
-        }
 
         BigDecimal amount = creditOffer.getAmount();
         //Сумма кредита
@@ -55,7 +51,6 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
 
         PaymentSchedule paymentSchedule;
         for (int i = 0; i < periodInMonths; i++) {
-
             percentSum = percentSum.add(monthPayForPercent);
             //Расчет итоговой суммы процентов по кредиту
             monthPay = repaymentInMonth.add(monthPayForPercent);
@@ -67,6 +62,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
             //Остаток
             paymentSchedule = new PaymentSchedule();
 
+            //paymentSchedule.setId(i + 1);
             paymentSchedule.setPaymentAmount(monthPay);
 
             paymentSchedule.setPaymentDate(LocalDate.now().plusMonths(i + 1));
@@ -81,5 +77,4 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         creditOffer.setPercentSum(percentSum);
         creditOfferService.saveCreditOffer(creditOffer);
     }
-
 }

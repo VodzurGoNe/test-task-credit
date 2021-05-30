@@ -1,7 +1,7 @@
-package org.gruzdov.solution.test_solution.service;
+package test_solution.service;
 
-import org.gruzdov.solution.test_solution.entity.Client;
 import org.springframework.data.domain.Page;
+import test_solution.entity.Client;
 
 import java.util.List;
 import java.util.UUID;
