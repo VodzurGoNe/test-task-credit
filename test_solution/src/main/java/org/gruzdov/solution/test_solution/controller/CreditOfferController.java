@@ -59,11 +59,15 @@ public class CreditOfferController {
     public String saveCreditOffer(@ModelAttribute("creditOffer") @Valid CreditOffer creditOffer
         , BindingResult bindingResult) {
 
-            if (bindingResult.hasErrors())
-                return "/credit_offers/new_credit_offer";
+            if (bindingResult.hasErrors()) {
+                return creditOffer.getId() == null ? "/credit_offers/new_credit_offer"
+                        : "/credit_offers/update_credit_offer";
+            }
 
         //creditOfferService.saveCreditOffer(creditOffer);
         //if (creditOffer.getPercentSum().intValue() == 0)
+
+        //if (creditOffer.getPaymentSchedules().isEmpty())
             calculationPaymentService.calculationPaymentSchedule(creditOffer);
         //else creditOfferService.saveCreditOffer(creditOffer);
         String clientId = creditOffer.getClient().getId().toString();

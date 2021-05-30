@@ -14,6 +14,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "PAYMENTSCHEDULE")
 public class PaymentSchedule {
+    private static final long serialVersionUID = -8150857881422152651L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PAYMENTSCHEDULE_ID")

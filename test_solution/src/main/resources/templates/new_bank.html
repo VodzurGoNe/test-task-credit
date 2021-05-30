@@ -18,6 +18,7 @@
           method="POST">
         <input type="text" th:field="*{title}"
                placeholder="Bank Title" class="form-control mb-4 col-4">
+
         <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
 
         <button type="submit" class="btn btn-info col-2"> Save Bank</button>

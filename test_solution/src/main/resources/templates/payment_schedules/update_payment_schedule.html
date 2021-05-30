@@ -11,27 +11,41 @@
 <div class="container">
     <h1>Credit Offer Management System</h1>
     <hr>
-    <h2>Update Credit Offer</h2>
+    <h2>Update Payment Schedule</h2>
 
-    <form action="#" th:action="@{/credits_offers/save_credit_offer}" th:object="${creditOffer}"
+    <form action="#" th:action="@{/payment_schedules/save_payment_schedule}" th:object="${paymentSchedule}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{creditOffer}" />
+        <input type="hidden" th:field="*{remains}" />
 
-        <input type="text" th:field="*{named}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{paymentDate}"
+               placeholder="Payment Date" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{amount}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('paymentDate')}" th:errors="*{paymentDate}">paymentDate error</div>
 
-        <input type="text" th:field="*{periodInMonths}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{bank}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{paymentAmount}"
+               placeholder="Payment Amount" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{credit}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('paymentAmount')}" th:errors="*{paymentAmount}">paymentAmount error</div>
 
-        <input type="text" th:field="*{client}" class="form-control mb-4 col-4">
 
-        <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
+        <input type="text" th:field="*{amountOfTheBody}"
+               placeholder="Amount Of The Body" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('amountOfTheBody')}" th:errors="*{amountOfTheBody}">amountOfTheBody error</div>
+
+
+        <input type="text" th:field="*{amountOfThePercent}"
+               placeholder="Amount Of The Percent" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('amountOfThePercent')}" th:errors="*{amountOfThePercent}">amountOfThePercent error</div>
+
+
+        <button type="submit" class="btn btn-info col-2"> Update Payment Schedule</button>
     </form>
 
     <hr>

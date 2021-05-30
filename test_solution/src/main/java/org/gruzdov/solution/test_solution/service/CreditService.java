@@ -19,6 +19,10 @@ public interface CreditService {
 
     List<Credit> findByBankId(UUID bankId);
 
-//    Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<Credit> findPaginated(int pageNo, int pageSize
+            , String sortField, String sortDirection);
+
+    Page<Credit> findPaginated(UUID bankId, int pageNo, int pageSize
+            , String sortField, String sortDirection);
 
 }

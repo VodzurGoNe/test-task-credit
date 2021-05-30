@@ -49,9 +49,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Bank findByTitle(String title) {
-        Bank bank = bankRepository.findByTitle(title);
-
-        return bank;
+        return bankRepository.findByTitle(title);
     }
 
     @Override
@@ -60,6 +58,6 @@ public class BankServiceImpl implements BankService {
                 Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.bankRepository.findAll(pageable);
+        return bankRepository.findAll(pageable);
     }
 }

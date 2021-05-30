@@ -1,33 +1,24 @@
 package org.gruzdov.solution.test_solution.controller;
 
-import org.gruzdov.solution.test_solution.entity.Client;
-import org.gruzdov.solution.test_solution.entity.CreditOffer;
+import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.gruzdov.solution.test_solution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 
 @Controller
 @RequestMapping("/payment_schedules")
 public class PaymentScheduleController {
-    private final ClientService clientService;
-    private final CreditOfferService creditOfferService;
-    private final CalculationPaymentService calculationPaymentService;
     private final PaymentScheduleService paymentScheduleService;
 
     @Autowired
-    public PaymentScheduleController(ClientService clientService
-            , CreditOfferService creditOfferService
-            , CalculationPaymentService calculationPaymentService
-            , PaymentScheduleService paymentScheduleService) {
-
-        this.clientService = clientService;
-        this.creditOfferService = creditOfferService;
-        this.calculationPaymentService = calculationPaymentService;
+    public PaymentScheduleController(PaymentScheduleService paymentScheduleService) {
         this.paymentScheduleService = paymentScheduleService;
     }
 
@@ -40,8 +31,7 @@ public class PaymentScheduleController {
         return "/payment_schedules/index";
     }
 
-
-
+/*
     @GetMapping("/show_new_payment_schedule_form/{clientId}")
     public String showNewPaymentScheduleForm(@PathVariable("clientId") UUID clientId
             , Model model) {
@@ -57,30 +47,39 @@ public class PaymentScheduleController {
         return "credit_offers/new_credit_offer";
     }
 
+ */
+
     @PostMapping("/save_payment_schedule")
-    public String savePaymentSchedule(@ModelAttribute("creditOffer") CreditOffer creditOffer) {
+    public String savePaymentSchedule(@ModelAttribute("paymentSchedule") @Valid PaymentSchedule paymentSchedule
+            , BindingResult bindingResult) {
 
-        creditOfferService.saveCreditOffer(creditOffer);
-        calculationPaymentService.calculationPaymentSchedule(creditOffer);
+            if (bindingResult.hasErrors())
+                return "/payment_schedules/update_payment_schedule";
 
-        return "redirect:/payment_schedules/payment_schedules_list";
+        String creditOfferId = paymentSchedule.getCreditOffer().getId().toString();
+        paymentScheduleService.savePaymentSchedule(paymentSchedule);
+        return "redirect:/payment_schedules/payment_schedules_list/" + creditOfferId;
     }
 
 
-    @GetMapping("/show_form_for_update/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") UUID id, Model model) {
+    @GetMapping("/show_form_for_update/{paymentScheduleId}")
+    public String showFormForUpdate(@PathVariable("paymentScheduleId") UUID paymentScheduleId
+            , Model model) {
 
-        CreditOffer creditOffer = creditOfferService.getCreditOffer(id);
+        PaymentSchedule paymentSchedule = paymentScheduleService.getPaymentSchedule(paymentScheduleId);
 
-        model.addAttribute("creditOffer", creditOffer);
+        model.addAttribute("paymentSchedule", paymentSchedule);
         return "payment_schedules/update_payment_schedule";
     }
 
-    @GetMapping("/delete_payment_schedule/{id}")
-    public String deletePaymentSchedule(@PathVariable (value = "id") UUID id) {
+    @GetMapping("/delete_payment_schedule/{paymentScheduleId}")
+    public String deletePaymentSchedule(@PathVariable("paymentScheduleId") UUID paymentScheduleId) {
 
-        this.creditOfferService.deleteCreditOffer(id);
-        return "redirect:/payment_schedules/payment_schedules_list";
+        String creditOfferId = paymentScheduleService.getPaymentSchedule(paymentScheduleId)
+                .getCreditOffer().getId().toString();
+
+        paymentScheduleService.deletePaymentSchedule(paymentScheduleId);
+        return "redirect:/payment_schedules/payment_schedules_list/" + creditOfferId;
     }
 
 }

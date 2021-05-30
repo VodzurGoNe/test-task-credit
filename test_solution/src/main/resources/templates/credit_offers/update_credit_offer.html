@@ -21,24 +21,43 @@
 
         <input type="hidden" th:field="*{bank}" />
 
-        <input type="hidden" th:field="*{credit}" />
-
         <input type="hidden" th:field="*{client}" />
 
+        <input type="hidden" th:field="*{percentSum}" />
 
-        <input type="text" th:field="*{named}" class="form-control mb-4 col-4">
+        <input type="hidden" th:field="*{paymentSchedules}" />
+
+
+        <select class="form-control" id="choice-box-menu-item">
+            <option value="0">Select Credit</option>
+            <option th:each="credit : ${creditOffer.getBank().getCredits()}" th:value="${creditOffer.setCredit(credit)}" th:text="${credit.getTitle()}"></option>
+        </select>
+
+        <br>
+        <br>
+
+        <input type="text" th:field="*{named}"
+               placeholder="Named" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('named')}" th:errors="*{named}">named error</div>
 
 
-        <input type="text" th:field="*{amount}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{amount}"
+               placeholder="Amount" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount error</div>
 
 
-        <input type="text" th:field="*{periodInMonths}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{periodInMonths}"
+               placeholder="Period In Months" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('periodInMonths')}" th:errors="*{periodInMonths}">periodInMonths error</div>
+
+
+        <input type="text" th:field="*{firstPay}"
+               placeholder="First Pay" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
 
 
         <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
@@ -46,7 +65,7 @@
 
     <hr>
 
-    <a th:href = "@{/credit_offers/credit_offers_list}"> Back to Credit Offers List</a>
+    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Back to Credit Offers List</a>
 </div>
 </body>
 </html>

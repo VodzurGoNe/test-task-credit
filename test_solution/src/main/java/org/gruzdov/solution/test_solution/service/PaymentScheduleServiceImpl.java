@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +61,6 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         //return findAllByCreditOfferId(id);
-        return this.paymentScheduleRepository.findAll(pageable);
+        return paymentScheduleRepository.findAll(pageable);
     }
 }

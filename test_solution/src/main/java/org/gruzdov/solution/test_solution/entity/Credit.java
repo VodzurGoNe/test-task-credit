@@ -18,6 +18,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "CREDIT")
 public class Credit {
+    private static final long serialVersionUID = -8150854881422152651L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CREDIT_ID")

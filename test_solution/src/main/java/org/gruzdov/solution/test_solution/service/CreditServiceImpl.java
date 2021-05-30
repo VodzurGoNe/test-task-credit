@@ -49,24 +49,34 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     public Credit findByTitle(String title) {
-        Credit credit = creditRepository.findByTitle(title);
-
-        return credit;
+        return creditRepository.findByTitle(title);
     }
 
     @Override
     public List<Credit> findByBankId(UUID bankId) {
         return creditRepository.findByBankId(bankId);
     }
-/*
+
     @Override
-    public Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Credit> findPaginated(int pageNo, int pageSize
+            , String sortField, String sortDirection) {
+
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.creditRepository.findAll(pageable);
+        return creditRepository.findAll(pageable);
     }
 
- */
+    @Override
+    public Page<Credit> findPaginated(UUID bankId, int pageNo, int pageSize
+            , String sortField, String sortDirection) {
+
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return creditRepository.findPaginatedByBankId(bankId, pageable);
+    }
+
 }

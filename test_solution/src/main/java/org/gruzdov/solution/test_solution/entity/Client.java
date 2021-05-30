@@ -14,6 +14,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "CLIENT")
 public class Client {
+    private static final long serialVersionUID = -8150857881422153651L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CLIENT_ID")
@@ -26,7 +28,7 @@ public class Client {
     @Column(name = "CLIENT_FIO")
     private String fio;
 
-    @NotBlank(message = "phoneNumber is required field")
+    @NotBlank(message = "Phone Number is required field")
     @Pattern(regexp = "\\d{3}-\\d{3}-\\d{2}-\\d{2}"
             , message = "please use pattern XXX-XXX-XX-XX")
 
@@ -39,7 +41,7 @@ public class Client {
     @Column(name = "CLIENT_EMAIL")
     private String email;
 
-    @NotBlank(message = "passportNumber is required field")
+    @NotBlank(message = "Passport Number is required field")
     @Pattern(regexp = "\\d{2}-\\d{2}-\\d{6}"
             , message = "please use pattern XX-XX-XXXXXX")
 

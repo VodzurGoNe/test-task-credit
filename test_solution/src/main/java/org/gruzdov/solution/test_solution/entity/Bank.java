@@ -16,6 +16,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "BANK")
 public class Bank {
+    private static final long serialVersionUID = -8150857821422152651L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BANK_ID")

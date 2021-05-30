@@ -21,22 +21,26 @@
 
         <input type="hidden" th:field="*{bank}" />
 
-        <input type="text" th:field="*{fio}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{fio}"
+               placeholder="FIO Client" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">fio error</div>
 
 
-        <input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{phoneNumber}"
+               placeholder="Client Phone Number" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">phoneNumber error</div>
 
 
-        <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{email}"
+               placeholder="Client Email" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
 
 
-        <input type="text" th:field="*{passportNumber}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{passportNumber}"
+               placeholder="Client Passport Number" class="form-control mb-4 col-4">
 
         <div style="color:red" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">passportNumber error</div>
 

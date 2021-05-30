@@ -47,7 +47,8 @@
             <td th:text="${paymentSchedule.paymentAmount}"></td>
             <td th:text="${paymentSchedule.amountOfTheBody}"></td>
             <td th:text="${paymentSchedule.amountOfThePercent}"></td>
-            <td>
+            <td>    <a th:href="@{/payment_schedules/show_form_for_update/{id}(id=${listPaymentSchedules.get(0).id})}" class="btn btn-warning">Update</a>
+                <a th:href="@{/payment_schedules/delete_payment_schedule/{id}(id=${listPaymentSchedules.get(0).id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

@@ -17,6 +17,7 @@ public interface PaymentScheduleService {
 
     List<PaymentSchedule> findByCreditOfferId(UUID creditOfferId);
 
-    Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection, UUID id);
+    Page<PaymentSchedule> findPaginated(int pageNo, int pageSize
+            , String sortField, String sortDirection, UUID id);
 
 }

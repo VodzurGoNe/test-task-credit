@@ -16,12 +16,13 @@
     <form action="#" th:action="@{/save_bank}" th:object="${bank}"
           method="POST">
 
-        <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
-
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
 
-        <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{title}"
+               placeholder="Bank Title" class="form-control mb-4 col-4">
+
+        <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
 
         <button type="submit" class="btn btn-info col-2"> Update Bank</button>
     </form>

@@ -20,6 +20,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "CREDITOFFER")
 public class CreditOffer {
+    private static final long serialVersionUID = -8750857881422152651L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CREDITOFFER_ID")
@@ -31,12 +33,14 @@ public class CreditOffer {
     @Column(name = "CREDITOFFER_NAMED")
     private String named;
 
+//    @NotBlank(message = "Credit Offer Amount is required field")
     @Min(value = 1, message = "must be greater than 1")
     @Max(value = 200030001, message = "must be less than 200030001")
 
     @Column(name = "CREDITOFFER_AMOUNT")
     private BigDecimal amount;
 
+//    @NotBlank(message = "Credit Offer Period In Months is required field")
     @Min(value = 2, message = "must be greater than 2")
     @Max(value = 480, message = "must be less than 480")
 
