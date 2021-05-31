@@ -14,8 +14,8 @@ CREATE TABLE PUBLIC.PUBLIC.CLIENT
             primary key,
     CLIENT_EMAIL          varchar(205),
     CLIENT_FIO            varchar(205),
-    CLIENT_PASSPORTNUMBER varchar(205),
-    CLIENT_PHONENUMBER    varchar(205),
+    CLIENT_PASSPORT_NUMBER varchar(205),
+    CLIENT_PHONE_NUMBER    varchar(205),
     BANK_ID               uuid
         constraint fkim95abd01ot21q2dn9mpxo7nc
             references BANK
@@ -38,20 +38,20 @@ create table PUBLIC.PUBLIC.CREDIT
             references BANK
 );
 
-create table PUBLIC.PUBLIC.CREDITOFFER
+create table PUBLIC.PUBLIC.CREDIT_OFFER
 (
-    CREDITOFFER_ID               uuid not null
-        constraint CREDITOFFER_pkey
+    CREDIT_OFFER_ID               uuid not null
+        constraint CREDIT_OFFER_pkey
             primary key,
-    CREDITOFFER_AMOUNT           numeric(19, 2),
+    CREDIT_OFFER_AMOUNT           numeric(19, 2),
 
 
-    CREDITOFFER_FIRSTPAY         numeric(19, 2),
+    CREDIT_OFFER_FIRST_PAY         numeric(19, 2),
 
 
-    CREDITOFFER_NAMED            varchar(255),
-    CREDITOFFER_PERCENTSUM       numeric(19, 2),
-    CREDITOFFER_PERIOD_IN_MONTHS integer,
+    CREDIT_OFFER_NAMED            varchar(255),
+    CREDIT_OFFER_PERCENT_SUM       numeric(19, 2),
+    CREDIT_OFFER_PERIOD_IN_MONTHS integer,
 
 
     BANK_ID                      uuid
@@ -65,19 +65,19 @@ create table PUBLIC.PUBLIC.CREDITOFFER
             references CREDIT
 );
 
-create table PUBLIC.PUBLIC.PAYMENTSCHEDULE
+create table PUBLIC.PUBLIC.PAYMENT_SCHEDULE
 (
-    PAYMENTSCHEDULE_ID                    uuid not null
-        constraint PAYMENTSCHEDULE_pkey
+    PAYMENT_SCHEDULE_ID                    uuid not null
+        constraint PAYMENT_SCHEDULE_pkey
             primary key,
-    PAYMENTSCHEDULE_AMOUNT_OF_THE_BODY    numeric(19, 2),
-    PAYMENTSCHEDULE_AMOUNT_OF_THE_PERCENT numeric(19, 2),
-    PAYMENTSCHEDULE_PAYMENT_AMOUNT        numeric(19, 2),
-    PAYMENTSCHEDULE_PAYMENT_DATE          date,
-    PAYMENTSCHEDULE_REMAINS               numeric(19, 2),
-    CREDITOFFER_ID                        uuid
+    PAYMENT_SCHEDULE_AMOUNT_OF_THE_BODY    numeric(19, 2),
+    PAYMENT_SCHEDULE_AMOUNT_OF_THE_PERCENT numeric(19, 2),
+    PAYMENT_SCHEDULE_PAYMENT_AMOUNT        numeric(19, 2),
+    PAYMENT_SCHEDULE_PAYMENT_DATE          date,
+    PAYMENT_SCHEDULE_REMAINS               numeric(19, 2),
+    CREDIT_OFFER_ID                        uuid
         constraint fk67sgkjw07dmkvmy1f6invw33k
-            references CREDITOFFER
+            references CREDIT_OFFER
 );
 
 INSERT INTO BANK (BANK_ID, BANK_TITLE)
@@ -94,7 +94,7 @@ values ('51a80fb6-1ca4-435c-8fb3-2215d145db41', 'Mortgage', 15000000, 8,'11a80fb
        ('71a80fb6-1ca4-435c-8fb3-2215d145db41', 'Auto credit', 10000000, 15, '31a80fb6-1ca4-435c-8fb3-2215d145db41'),
        ('81a80fb6-1ca4-435c-8fb3-2215d145db41', '"installment plan"', 150000, 6, '41a80fb6-1ca4-435c-8fb3-2215d145db41');
 
-INSERT INTO CLIENT (CLIENT_ID, CLIENT_FIO, CLIENT_PHONENUMBER, CLIENT_EMAIL, CLIENT_PASSPORTNUMBER, BANK_ID)
+INSERT INTO CLIENT (CLIENT_ID, CLIENT_FIO, CLIENT_PHONE_NUMBER, CLIENT_EMAIL, CLIENT_PASSPORT_NUMBER, BANK_ID)
 
 values ('91a80fb6-1ca4-435c-8fb3-2215d145db41', 'Gruzdov Vladislav Grigorevich', '907-964-39-63', 'tomcat@random.com', '31-11-502830', '11a80fb6-1ca4-435c-8fb3-2215d145db41'),
        ('62a80fb6-1ca4-435c-8fb3-2215d145db41', 'Gruzdov Vladimir Grigorevich', '907-964-39-63', 'tomcat@random.com', '31-11-502830', '21a80fb6-1ca4-435c-8fb3-2215d145db41'),

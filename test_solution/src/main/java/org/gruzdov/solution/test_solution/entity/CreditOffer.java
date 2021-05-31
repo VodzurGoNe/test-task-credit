@@ -49,10 +49,10 @@ public class CreditOffer {
 
     @Max(value = 200030001, message = "must be less than 200030001")
 
-    @Column(name = "CREDIT_OFFER_FIRSTPAY")
+    @Column(name = "CREDIT_OFFER_FIRST_PAY")
     private BigDecimal firstPay;
 
-    @Column(name = "CREDIT_OFFER_PERCENTSUM")
+    @Column(name = "CREDIT_OFFER_PERCENT_SUM")
     private BigDecimal percentSum;
 
     @ToString.Exclude
