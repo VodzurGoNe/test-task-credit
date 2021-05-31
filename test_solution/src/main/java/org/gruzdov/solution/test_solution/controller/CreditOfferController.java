@@ -26,7 +26,6 @@ public class CreditOfferController {
             , BankService bankService
             , CreditOfferService creditOfferService
             , CalculationPaymentService calculationPaymentService) {
-
         this.clientService = clientService;
         this.bankService = bankService;
         this.creditOfferService = creditOfferService;
@@ -34,47 +33,36 @@ public class CreditOfferController {
     }
 
     @GetMapping("/credit_offers_list/{clientId}")
-    public String viewHomePage(@PathVariable("clientId") UUID clientId
-            , Model model) {
-
+    public String viewHomePage(@PathVariable("clientId") UUID clientId, Model model) {
         model.addAttribute("listCreditOffers", creditOfferService.findByClientId(clientId));
         return "/credit_offers/index";
     }
 
     @GetMapping("/show_new_credit_offer_form/{clientId}")
-    public String showNewCreditOfferForm(@PathVariable("clientId") UUID clientId
-            , Model model) {
-
+    public String showNewCreditOfferForm(@PathVariable("clientId") UUID clientId, Model model) {
         Client client = clientService.getClient(clientId);
-
         CreditOffer creditOffer = new CreditOffer();
         creditOffer.setClient(client);
         creditOffer.setBank(bankService.getBank(client.getBank().getId()));
         model.addAttribute("creditOffer", creditOffer);
-
         return "credit_offers/new_credit_offer";
     }
 
     @PostMapping("/save_credit_offer")
-    public String saveCreditOffer(@ModelAttribute("creditOffer") @Valid CreditOffer creditOffer
-        , BindingResult bindingResult) {
-
+    public String saveCreditOffer(@ModelAttribute("creditOffer") @Valid CreditOffer creditOffer,
+                                  BindingResult bindingResult) {
             if (bindingResult.hasErrors()) {
-                return creditOffer.getId() == null ? "/credit_offers/new_credit_offer"
+                return creditOffer.getId() == null
+                        ? "/credit_offers/new_credit_offer"
                         : "/credit_offers/update_credit_offer";
             }
-
             calculationPaymentService.calculationPaymentSchedule(creditOffer);
-
         String clientId = creditOffer.getClient().getId().toString();
         return "redirect:/credit_offers/credit_offers_list/" + clientId;
     }
 
-
     @GetMapping("/show_form_for_update/{creditOfferId}")
-    public String showFormForUpdate(@PathVariable("creditOfferId") UUID creditOfferId
-            , Model model) {
-
+    public String showFormForUpdate(@PathVariable("creditOfferId") UUID creditOfferId, Model model) {
         model.addAttribute("creditOffer", creditOfferService.getCreditOffer(creditOfferId));
         return "credit_offers/update_credit_offer";
     }
@@ -83,7 +71,6 @@ public class CreditOfferController {
     public String deleteCreditOffer(@PathVariable("creditOfferId") UUID creditOfferId) {
         String clientId = creditOfferService.getCreditOffer(creditOfferId)
                 .getClient().getId().toString();
-
         creditOfferService.deleteCreditOffer(creditOfferId);
         return "redirect:/credit_offers/credit_offers_list/" + clientId;
     }

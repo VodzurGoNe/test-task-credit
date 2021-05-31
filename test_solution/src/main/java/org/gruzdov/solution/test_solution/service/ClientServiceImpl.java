@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,12 +33,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClient(UUID id) {
-        Client client = null;
-        Optional<Client> optional = clientRepository.findById(id);
-        if (optional.isPresent())
-            client = optional.get();
-
-        return client;
+        return clientRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -60,9 +54,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findPaginated(int pageNo, int pageSize
             , String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.clientRepository.findAll(pageable);
     }
@@ -70,10 +64,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Page<Client> findPaginated(UUID bankId, int pageNo, int pageSize
             , String sortField, String sortDirection) {
-
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return clientRepository.findPaginatedByBankId(bankId, pageable);
     }

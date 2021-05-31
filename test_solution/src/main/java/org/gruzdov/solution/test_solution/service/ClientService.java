@@ -19,11 +19,9 @@ public interface ClientService {
 
     List<Client> findByBankId(UUID bankId);
 
-    Page<Client> findPaginated(int pageNo, int pageSize
-            , String sortField, String sortDirection);
+    Page<Client> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
-    Page<Client> findPaginated(UUID bankId, int pageNo, int pageSize
-            , String sortField, String sortDirection);
+    Page<Client> findPaginated(UUID bankId, int pageNo, int pageSize, String sortField, String sortDirection);
 
 
 }

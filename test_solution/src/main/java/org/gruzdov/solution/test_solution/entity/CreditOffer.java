@@ -18,41 +18,41 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "CREDITOFFER")
+@Table(name = "CREDIT_OFFER")
 public class CreditOffer {
     private static final long serialVersionUID = -8750857881422152651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CREDITOFFER_ID")
+    @Column(name = "CREDIT_OFFER_ID")
     private UUID id;
 
     @NotBlank(message = "Credit Offer Named is required field")
     @Size(min = 2, message = "Named must be min 2 symbols")
 
-    @Column(name = "CREDITOFFER_NAMED")
+    @Column(name = "CREDIT_OFFER_NAMED")
     private String named;
 
 //    @NotBlank(message = "Credit Offer Amount is required field")
     @Min(value = 1, message = "must be greater than 1")
     @Max(value = 200030001, message = "must be less than 200030001")
 
-    @Column(name = "CREDITOFFER_AMOUNT")
+    @Column(name = "CREDIT_OFFER_AMOUNT")
     private BigDecimal amount;
 
 //    @NotBlank(message = "Credit Offer Period In Months is required field")
     @Min(value = 2, message = "must be greater than 2")
     @Max(value = 480, message = "must be less than 480")
 
-    @Column(name = "CREDITOFFER_PERIOD_IN_MONTHS")
+    @Column(name = "CREDIT_OFFER_PERIOD_IN_MONTHS")
     private Integer periodInMonths;
 
     @Max(value = 200030001, message = "must be less than 200030001")
 
-    @Column(name = "CREDITOFFER_FIRSTPAY")
+    @Column(name = "CREDIT_OFFER_FIRSTPAY")
     private BigDecimal firstPay;
 
-    @Column(name = "CREDITOFFER_PERCENTSUM")
+    @Column(name = "CREDIT_OFFER_PERCENTSUM")
     private BigDecimal percentSum;
 
     @ToString.Exclude

@@ -27,55 +27,39 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
             paymentScheduleRepository.deleteByCreditOfferId(creditOffer.getId());
         }
 
-        BigDecimal amount = creditOffer.getAmount();
-        //Сумма кредита
+        BigDecimal creditOfferAmount = creditOffer.getAmount();
         BigDecimal firstPay = creditOffer.getFirstPay();
-        //Первый взнос
         BigDecimal percent = creditOffer.getCredit().getPercent();
-        //Процент
         Integer periodInMonths = creditOffer.getPeriodInMonths();
-        //Срок кредитования
-        BigDecimal remains = amount.subtract(firstPay);
-        //Перерасчёт с учётом первого платежа
+        BigDecimal remains = creditOfferAmount.subtract(firstPay);
         BigDecimal repaymentInMonth = remains.divide(BigDecimal.valueOf(periodInMonths)
                 ,2, RoundingMode.HALF_EVEN);
-        //Ежемесячная сумма гашения тела кредита
         BigDecimal percentMonth = percent.divide(BigDecimal.valueOf(12)
                 ,4, RoundingMode.HALF_EVEN);
-        //Ежемесячный процент
-
 
         BigDecimal monthPay;
         BigDecimal monthPayForPercent = remains.multiply(percentMonth)
                 .divide(BigDecimal.valueOf(100)
                         , 2
                         , RoundingMode.HALF_EVEN);
-        //Отчисления по процентам
-        BigDecimal percentSum = new BigDecimal("0");
 
-        PaymentSchedule paymentSchedule;
+        BigDecimal percentSum = BigDecimal.ZERO;
+
         for (int i = 0; i < periodInMonths; i++) {
 
             percentSum = percentSum.add(monthPayForPercent);
-            //Расчет итоговой суммы процентов по кредиту
             monthPay = repaymentInMonth.add(monthPayForPercent);
-            //Общий платёж
-
-            //Ежемесяный платёж без процентов
-
             remains = remains.subtract(repaymentInMonth);
-            //Остаток
-            paymentSchedule = new PaymentSchedule();
 
-            paymentSchedule.setPaymentAmount(monthPay);
+            paymentScheduleRepository.save(
+            PaymentSchedule.builder().paymentAmount(monthPay)
+                    .paymentDate(LocalDate.now().plusMonths(i + 1))
+                    .amountOfTheBody(repaymentInMonth)
+                    .amountOfThePercent(monthPayForPercent)
+                    .remains(remains)
+                    .creditOffer(creditOffer)
+                    .build());
 
-            paymentSchedule.setPaymentDate(LocalDate.now().plusMonths(i + 1));
-            paymentSchedule.setAmountOfTheBody(repaymentInMonth);
-            paymentSchedule.setAmountOfThePercent(monthPayForPercent);
-            paymentSchedule.setRemains(remains);
-            paymentSchedule.setCreditOffer(creditOffer);
-
-            paymentScheduleRepository.save(paymentSchedule);
         }
 
         creditOffer.setPercentSum(percentSum);

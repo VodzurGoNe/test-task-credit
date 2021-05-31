@@ -24,49 +24,38 @@ public class BankController {
 
     @GetMapping("/bank_list")
     public String viewHomePage(Model model) {
-
         return findPaginated(1, "title", "asc", model);
     }
 
     @GetMapping("/show_new_bank_form")
     public String showNewBankForm(Model model) {
-
         model.addAttribute("bank", new Bank());
         return "new_bank";
     }
 
     @PostMapping("/save_bank")
-    public String saveBank(@ModelAttribute("bank") @Valid Bank bank
-            , BindingResult bindingResult) {
-
+    public String saveBank(@ModelAttribute("bank") @Valid Bank bank, BindingResult bindingResult) {
             if (bindingResult.hasErrors()) {
-                return bank.getId() == null ? "new_bank"
-                        : "update_bank";
+                return bank.getId() == null ? "new_bank" : "update_bank";
             }
-
         bankService.saveBank(bank);
         return "redirect:/bank_list";
     }
 
     @GetMapping("/show_bank/{bankId}")
-    public String showBank(@PathVariable("bankId") UUID bankId
-            , Model model) {
-
+    public String showBank(@PathVariable("bankId") UUID bankId, Model model) {
         model.addAttribute("bank", bankService.getBank(bankId));
         return "show_bank";
     }
 
     @GetMapping("/show_form_for_update/{bankId}")
-    public String showFormForUpdate(@PathVariable("bankId") UUID bankId
-            , Model model) {
-
+    public String showFormForUpdate(@PathVariable("bankId") UUID bankId, Model model) {
         model.addAttribute("bank", bankService.getBank(bankId));
         return "update_bank";
     }
 
     @GetMapping("/delete_bank/{bankId}")
     public String deleteBank(@PathVariable("bankId") UUID bankId) {
-
         bankService.deleteBank(bankId);
         return "redirect:/bank_list";
     }
@@ -80,15 +69,12 @@ public class BankController {
 
         Page<Bank> page = bankService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Bank> listBanks = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("listBanks", listBanks);
         return "/index";
     }

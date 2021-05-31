@@ -23,11 +23,8 @@ public class PaymentScheduleController {
     }
 
     @GetMapping("/payment_schedules_list/{creditOfferId}")
-    public String viewHomePage(@PathVariable("creditOfferId") UUID creditOfferId
-            , Model model) {
-
-        model.addAttribute("listPaymentSchedules"
-                , paymentScheduleService.findByCreditOfferId(creditOfferId));
+    public String viewHomePage(@PathVariable("creditOfferId") UUID creditOfferId, Model model) {
+        model.addAttribute("listPaymentSchedules", paymentScheduleService.findByCreditOfferId(creditOfferId));
         return "/payment_schedules/index";
     }
 
@@ -50,34 +47,28 @@ public class PaymentScheduleController {
  */
 
     @PostMapping("/save_payment_schedule")
-    public String savePaymentSchedule(@ModelAttribute("paymentSchedule") @Valid PaymentSchedule paymentSchedule
-            , BindingResult bindingResult) {
-
-            if (bindingResult.hasErrors())
+    public String savePaymentSchedule(@ModelAttribute("paymentSchedule") @Valid PaymentSchedule paymentSchedule,
+                                      BindingResult bindingResult) {
+            if (bindingResult.hasErrors()) {
                 return "/payment_schedules/update_payment_schedule";
-
+            }
         String creditOfferId = paymentSchedule.getCreditOffer().getId().toString();
         paymentScheduleService.savePaymentSchedule(paymentSchedule);
         return "redirect:/payment_schedules/payment_schedules_list/" + creditOfferId;
     }
 
-
     @GetMapping("/show_form_for_update/{paymentScheduleId}")
-    public String showFormForUpdate(@PathVariable("paymentScheduleId") UUID paymentScheduleId
-            , Model model) {
-
+    public String showFormForUpdate(@PathVariable("paymentScheduleId") UUID paymentScheduleId,
+                                    Model model) {
         PaymentSchedule paymentSchedule = paymentScheduleService.getPaymentSchedule(paymentScheduleId);
-
         model.addAttribute("paymentSchedule", paymentSchedule);
         return "payment_schedules/update_payment_schedule";
     }
 
     @GetMapping("/delete_payment_schedule/{paymentScheduleId}")
     public String deletePaymentSchedule(@PathVariable("paymentScheduleId") UUID paymentScheduleId) {
-
         String creditOfferId = paymentScheduleService.getPaymentSchedule(paymentScheduleId)
                 .getCreditOffer().getId().toString();
-
         paymentScheduleService.deletePaymentSchedule(paymentScheduleId);
         return "redirect:/payment_schedules/payment_schedules_list/" + creditOfferId;
     }

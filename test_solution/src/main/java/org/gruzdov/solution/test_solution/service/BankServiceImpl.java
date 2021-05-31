@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,12 +33,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Bank getBank(UUID id) {
-        Bank bank = null;
-        Optional<Bank> optional = bankRepository.findById(id);
-        if (optional.isPresent())
-            bank = optional.get();
-
-        return bank;
+        return bankRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -54,9 +48,9 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Page<Bank> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return bankRepository.findAll(pageable);
     }

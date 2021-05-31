@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,12 +33,7 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     public Credit getCredit(UUID id) {
-        Credit credit = null;
-        Optional<Credit> optional = creditRepository.findById(id);
-        if (optional.isPresent())
-            credit = optional.get();
-
-        return credit;
+        return creditRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -58,12 +52,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Page<Credit> findPaginated(int pageNo, int pageSize
-            , String sortField, String sortDirection) {
+    public Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
 
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return creditRepository.findAll(pageable);
     }
@@ -71,10 +64,9 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public Page<Credit> findPaginated(UUID bankId, int pageNo, int pageSize
             , String sortField, String sortDirection) {
-
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return creditRepository.findPaginatedByBankId(bankId, pageable);
     }

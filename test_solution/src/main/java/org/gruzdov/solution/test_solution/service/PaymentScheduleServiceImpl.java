@@ -34,12 +34,7 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
 
     @Override
     public PaymentSchedule getPaymentSchedule(UUID id) {
-        PaymentSchedule paymentSchedule = null;
-        Optional<PaymentSchedule> optional = paymentScheduleRepository.findById(id);
-        if (optional.isPresent())
-            paymentSchedule = optional.get();
-
-        return paymentSchedule;
+        return paymentScheduleRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -53,14 +48,13 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     }
 
     @Override
-    public Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection
-            , UUID id // creditOfferId
-    ) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
+    public Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection,
+                                               UUID creditOfferId) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        //return findAllByCreditOfferId(id);
+//        return findAllByCreditOfferId(creditOfferId);
         return paymentScheduleRepository.findAll(pageable);
     }
 }

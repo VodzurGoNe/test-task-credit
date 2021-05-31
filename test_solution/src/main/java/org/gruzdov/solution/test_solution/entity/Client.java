@@ -32,7 +32,7 @@ public class Client {
     @Pattern(regexp = "\\d{3}-\\d{3}-\\d{2}-\\d{2}"
             , message = "please use pattern XXX-XXX-XX-XX")
 
-    @Column(name = "CLIENT_PHONENUMBER")
+    @Column(name = "CLIENT_PHONE_NUMBER")
     private String phoneNumber;
 
     @CheckEmail(value = "random.com"
@@ -45,7 +45,7 @@ public class Client {
     @Pattern(regexp = "\\d{2}-\\d{2}-\\d{6}"
             , message = "please use pattern XX-XX-XXXXXX")
 
-    @Column(name = "CLIENT_PASSPORTNUMBER")
+    @Column(name = "CLIENT_PASSPORT_NUMBER")
     private String passportNumber;
 
     @ToString.Exclude

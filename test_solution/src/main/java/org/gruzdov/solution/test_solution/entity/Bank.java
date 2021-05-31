@@ -7,7 +7,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,20 +36,5 @@ public class Bank {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
     private List<Client> clients;
 
-    public void addCreditToBank(Credit credit) {
-        if (credits == null)
-            credits = new ArrayList<>();
-
-        credit.setBank(this);
-        credits.add(credit);
-    }
-
-    public void addClientToBank(Client client) {
-        if (credits == null)
-            credits = new ArrayList<>();
-
-        client.setBank(this);
-        clients.add(client);
-    }
 }
 
