@@ -23,7 +23,7 @@ public class Client {
 
     @NotBlank(message = "FIO is required field")
     @Pattern(regexp = "^([\\w]+) (\\w{1})* (\\w{1})*$",
-            message = "please use pattern \"Last name First name Patronymic\"")
+            message = "please use pattern \"Last Name First Name Middle Name\"")
     @Column(name = "CLIENT_FIO")
     private String fio;
 
@@ -51,6 +51,9 @@ public class Client {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<CreditOffer> creditOffers;
 
+    @Override public String toString() {
+        return "Last Name, First Name, Middle Name : \n" + getFio();
+    }
 }
 
 

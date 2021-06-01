@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-
 @Controller
 @RequestMapping("/clients")
 public class ClientController {
@@ -60,20 +59,22 @@ public class ClientController {
 
     @GetMapping("/delete_client/{clientId}")
     public String deleteClient(@PathVariable("clientId") UUID clientId) {
-        String bankId = clientService.getClient(clientId)
-                .getBank().getId().toString();
+        String bankId = clientService.getClient(clientId).getBank().getId().toString();
         clientService.deleteClient(clientId);
         return "redirect:/clients/clients_list/" + bankId;
     }
 
-    @GetMapping("/clients_list/{bankId}/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "bankId") UUID bankId,
+    @GetMapping("/clients_list/page/{pageNo}/{bankId}")
+//    @GetMapping("/clients_list/{bankId}/page/{pageNo}")
+//    @GetMapping("/clients/clients_list/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "bankId") UUID bankId1,
                                 @PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
+        //UUID bankId1 = bankId;
         int pageSize = 5;
-        Page<Client> page = clientService.findPaginated(bankId, pageNo, pageSize, sortField, sortDir);
+        Page<Client> page = clientService.findPaginated(bankId1, pageNo, pageSize, sortField, sortDir);
         List<Client> listClients = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());

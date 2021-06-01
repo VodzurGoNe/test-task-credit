@@ -50,6 +50,9 @@ public class Credit {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
     private List<CreditOffer> creditOffers;
 
+    @Override public String toString() {
+        return "Title: " + getTitle() + "\nLimit: " + getLimit() + "\nInterest rate (%): " + getPercent();
+    }
 }
 
 

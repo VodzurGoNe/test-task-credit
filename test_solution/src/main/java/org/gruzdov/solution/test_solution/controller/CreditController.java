@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-
 @Controller
 @RequestMapping("/credits")
 public class CreditController {
@@ -62,8 +61,7 @@ public class CreditController {
 
     @GetMapping("/delete_credit/{creditId}")
     public String deleteCredit(@PathVariable("creditId") UUID creditId) {
-        String bankId = creditService.getCredit(creditId)
-                .getBank().getId().toString();
+        String bankId = creditService.getCredit(creditId).getBank().getId().toString();
         creditService.deleteCredit(creditId);
         return "redirect:/credits/credits_list/" + bankId;
     }

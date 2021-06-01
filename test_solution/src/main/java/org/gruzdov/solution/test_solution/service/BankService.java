@@ -1,6 +1,5 @@
 package org.gruzdov.solution.test_solution.service;
 
-
 import org.gruzdov.solution.test_solution.entity.Bank;
 import org.springframework.data.domain.Page;
 

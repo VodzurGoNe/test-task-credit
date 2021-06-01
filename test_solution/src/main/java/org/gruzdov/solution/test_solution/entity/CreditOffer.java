@@ -72,4 +72,5 @@ public class CreditOffer {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "creditOffer")
     private List<PaymentSchedule> paymentSchedules;
+
 }
