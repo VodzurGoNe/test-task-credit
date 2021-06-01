@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Credit Management System</title>
-
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
@@ -12,37 +11,19 @@
     <h1>Credit Management System</h1>
     <hr>
     <h2>Update Credit</h2>
-
-    <form action="#" th:action="@{/credits/save_credit}" th:object="${credit}"
-          method="POST">
-
+    <form action="#" th:action="@{/credits/save_credit}" th:object="${credit}" method="POST">
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
-
         <input type="hidden" th:field="*{bank}" />
-
-        <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
-
         <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
-
-
-        <input type="text" th:field="*{limit}" class="form-control mb-4 col-4">
-
+        <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">limit error</div>
-
-
-
-        <input type="text" th:field="*{percent}" class="form-control mb-4 col-4">
-
+        <input type="text" th:field="*{limit}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('percent')}" th:errors="*{percent}">percent error</div>
-
-
-
+        <input type="text" th:field="*{percent}" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2"> Update Credit</button>
     </form>
-
     <hr>
-
     <a th:href = "@{/credits/credits_list/{id}(id=${credit.bank.id})}"> Back to Credit List</a>
 </div>
 </body>

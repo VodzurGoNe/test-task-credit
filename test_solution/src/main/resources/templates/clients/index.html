@@ -3,19 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Client Management System</title>
-
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-
 </head>
 <body>
-
 <div class="container my-2">
     <h1>Client List</h1>
-
-
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
@@ -51,7 +46,6 @@
         </tr>
         </tbody>
     </table>
-
     <div th:if = "${totalPages > 1}">
         <div class = "row col-sm-10">
             <div class = "col-sm-2">
@@ -67,7 +61,6 @@
                 <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
                 <span th:unless="${currentPage < totalPages}">Next</span>
             </div>
-
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
                 <span th:unless="${currentPage < totalPages}">Last</span>
