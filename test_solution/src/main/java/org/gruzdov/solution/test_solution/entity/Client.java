@@ -22,35 +22,28 @@ public class Client {
     private UUID id;
 
     @NotBlank(message = "FIO is required field")
-    @Pattern(regexp = "^([\\w]+) (\\w{1})* (\\w{1})*$"
-            , message = "please use pattern \"Last name First name Patronymic\"")
-
+    @Pattern(regexp = "^([\\w]+) (\\w{1})* (\\w{1})*$",
+            message = "please use pattern \"Last name First name Patronymic\"")
     @Column(name = "CLIENT_FIO")
     private String fio;
 
     @NotBlank(message = "Phone Number is required field")
-    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{2}-\\d{2}"
-            , message = "please use pattern XXX-XXX-XX-XX")
-
+    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{2}-\\d{2}", message = "please use pattern XXX-XXX-XX-XX")
     @Column(name = "CLIENT_PHONE_NUMBER")
     private String phoneNumber;
 
-    @CheckEmail(value = "random.com"
-            , message = "email must ends with \"random.com\"")
-
+    @CheckEmail(value = "random.com", message = "email must ends with \"random.com\"")
     @Column(name = "CLIENT_EMAIL")
     private String email;
 
     @NotBlank(message = "Passport Number is required field")
-    @Pattern(regexp = "\\d{2}-\\d{2}-\\d{6}"
-            , message = "please use pattern XX-XX-XXXXXX")
-
+    @Pattern(regexp = "\\d{2}-\\d{2}-\\d{6}", message = "please use pattern XX-XX-XXXXXX")
     @Column(name = "CLIENT_PASSPORT_NUMBER")
     private String passportNumber;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
-            , CascadeType.DETACH, CascadeType.MERGE })
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 

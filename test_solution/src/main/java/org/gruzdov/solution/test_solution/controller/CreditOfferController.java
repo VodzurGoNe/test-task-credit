@@ -22,10 +22,9 @@ public class CreditOfferController {
     private final CalculationPaymentService calculationPaymentService;
 
     @Autowired
-    public CreditOfferController(ClientService clientService
-            , BankService bankService
-            , CreditOfferService creditOfferService
-            , CalculationPaymentService calculationPaymentService) {
+    public CreditOfferController(ClientService clientService, BankService bankService,
+                                 CreditOfferService creditOfferService,
+                                 CalculationPaymentService calculationPaymentService) {
         this.clientService = clientService;
         this.bankService = bankService;
         this.creditOfferService = creditOfferService;

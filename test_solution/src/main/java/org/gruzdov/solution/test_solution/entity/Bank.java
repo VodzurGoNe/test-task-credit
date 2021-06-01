@@ -24,7 +24,6 @@ public class Bank {
 
     @NotBlank(message = "Bank Title is required field")
     @Size(min = 2, message = "Title must be min 2 symbols")
-
     @Column(name = "BANK_TITLE")
     private String title;
 

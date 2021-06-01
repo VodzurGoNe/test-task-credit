@@ -27,25 +27,22 @@ public class Credit {
 
     @NotBlank(message = "title is required field")
     @Size(min = 2, message = "title must be min 2 symbols")
-
     @Column(name = "CREDIT_TITLE")
     private String title;
 
     @Min(value = 1, message = "must be greater than 1")
     @Max(value = 200030001, message = "must be less than 200030001")
-
     @Column(name = "CREDIT_LIMIT")
     private BigDecimal limit;
 
     @Min(value = 5, message = "must be greater than 5")
     @Max(value = 360, message = "must be less than 360")
-
     @Column(name = "CREDIT_PERCENT")
     private BigDecimal percent;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH
-            , CascadeType.DETACH, CascadeType.MERGE })
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE })
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
