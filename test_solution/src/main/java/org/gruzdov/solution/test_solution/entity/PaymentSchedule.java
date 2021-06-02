@@ -37,8 +37,7 @@ public class PaymentSchedule {
     private BigDecimal remains;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREDIT_OFFER_ID")
     private CreditOffer creditOffer;
 

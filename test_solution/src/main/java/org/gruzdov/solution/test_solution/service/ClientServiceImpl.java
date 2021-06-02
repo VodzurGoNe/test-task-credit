@@ -3,10 +3,7 @@ package org.gruzdov.solution.test_solution.service;
 import org.gruzdov.solution.test_solution.dao.ClientRepository;
 import org.gruzdov.solution.test_solution.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +23,7 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
+    @Nullable
     @Override
     public Client getClient(UUID id) {
         return clientRepository.findById(id).orElse(null);

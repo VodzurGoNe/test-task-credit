@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
     private final PaymentScheduleRepository paymentScheduleRepository;
     private final CreditOfferService creditOfferService;
@@ -28,6 +27,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         this.entityManager = entityManager;
     }
 
+    @Transactional
     @Override
     public void calculationPaymentSchedule(CreditOffer creditOffer) {
         if (creditOffer.getId() != null) {
@@ -36,7 +36,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         }
 
         BigDecimal creditOfferAmount = creditOffer.getAmount();
-        BigDecimal firstPay = creditOffer.getFirstPay();
+        BigDecimal firstPay = creditOffer.getFirstPay() != null ? creditOffer.getFirstPay() : BigDecimal.ZERO;
         BigDecimal percent = creditOffer.getCredit().getPercent();
         Integer periodInMonths = creditOffer.getPeriodInMonths();
         BigDecimal remains = creditOfferAmount.subtract(firstPay);

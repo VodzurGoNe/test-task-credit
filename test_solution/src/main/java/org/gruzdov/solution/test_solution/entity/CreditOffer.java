@@ -52,20 +52,17 @@ public class CreditOffer {
     private BigDecimal percentSum;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREDIT_ID")
     private Credit credit;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
