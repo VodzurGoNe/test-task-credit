@@ -15,18 +15,9 @@
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
-            <th>
-                <a th:href="@{'page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                    Credit Title</a>
-            </th>
-            <th>
-                <a th:href="@{'page/' + ${currentPage} + '?sortField=limit&sortDir=' + ${reverseSortDir}}">
-                    Credit Limit</a>
-            </th>
-            <th>
-                <a th:href="@{'page/' + ${currentPage} + '?sortField=percent&sortDir=' + ${reverseSortDir}}">
-                    Credit Percent</a>
-            </th>
+            <th>Title</th>
+            <th>Limit</th>
+            <th>Percent</th>
             <th> Actions </th>
         </tr>
         </thead>
@@ -42,27 +33,6 @@
         </tbody>
     </table>
     <a th:if="${!listCredits.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listCredits.get(0).bank.id})}" class="btn btn-success btn-sm mb-3"> Show Bank </a>
-    <div th:if = "${totalPages > 1}">
-        <div class = "row col-sm-10">
-            <div class = "col-sm-2">
-                Total Rows: [[${totalItems}]]
-            </div>
-            <div class = "col-sm-1">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{${listCredits.get(0).bank.id}+ '/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-					</span>
-            </div>
-            <div class = "col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
-            </div>
-        </div>
-    </div>
 </div>
 </body>
 </html>

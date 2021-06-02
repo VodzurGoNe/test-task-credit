@@ -38,8 +38,8 @@ public class CreditOfferController {
 
     @GetMapping("/show_new_credit_offer_form/{clientId}")
     public String showNewCreditOfferForm(@PathVariable("clientId") UUID clientId, Model model) {
-        Client client = clientService.getClient(clientId);
         CreditOffer creditOffer = new CreditOffer();
+        Client client = clientService.getClient(clientId);
         creditOffer.setClient(client);
         creditOffer.setBank(bankService.getBank(client.getBank().getId()));
         model.addAttribute("creditOffer", creditOffer);

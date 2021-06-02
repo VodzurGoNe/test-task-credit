@@ -15,34 +15,13 @@
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=named&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Named</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=amount&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Amount</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=periodInMonths&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Period In Month</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=percentSum&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Percent Sum</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=bank&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Bank</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=credit&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Credit</a>
-            </th>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=client&sortDir=' + ${reverseSortDir}}">
-                    Credit Offer Client</a>
-            </th>
+            <th>Named</th>
+            <th>Amount</th>
+            <th>Period In Month</th>
+            <th>Percent Sum</th>
+            <th>Bank</th>
+            <th>Credit</th>
+            <th>Client</th>
             <th> Actions </th>
         </tr>
         </thead>
@@ -62,27 +41,6 @@
         </tr>
         </tbody>
     </table>
-    <div th:if = "${totalPages > 1}">
-        <div class = "row col-sm-10">
-            <div class = "col-sm-2">
-                Total Rows: [[${totalItems}]]
-            </div>
-            <div class = "col-sm-1">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-					</span>
-            </div>
-            <div class = "col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
-            </div>
-        </div>
-    </div>
 </div>
 </body>
 </html>

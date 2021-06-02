@@ -3,10 +3,6 @@ package org.gruzdov.solution.test_solution.service;
 import org.gruzdov.solution.test_solution.dao.PaymentScheduleRepository;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +15,6 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     @Autowired
     public PaymentScheduleServiceImpl(PaymentScheduleRepository paymentScheduleRepository) {
         this.paymentScheduleRepository = paymentScheduleRepository;
-    }
-
-    @Override
-    public List<PaymentSchedule> getAllPaymentSchedules() {
-        return paymentScheduleRepository.findAll();
     }
 
     @Override
@@ -46,14 +37,4 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         return paymentScheduleRepository.findByCreditOfferId(creditOfferId);
     }
 
-    @Override
-    public Page<PaymentSchedule> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection,
-                                               UUID creditOfferId) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending()
-                : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-//        return findAllByCreditOfferId(creditOfferId);
-        return paymentScheduleRepository.findAll(pageable);
-    }
 }

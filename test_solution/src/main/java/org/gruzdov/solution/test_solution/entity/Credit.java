@@ -25,18 +25,18 @@ public class Credit {
     @Column(name = "CREDIT_ID")
     private UUID id;
 
-    @NotBlank(message = "title is required field")
-    @Size(min = 2, message = "title must be min 2 symbols")
+    @NotBlank(message = "Title is required field")
+    @Size(min = 2, message = "Title must be min 2 symbols")
     @Column(name = "CREDIT_TITLE")
     private String title;
 
-    @Min(value = 1, message = "must be greater than 1")
-    @Max(value = 200030001, message = "must be less than 200030001")
+    @Min(value = 1, message = "Must be greater than 1")
+    @Max(value = 200030001, message = "Must be less than 200030001")
     @Column(name = "CREDIT_LIMIT")
     private BigDecimal limit;
 
-    @Min(value = 5, message = "must be greater than 5")
-    @Max(value = 360, message = "must be less than 360")
+    @Min(value = 5, message = "Must be greater than 5")
+    @Max(value = 360, message = "Must be less than 360")
     @Column(name = "CREDIT_PERCENT")
     private BigDecimal percent;
 

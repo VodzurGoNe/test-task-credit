@@ -27,24 +27,6 @@ public class PaymentScheduleController {
         return "/payment_schedules/index";
     }
 
-/*
-    @GetMapping("/show_new_payment_schedule_form/{clientId}")
-    public String showNewPaymentScheduleForm(@PathVariable("clientId") UUID clientId
-            , Model model) {
-
-        Client client = clientService.getClient(clientId);
-
-       // PaymentSchedule paySchedule = new PaymentSchedule();
-//        CreditOffer creditOffer = new CreditOffer();
-//        creditOffer.setClient(client);
-//        creditOffer.setBank(bankService.getBank(client.getBank().getId()));
-//        model.addAttribute("creditOffer", creditOffer);
-
-        return "credit_offers/new_credit_offer";
-    }
-
- */
-
     @PostMapping("/save_payment_schedule")
     public String savePaymentSchedule(@ModelAttribute("paymentSchedule") @Valid PaymentSchedule paymentSchedule,
                                       BindingResult bindingResult) {

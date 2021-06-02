@@ -22,11 +22,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
-    }
-
-    @Override
     public void saveClient(Client client) {
         clientRepository.save(client);
     }
@@ -42,33 +37,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAllByFio(String fio) {
-        return clientRepository.findAllByFio(fio);
-    }
-
-    @Override
     public List<Client> findByBankId(UUID bankId) {
         return clientRepository.findByBankId(bankId);
-    }
-
-    @Override
-    public Page<Client> findPaginated(int pageNo, int pageSize
-            , String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending()
-                : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.clientRepository.findAll(pageable);
-    }
-
-    @Override
-    public Page<Client> findPaginated(UUID bankId, int pageNo, int pageSize
-            , String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending()
-                : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return clientRepository.findPaginatedByBankId(bankId, pageable);
     }
 
 }

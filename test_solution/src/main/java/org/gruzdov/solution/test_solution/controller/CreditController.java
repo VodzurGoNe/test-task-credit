@@ -4,14 +4,12 @@ import org.gruzdov.solution.test_solution.entity.Credit;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.gruzdov.solution.test_solution.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -28,10 +26,8 @@ public class CreditController {
 
     @GetMapping("/credits_list/{bankId}")
     public String viewHomePage(@PathVariable("bankId") UUID bankId, Model model) {
-            //, @RequestParam(defaultValue = "0")) {
-        return findPaginated(bankId,1, "title", "asc", model);
-//        model.addAttribute("listCredits", creditService.findByBankId(bankId));
-//        return "/credits/index";
+        model.addAttribute("listCredits", creditService.findByBankId(bankId));
+        return "/credits/index";
     }
 
     @GetMapping("/show_new_credit_form/{bankId}")
@@ -66,22 +62,4 @@ public class CreditController {
         return "redirect:/credits/credits_list/" + bankId;
     }
 
-    @GetMapping("/credits_list/{bankId}/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "bankId") UUID bankId,
-                                @PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-        Page<Credit> page = creditService.findPaginated(bankId, pageNo, pageSize, sortField, sortDir);
-        List<Credit> listCredits = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("listCredits", listCredits);
-        return "credits/index";
-    }
 }

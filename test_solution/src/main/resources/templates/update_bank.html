@@ -15,7 +15,7 @@
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
         <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
-        <input type="text" th:field="*{title}" placeholder="Bank Title" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{title}" placeholder="Title" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2"> Update Bank</button>
     </form>
     <hr>

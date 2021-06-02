@@ -8,5 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface BankRepository extends JpaRepository<Bank, UUID> {
-    Bank findByTitle(String title);
 }

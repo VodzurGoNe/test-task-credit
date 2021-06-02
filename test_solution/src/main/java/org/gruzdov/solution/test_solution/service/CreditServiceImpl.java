@@ -3,10 +3,6 @@ package org.gruzdov.solution.test_solution.service;
 import org.gruzdov.solution.test_solution.dao.CreditRepository;
 import org.gruzdov.solution.test_solution.entity.Credit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +15,6 @@ public class CreditServiceImpl implements CreditService {
     @Autowired
     public CreditServiceImpl(CreditRepository creditRepository) {
         this.creditRepository = creditRepository;
-    }
-
-    @Override
-    public List<Credit> getAllCredits() {
-        return creditRepository.findAll();
     }
 
     @Override
@@ -42,33 +33,8 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Credit findByTitle(String title) {
-        return creditRepository.findByTitle(title);
-    }
-
-    @Override
     public List<Credit> findByBankId(UUID bankId) {
         return creditRepository.findByBankId(bankId);
-    }
-
-    @Override
-    public Page<Credit> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending()
-                : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return creditRepository.findAll(pageable);
-    }
-
-    @Override
-    public Page<Credit> findPaginated(UUID bankId, int pageNo, int pageSize
-            , String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortField).ascending()
-                : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return creditRepository.findPaginatedByBankId(bankId, pageable);
     }
 
 }

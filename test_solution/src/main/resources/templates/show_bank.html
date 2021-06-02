@@ -13,7 +13,9 @@
     <h1>Bank Management System</h1>
     <hr>
     <h2>Show Bank</h2>
-    <a th:text="${bank.title}"> VALUE</a>
+    <br>
+    <br>
+    <h1 th:text="${bank.title}">Bank Title</h1>
     <a th:href = "@{/credits/show_new_credit_form/{id}(id=${bank.getId()})}" class="btn btn-success btn-sm mb-3"> Create Credit</a>
     <a th:href = "@{/clients/show_new_client_form/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Add Client</a>
     <hr>
