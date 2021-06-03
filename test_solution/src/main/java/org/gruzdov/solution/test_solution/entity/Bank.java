@@ -36,7 +36,7 @@ public class Bank {
     private List<Client> clients;
 
     @Override public String toString() {
-        return "Bank Title: " + getTitle();
+        return "Bank Title: " + title;
     }
 }
 

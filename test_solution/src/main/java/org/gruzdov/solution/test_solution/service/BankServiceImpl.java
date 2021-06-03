@@ -19,11 +19,6 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public List<Bank> getAllBanks() {
-        return bankRepository.findAll();
-    }
-
-    @Override
     public void saveBank(Bank bank) {
         bankRepository.save(bank);
     }
@@ -37,6 +32,11 @@ public class BankServiceImpl implements BankService {
     @Override
     public void deleteBank(UUID id) {
         bankRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Bank> getAllBanks() {
+        return bankRepository.findAll();
     }
 
 }

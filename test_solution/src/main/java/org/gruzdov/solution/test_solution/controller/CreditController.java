@@ -43,9 +43,9 @@ public class CreditController {
         if (bindingResult.hasErrors()) {
             return credit.getId() == null ? "/credits/new_credit" : "/credits/update_credit";
         }
-        String bankId = credit.getBank().getId().toString();
+        UUID bankId = credit.getBank().getId();
         creditService.saveCredit(credit);
-        return "redirect:/credits/credits_list/" + bankId;
+        return String.format("redirect:/credits/credits_list/%s", bankId);
     }
 
 
@@ -57,9 +57,9 @@ public class CreditController {
 
     @GetMapping("/delete_credit/{creditId}")
     public String deleteCredit(@PathVariable("creditId") UUID creditId) {
-        String bankId = creditService.getCredit(creditId).getBank().getId().toString();
+        UUID bankId = creditService.getCredit(creditId).getBank().getId();
         creditService.deleteCredit(creditId);
-        return "redirect:/credits/credits_list/" + bankId;
+        return String.format("redirect:/credits/credits_list/%s", bankId);
     }
 
 }

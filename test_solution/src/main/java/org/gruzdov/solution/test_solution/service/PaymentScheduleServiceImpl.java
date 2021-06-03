@@ -23,6 +23,11 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
         paymentScheduleRepository.save(paymentSchedule);
     }
 
+    @Override
+    public void saveAllPaymentSchedules(List<PaymentSchedule> paymentScheduleList) {
+        paymentScheduleRepository.saveAll(paymentScheduleList);
+    }
+
     @Nullable
     @Override
     public PaymentSchedule getPaymentSchedule(UUID id) {
@@ -32,6 +37,11 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     @Override
     public void deletePaymentSchedule(UUID id) {
         paymentScheduleRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllByCreditOfferId(UUID creditOfferId) {
+        paymentScheduleRepository.deleteAllByCreditOfferId(creditOfferId);
     }
 
     @Override

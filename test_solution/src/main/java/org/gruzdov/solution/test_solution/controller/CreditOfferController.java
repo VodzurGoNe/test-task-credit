@@ -38,11 +38,9 @@ public class CreditOfferController {
 
     @GetMapping("/show_new_credit_offer_form/{clientId}")
     public String showNewCreditOfferForm(@PathVariable("clientId") UUID clientId, Model model) {
-        CreditOffer creditOffer = new CreditOffer();
         Client client = clientService.getClient(clientId);
-        creditOffer.setClient(client);
-        creditOffer.setBank(bankService.getBank(client.getBank().getId()));
-        model.addAttribute("creditOffer", creditOffer);
+        model.addAttribute("creditOffer", CreditOffer.builder().client(client)
+                .bank(bankService.getBank(client.getBank().getId())).build());
         return "credit_offers/new_credit_offer";
     }
 
@@ -55,8 +53,8 @@ public class CreditOfferController {
                     : "/credit_offers/update_credit_offer";
         }
         calculationPaymentService.calculationPaymentSchedule(creditOffer);
-        String clientId = creditOffer.getClient().getId().toString();
-        return "redirect:/credit_offers/credit_offers_list/" + clientId;
+        UUID clientId = creditOffer.getClient().getId();
+        return String.format("redirect:/credit_offers/credit_offers_list/%s", clientId);
     }
 
     @GetMapping("/show_form_for_update/{creditOfferId}")
@@ -67,10 +65,9 @@ public class CreditOfferController {
 
     @GetMapping("/delete_credit_offer/{creditOfferId}")
     public String deleteCreditOffer(@PathVariable("creditOfferId") UUID creditOfferId) {
-        String clientId = creditOfferService.getCreditOffer(creditOfferId)
-                .getClient().getId().toString();
+        UUID clientId = creditOfferService.getCreditOffer(creditOfferId).getClient().getId();
         creditOfferService.deleteCreditOffer(creditOfferId);
-        return "redirect:/credit_offers/credit_offers_list/" + clientId;
+        return String.format("redirect:/credit_offers/credit_offers_list/%s", clientId);
     }
 
 }

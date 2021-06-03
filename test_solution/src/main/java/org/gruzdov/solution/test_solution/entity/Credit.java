@@ -51,7 +51,7 @@ public class Credit {
     private List<CreditOffer> creditOffers;
 
     @Override public String toString() {
-        return "Title: " + getTitle() + "\nLimit: " + getLimit() + "\nInterest rate (%): " + getPercent();
+        return "Title: " + title + "\nLimit: " + limit + "\nInterest rate (%): " + percent;
     }
 }
 

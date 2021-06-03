@@ -1,6 +1,5 @@
 package org.gruzdov.solution.test_solution.service;
 
-import org.gruzdov.solution.test_solution.dao.PaymentScheduleRepository;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.springframework.stereotype.Service;
@@ -15,15 +14,15 @@ import java.util.List;
 
 @Service
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
-    private final PaymentScheduleRepository paymentScheduleRepository;
     private final CreditOfferService creditOfferService;
+    private final PaymentScheduleService paymentScheduleService;
     private final EntityManager entityManager;
 
-    public CalculationPaymentServiceImpl(PaymentScheduleRepository paymentScheduleRepository,
-                                         CreditOfferService creditOfferService,
+    public CalculationPaymentServiceImpl(CreditOfferService creditOfferService,
+                                         PaymentScheduleService paymentScheduleService,
                                          EntityManager entityManager) {
-        this.paymentScheduleRepository = paymentScheduleRepository;
         this.creditOfferService = creditOfferService;
+        this.paymentScheduleService = paymentScheduleService;
         this.entityManager = entityManager;
     }
 
@@ -32,7 +31,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
     public void calculationPaymentSchedule(CreditOffer creditOffer) {
         if (creditOffer.getId() != null) {
             creditOffer = entityManager.merge(creditOffer);
-            paymentScheduleRepository.deleteAllByCreditOfferId(creditOffer.getId());
+            paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
         }
 
         BigDecimal creditOfferAmount = creditOffer.getAmount();
@@ -63,7 +62,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         }
         creditOffer.setPercentSum(percentSum);
         creditOfferService.saveCreditOffer(creditOffer);
-        paymentScheduleRepository.saveAll(paymentScheduleList);
+        paymentScheduleService.saveAllPaymentSchedules(paymentScheduleList);
     }
 
 }

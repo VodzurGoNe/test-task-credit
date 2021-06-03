@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BankService {
-    List<Bank> getAllBanks();
     void saveBank(Bank bank);
     Bank getBank(UUID id);
     void deleteBank(UUID id);
-
+    List<Bank> getAllBanks();
 }

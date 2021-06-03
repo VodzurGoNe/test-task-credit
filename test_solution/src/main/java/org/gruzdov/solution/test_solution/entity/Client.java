@@ -52,7 +52,7 @@ public class Client {
     private List<CreditOffer> creditOffers;
 
     @Override public String toString() {
-        return "Last Name, First Name, Middle Name: \n" + getFio();
+        return "Last Name, First Name, Middle Name: \n" + fio;
     }
 }
 
