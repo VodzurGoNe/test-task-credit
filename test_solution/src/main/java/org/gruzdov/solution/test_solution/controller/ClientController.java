@@ -40,12 +40,11 @@ public class ClientController {
 
     @PostMapping("/save_client/")
     public String saveClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
-            if (bindingResult.hasErrors()) {
-                return client.getId() == null ? "/clients/new_client" : "/clients/update_client";
-            }
-        String bankId = client.getBank().getId().toString();
+        if (bindingResult.hasErrors()) {
+            return client.getId() == null ? "/clients/new_client" : "/clients/update_client";
+        }
         clientService.saveClient(client);
-        return "redirect:/clients/clients_list/" + bankId;
+        return String.format("redirect:/clients/clients_list/%s", client.getBank().getId());
     }
 
     @GetMapping("/show_form_for_update/{clientId}")
@@ -56,9 +55,9 @@ public class ClientController {
 
     @GetMapping("/delete_client/{clientId}")
     public String deleteClient(@PathVariable("clientId") UUID clientId) {
-        String bankId = clientService.getClient(clientId).getBank().getId().toString();
+        UUID bankId = clientService.getClient(clientId).getBank().getId();
         clientService.deleteClient(clientId);
-        return "redirect:/clients/clients_list/" + bankId;
+        return String.format("redirect:/clients/clients_list/%s", bankId);
     }
 
 }

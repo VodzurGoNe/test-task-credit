@@ -30,17 +30,16 @@ public class PaymentScheduleController {
     @PostMapping("/save_payment_schedule")
     public String savePaymentSchedule(@ModelAttribute("paymentSchedule") @Valid PaymentSchedule paymentSchedule,
                                       BindingResult bindingResult) {
-            if (bindingResult.hasErrors()) {
-                return "/payment_schedules/update_payment_schedule";
-            }
+        if (bindingResult.hasErrors()) {
+            return "/payment_schedules/update_payment_schedule";
+        }
         String creditOfferId = paymentSchedule.getCreditOffer().getId().toString();
         paymentScheduleService.savePaymentSchedule(paymentSchedule);
         return "redirect:/payment_schedules/payment_schedules_list/" + creditOfferId;
     }
 
     @GetMapping("/show_form_for_update/{paymentScheduleId}")
-    public String showFormForUpdate(@PathVariable("paymentScheduleId") UUID paymentScheduleId,
-                                    Model model) {
+    public String showFormForUpdate(@PathVariable("paymentScheduleId") UUID paymentScheduleId, Model model) {
         PaymentSchedule paymentSchedule = paymentScheduleService.getPaymentSchedule(paymentScheduleId);
         model.addAttribute("paymentSchedule", paymentSchedule);
         return "payment_schedules/update_payment_schedule";

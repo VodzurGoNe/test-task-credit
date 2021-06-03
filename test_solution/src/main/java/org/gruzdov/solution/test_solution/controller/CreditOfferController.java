@@ -49,12 +49,12 @@ public class CreditOfferController {
     @PostMapping("/save_credit_offer")
     public String saveCreditOffer(@ModelAttribute("creditOffer") @Valid CreditOffer creditOffer,
                                   BindingResult bindingResult) {
-            if (bindingResult.hasErrors()) {
-                return creditOffer.getId() == null
-                        ? "/credit_offers/new_credit_offer"
-                        : "/credit_offers/update_credit_offer";
-            }
-            calculationPaymentService.calculationPaymentSchedule(creditOffer);
+        if (bindingResult.hasErrors()) {
+            return creditOffer.getId() == null
+                    ? "/credit_offers/new_credit_offer"
+                    : "/credit_offers/update_credit_offer";
+        }
+        calculationPaymentService.calculationPaymentSchedule(creditOffer);
         String clientId = creditOffer.getClient().getId().toString();
         return "redirect:/credit_offers/credit_offers_list/" + clientId;
     }

@@ -40,9 +40,9 @@ public class CreditController {
 
     @PostMapping("/save_credit")
     public String saveCredit(@ModelAttribute("credit") @Valid Credit credit, BindingResult bindingResult) {
-            if (bindingResult.hasErrors()) {
-                return credit.getId() == null ? "/credits/new_credit" : "/credits/update_credit";
-            }
+        if (bindingResult.hasErrors()) {
+            return credit.getId() == null ? "/credits/new_credit" : "/credits/update_credit";
+        }
         String bankId = credit.getBank().getId().toString();
         creditService.saveCredit(credit);
         return "redirect:/credits/credits_list/" + bankId;

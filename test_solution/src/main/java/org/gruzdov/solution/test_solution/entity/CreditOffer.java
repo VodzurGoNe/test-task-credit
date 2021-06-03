@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -27,18 +24,18 @@ public class CreditOffer {
     @Column(name = "CREDIT_OFFER_ID")
     private UUID id;
 
-    @NotBlank(message = "Credit Offer Named is required field")
+    @NotBlank(message = "Named is required field")
     @Size(min = 2, message = "Named must be min 2 symbols")
     @Column(name = "CREDIT_OFFER_NAMED")
     private String named;
 
-//    @NotBlank(message = "Credit Offer Amount is required field")
+    @NotNull(message = "Amount is required field")
     @Min(value = 1, message = "Must be greater than 1")
     @Max(value = 200030001, message = "Must be less than 200030001")
     @Column(name = "CREDIT_OFFER_AMOUNT")
     private BigDecimal amount;
 
-//    @NotBlank(message = "Credit Offer Period In Months is required field")
+    @NotNull(message = "Period In Months is required field")
     @Min(value = 2, message = "Must be greater than 2")
     @Max(value = 480, message = "Must be less than 480")
     @Column(name = "CREDIT_OFFER_PERIOD_IN_MONTHS")

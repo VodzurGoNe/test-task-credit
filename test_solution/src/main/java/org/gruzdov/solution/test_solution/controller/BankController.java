@@ -34,9 +34,9 @@ public class BankController {
 
     @PostMapping("/save_bank")
     public String saveBank(@ModelAttribute("bank") @Valid Bank bank, BindingResult bindingResult) {
-            if (bindingResult.hasErrors()) {
-                return bank.getId() == null ? "new_bank" : "update_bank";
-            }
+        if (bindingResult.hasErrors()) {
+            return bank.getId() == null ? "new_bank" : "update_bank";
+        }
         bankService.saveBank(bank);
         return "redirect:/bank_list";
     }
