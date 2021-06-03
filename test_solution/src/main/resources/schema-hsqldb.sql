@@ -1,64 +1,55 @@
-CREATE TABLE PUBLIC.PUBLIC.BANK (
+CREATE TABLE BANK (
     BANK_ID uuid not null,
     BANK_TITLE varchar(255),
     PRIMARY KEY (BANK_ID)
 );
 
-CREATE TABLE PUBLIC.PUBLIC.CLIENT (
-    CLIENT_ID uuid not null
-    constraint CLIENT_pkey
-    primary key,
+CREATE TABLE CLIENT (
+    CLIENT_ID uuid not null,
     CLIENT_EMAIL varchar(255),
     CLIENT_FIO varchar(255),
     CLIENT_PASSPORT_NUMBER varchar(205),
     CLIENT_PHONE_NUMBER varchar(205),
+    PRIMARY KEY (CLIENT_ID),
     BANK_ID uuid
-    constraint fkim95abd01ot21q2dn9mpxo7nc
-    references BANK
+    CONSTRAINT FK_CLIENT_BANK_ID REFERENCES BANK(BANK_ID)
 );
 
-create table PUBLIC.PUBLIC.CREDIT (
-    CREDIT_ID uuid not null
-    constraint CREDIT_pkey
-    primary key,
+create table CREDIT (
+    CREDIT_ID uuid not null,
     CREDIT_LIMIT numeric(19, 2),
     CREDIT_PERCENT numeric(19, 2),
     CREDIT_TITLE varchar(255),
+    PRIMARY KEY (CREDIT_ID),
     BANK_ID uuid
-    constraint fk1x1iaf0dsp6s1tjhdihhedgdk
-    references BANK
+    CONSTRAINT FK_CREDIT_BANK_ID REFERENCES BANK(BANK_ID)
 );
 
-create table PUBLIC.PUBLIC.CREDIT_OFFER (
-    CREDIT_OFFER_ID uuid not null
-    constraint CREDIT_OFFER_pkey
-    primary key,
+create table CREDIT_OFFER (
+    CREDIT_OFFER_ID uuid not null,
     CREDIT_OFFER_AMOUNT numeric(19, 2),
     CREDIT_OFFER_FIRST_PAY numeric(19, 2),
     CREDIT_OFFER_NAMED varchar(255),
     CREDIT_OFFER_PERCENT_SUM numeric(19, 2),
     CREDIT_OFFER_PERIOD_IN_MONTHS integer,
+    PRIMARY KEY (CREDIT_OFFER_ID),
     BANK_ID uuid
-    constraint fkkij8lijqb84vmmkcnhssnpeji
-    references BANK,
+    CONSTRAINT FK_CREDIT_OFFER_BANK_ID REFERENCES BANK(BANK_ID),
     CLIENT_ID uuid
-    constraint fk18hoi8h4wktsstqg7c6bot11q
-    references CLIENT,
+    CONSTRAINT FK_CREDIT_OFFER_CLIENT_ID REFERENCES CLIENT(CLIENT_ID),
     CREDIT_ID uuid
-    constraint fk385fjsia5r7avrt8pk7t1hchk
-    references CREDIT
+    CONSTRAINT FK_CREDIT_OFFER_CREDIT_ID REFERENCES CREDIT(CREDIT_ID)
 );
 
-create table PUBLIC.PUBLIC.PAYMENT_SCHEDULE (
-    PAYMENT_SCHEDULE_ID uuid not null
-    constraint PAYMENT_SCHEDULE_pkey
-    primary key,
+create table PAYMENT_SCHEDULE (
+    PAYMENT_SCHEDULE_ID uuid not null,
     PAYMENT_SCHEDULE_AMOUNT_OF_THE_BODY numeric(19, 2),
     PAYMENT_SCHEDULE_AMOUNT_OF_THE_PERCENT numeric(19, 2),
     PAYMENT_SCHEDULE_PAYMENT_AMOUNT numeric(19, 2),
     PAYMENT_SCHEDULE_PAYMENT_DATE date,
     PAYMENT_SCHEDULE_REMAINS numeric(19, 2),
+    PRIMARY KEY (PAYMENT_SCHEDULE_ID),
     CREDIT_OFFER_ID uuid
-    constraint fk67sgkjw07dmkvmy1f6invw33k
-    references CREDIT_OFFER
+    CONSTRAINT FK_CREDIT_OFFER_ID REFERENCES CREDIT_OFFER(CREDIT_OFFER_ID)
 );
+
