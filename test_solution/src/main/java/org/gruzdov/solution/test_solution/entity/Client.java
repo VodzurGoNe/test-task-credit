@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "CLIENT")
 public class Client {
-    private static final long serialVersionUID = -8150857881422153651L;
+    private static final long serialVersionUID = -2150857881422153651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +21,8 @@ public class Client {
     private UUID id;
 
     @NotBlank(message = "FIO is required field")
-    @Pattern(regexp = "^([\\w]+) (\\w{1})* (\\w{1})*$",
-            message = "please use pattern \"Last Name First Name Middle Name\"")
+    @Pattern(regexp = "^[a-zA-ZА-Яа-я '-]{2,}([-][a-zA-ZА-ЯЁ][а-яё]{2,})?\\s[a-zA-ZА-ЯЁ][a-zA-ZАа-яё]{2,}\\s[a-zA-ZА-ЯЁ][a-zA-ZАа-яё]{2,}$",
+            message = "Please use pattern \"Last Name First Name Middle Name\"")
     @Column(name = "CLIENT_FIO")
     private String fio;
 
@@ -42,13 +42,12 @@ public class Client {
     private String passportNumber;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private List<CreditOffer> creditOffers;
 
     @Override public String toString() {

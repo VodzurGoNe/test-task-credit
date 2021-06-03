@@ -32,6 +32,8 @@
                 <a th:href="@{/clients/delete_client/{id}(id=${client.getId()})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
+        <hr>
+        <a th:if="${!listClients.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listClients.get(0).bank.id})}" class="btn btn-info btn-sm mb-3"> Go Back To The Bank Menu</a>
         </tbody>
     </table>
 </div>

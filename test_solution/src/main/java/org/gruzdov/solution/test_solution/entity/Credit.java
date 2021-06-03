@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "CREDIT")
 public class Credit {
-    private static final long serialVersionUID = -8150854881422152651L;
+    private static final long serialVersionUID = -3150854881422152651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,13 +41,12 @@ public class Credit {
     private BigDecimal percent;
 
     @ToString.Exclude
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH, CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "credit")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credit")
     private List<CreditOffer> creditOffers;
 
     @Override public String toString() {

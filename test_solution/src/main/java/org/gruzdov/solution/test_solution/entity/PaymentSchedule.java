@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "PAYMENT_SCHEDULE")
 public class PaymentSchedule {
-    private static final long serialVersionUID = -8150857881422152651L;
+    private static final long serialVersionUID = -5150857881422152651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +37,7 @@ public class PaymentSchedule {
     private BigDecimal remains;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "CREDIT_OFFER_ID")
     private CreditOffer creditOffer;
 

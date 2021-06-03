@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "CREDIT_OFFER")
 public class CreditOffer {
-    private static final long serialVersionUID = -8750857881422152651L;
+    private static final long serialVersionUID = -4750857881422152651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,22 +47,22 @@ public class CreditOffer {
     private BigDecimal percentSum;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "CREDIT_ID")
     private Credit credit;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creditOffer")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creditOffer")
     private List<PaymentSchedule> paymentSchedules;
 
 }

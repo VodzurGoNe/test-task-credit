@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "BANK")
 public class Bank {
-    private static final long serialVersionUID = -8150857821422152651L;
+    private static final long serialVersionUID = -1150857821422152651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,11 +28,11 @@ public class Bank {
     private String title;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bank")
     private List<Credit> credits;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bank")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bank")
     private List<Client> clients;
 
     @Override public String toString() {
