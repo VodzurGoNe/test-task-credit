@@ -64,5 +64,4 @@ public class CreditOffer {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creditOffer")
     private List<PaymentSchedule> paymentSchedules;
-
 }

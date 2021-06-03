@@ -50,5 +50,4 @@ public class PaymentScheduleController {
         paymentScheduleService.deletePaymentSchedule(paymentScheduleId);
         return String.format("redirect:/payment_schedules/payment_schedules_list/%s", creditOfferId);
     }
-
 }

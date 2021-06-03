@@ -28,12 +28,11 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
 
     @Transactional
     @Override
-    public void calculationPaymentSchedule(CreditOffer creditOffer) {
+    public void collectingDataAboutCreditOffer(CreditOffer creditOffer) {
         if (creditOffer.getId() != null) {
             creditOffer = entityManager.merge(creditOffer);
             paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
         }
-
         BigDecimal creditOfferAmount = creditOffer.getAmount();
         BigDecimal firstPay = creditOffer.getFirstPay() != null ? creditOffer.getFirstPay() : BigDecimal.ZERO;
         BigDecimal percent = creditOffer.getCredit().getPercent();
@@ -45,6 +44,14 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                 4, RoundingMode.HALF_EVEN);
         BigDecimal monthlyPaymentToPercentCredit = remains.multiply(interestRatePerMonth)
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
+        calculationAndCreatePaymentSchedule(periodInMonths, remains, monthlyPaymentToBodyCredit,
+                monthlyPaymentToPercentCredit, creditOffer);
+    }
+
+    @Override
+    public void calculationAndCreatePaymentSchedule(Integer periodInMonths, BigDecimal remains,
+                                           BigDecimal monthlyPaymentToBodyCredit,
+                                           BigDecimal monthlyPaymentToPercentCredit, CreditOffer creditOffer) {
         BigDecimal monthPay;
         BigDecimal percentSum = BigDecimal.ZERO;
         List<PaymentSchedule> paymentScheduleList = new ArrayList<>(periodInMonths);
@@ -52,17 +59,19 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
             percentSum = percentSum.add(monthlyPaymentToPercentCredit);
             monthPay = monthlyPaymentToBodyCredit.add(monthlyPaymentToPercentCredit);
             remains = remains.subtract(monthlyPaymentToBodyCredit);
-            paymentScheduleList.add(PaymentSchedule.builder().paymentAmount(monthPay)
-                    .paymentDate(LocalDate.now().plusMonths(i + 1))
-                    .amountOfTheBody(monthlyPaymentToBodyCredit)
+            paymentScheduleList.add(PaymentSchedule.builder().paymentAmount(monthPay).paymentDate(LocalDate.now()
+                    .plusMonths(i + 1)).amountOfTheBody(monthlyPaymentToBodyCredit)
                     .amountOfThePercent(monthlyPaymentToPercentCredit)
                     .remains(remains.compareTo(BigDecimal.ZERO) > 0 ? remains : BigDecimal.ZERO)
-                    .creditOffer(creditOffer)
-                    .build());
+                    .creditOffer(creditOffer).build());
         }
+        saveCreditOffer(creditOffer, percentSum, paymentScheduleList);
+    }
+
+    private void saveCreditOffer(CreditOffer creditOffer, BigDecimal percentSum,
+                                 List<PaymentSchedule> paymentScheduleList) {
         creditOffer.setPercentSum(percentSum);
         creditOfferService.saveCreditOffer(creditOffer);
         paymentScheduleService.saveAllPaymentSchedules(paymentScheduleList);
     }
-
 }

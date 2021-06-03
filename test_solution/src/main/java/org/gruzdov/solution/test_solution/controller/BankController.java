@@ -58,5 +58,4 @@ public class BankController {
         bankService.deleteBank(bankId);
         return "redirect:/bank_list";
     }
-
 }

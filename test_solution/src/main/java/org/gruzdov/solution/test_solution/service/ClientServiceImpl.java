@@ -38,5 +38,4 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> findByBankId(UUID bankId) {
         return clientRepository.findByBankId(bankId);
     }
-
 }

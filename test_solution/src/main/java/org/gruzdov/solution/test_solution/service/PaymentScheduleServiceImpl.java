@@ -48,5 +48,4 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     public List<PaymentSchedule> findByCreditOfferId(UUID creditOfferId) {
         return paymentScheduleRepository.findByCreditOfferId(creditOfferId);
     }
-
 }

@@ -59,5 +59,4 @@ public class ClientController {
         clientService.deleteClient(clientId);
         return String.format("redirect:/clients/clients_list/%s", bankId);
     }
-
 }

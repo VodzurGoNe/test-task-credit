@@ -38,5 +38,4 @@ public class BankServiceImpl implements BankService {
     public List<Bank> getAllBanks() {
         return bankRepository.findAll();
     }
-
 }

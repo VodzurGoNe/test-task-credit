@@ -38,5 +38,4 @@ public class CreditServiceImpl implements CreditService {
     public List<Credit> findByBankId(UUID bankId) {
         return creditRepository.findByBankId(bankId);
     }
-
 }

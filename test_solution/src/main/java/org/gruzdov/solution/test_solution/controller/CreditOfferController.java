@@ -52,7 +52,7 @@ public class CreditOfferController {
                     ? "/credit_offers/new_credit_offer"
                     : "/credit_offers/update_credit_offer";
         }
-        calculationPaymentService.calculationPaymentSchedule(creditOffer);
+        calculationPaymentService.collectingDataAboutCreditOffer(creditOffer);
         UUID clientId = creditOffer.getClient().getId();
         return String.format("redirect:/credit_offers/credit_offers_list/%s", clientId);
     }
@@ -69,5 +69,4 @@ public class CreditOfferController {
         creditOfferService.deleteCreditOffer(creditOfferId);
         return String.format("redirect:/credit_offers/credit_offers_list/%s", clientId);
     }
-
 }

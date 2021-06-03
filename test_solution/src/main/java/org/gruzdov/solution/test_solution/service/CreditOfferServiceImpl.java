@@ -38,5 +38,4 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     public List<CreditOffer> findByClientId(UUID clientId) {
         return creditOfferRepository.findByClientId(clientId);
     }
-
 }

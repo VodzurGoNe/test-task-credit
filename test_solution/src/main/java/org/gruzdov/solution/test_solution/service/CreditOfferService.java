@@ -10,5 +10,4 @@ public interface CreditOfferService {
     CreditOffer getCreditOffer(UUID id);
     void deleteCreditOffer(UUID id);
     List<CreditOffer> findByClientId(UUID clientId);
-
 }

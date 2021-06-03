@@ -10,5 +10,4 @@ public interface CreditService {
     Credit getCredit(UUID id);
     void deleteCredit(UUID id);
     List<Credit> findByBankId(UUID bankId);
-
 }

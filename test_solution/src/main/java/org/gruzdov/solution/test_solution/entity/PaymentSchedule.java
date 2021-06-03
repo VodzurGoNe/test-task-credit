@@ -40,5 +40,4 @@ public class PaymentSchedule {
     @ManyToOne
     @JoinColumn(name = "CREDIT_OFFER_ID")
     private CreditOffer creditOffer;
-
 }

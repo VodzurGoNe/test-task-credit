@@ -48,7 +48,6 @@ public class CreditController {
         return String.format("redirect:/credits/credits_list/%s", bankId);
     }
 
-
     @GetMapping("/show_form_for_update/{creditId}")
     public String showFormForUpdate(@PathVariable("creditId") UUID creditId, Model model) {
         model.addAttribute("credit", creditService.getCredit(creditId));
@@ -61,5 +60,4 @@ public class CreditController {
         creditService.deleteCredit(creditId);
         return String.format("redirect:/credits/credits_list/%s", bankId);
     }
-
 }
