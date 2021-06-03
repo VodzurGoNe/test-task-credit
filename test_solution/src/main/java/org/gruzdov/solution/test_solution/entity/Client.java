@@ -1,7 +1,6 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
-import org.gruzdov.solution.test_solution.validation.CheckEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,7 +31,8 @@ public class Client {
     @Column(name = "CLIENT_PHONE_NUMBER")
     private String phoneNumber;
 
-    @CheckEmail(value = "random.com", message = "Email must ends with \"random.com\"")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
+            message = "Please use pattern \"login@siteAddress.domainName\" for example \"bestuser@gmail.com\"")
     @Column(name = "CLIENT_EMAIL")
     private String email;
 
