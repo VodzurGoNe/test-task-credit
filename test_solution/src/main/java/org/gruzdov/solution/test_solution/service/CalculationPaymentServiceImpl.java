@@ -3,15 +3,16 @@ package org.gruzdov.solution.test_solution.service;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
     private final CreditOfferService creditOfferService;
@@ -26,12 +27,10 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         this.entityManager = entityManager;
     }
 
-    @Transactional
     @Override
     public void collectingDataAboutCreditOffer(CreditOffer creditOffer) {
         if (creditOffer.getId() != null) {
-            creditOffer = entityManager.merge(creditOffer);
-            paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
+            creditOffer = mergeAndClearPaymentScheduleList(creditOffer);
         }
         BigDecimal creditOfferAmount = creditOffer.getAmount();
         BigDecimal firstPay = creditOffer.getFirstPay() != null ? creditOffer.getFirstPay() : BigDecimal.ZERO;
@@ -44,11 +43,11 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                 4, RoundingMode.HALF_EVEN);
         BigDecimal monthlyPaymentToPercentCredit = remains.multiply(interestRatePerMonth)
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
-        calculationAndCreatePaymentSchedule(periodInMonths, remains, monthlyPaymentToBodyCredit,
+        calculationAndCreatePaymentSchedules(periodInMonths, remains, monthlyPaymentToBodyCredit,
                 monthlyPaymentToPercentCredit, creditOffer);
     }
 
-    private void calculationAndCreatePaymentSchedule(Integer periodInMonths, BigDecimal remains,
+    private void calculationAndCreatePaymentSchedules(Integer periodInMonths, BigDecimal remains,
                                            BigDecimal monthlyPaymentToBodyCredit,
                                            BigDecimal monthlyPaymentToPercentCredit, CreditOffer creditOffer) {
         BigDecimal monthPay, percentSum = BigDecimal.ZERO;
@@ -71,5 +70,11 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         creditOffer.setPercentSum(percentSum);
         creditOfferService.saveCreditOffer(creditOffer);
         paymentScheduleService.saveAllPaymentSchedules(paymentScheduleList);
+    }
+
+    private CreditOffer mergeAndClearPaymentScheduleList(CreditOffer creditOffer) {
+        creditOffer = entityManager.merge(creditOffer);
+        paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
+        return creditOffer;
     }
 }
