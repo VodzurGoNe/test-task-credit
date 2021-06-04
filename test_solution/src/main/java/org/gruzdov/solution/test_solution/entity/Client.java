@@ -50,7 +50,8 @@ public class Client {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private List<CreditOffer> creditOffers;
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Last Name, First Name, Middle Name: \n" + fio;
     }
 }

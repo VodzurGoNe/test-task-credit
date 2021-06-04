@@ -20,7 +20,7 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @GetMapping("/bank_list")
+    @GetMapping({"/", "/bank_list"})
     public String viewHomePage(Model model) {
         model.addAttribute("listBanks", bankService.getAllBanks());
         return "/index";

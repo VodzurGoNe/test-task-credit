@@ -35,7 +35,8 @@ public class Bank {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bank")
     private List<Client> clients;
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Bank Title: " + title;
     }
 }

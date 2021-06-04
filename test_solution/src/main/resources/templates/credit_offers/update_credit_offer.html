@@ -12,31 +12,31 @@
     <hr>
     <h2>Update Credit Offer</h2>
     <form action="#" th:action="@{/credit_offers/save_credit_offer}" th:object="${creditOffer}" method="POST">
+        <div style="color:red" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}">credit error</div>
+        <select class = class="form-control" id="choice-box-menu-item" th:value="${creditOffer}" name="creditOffer"  th:field="*{credit}">
+            <option value="" selected="selected">Please Select Credit</option>
+            <option th:each="credit : ${creditOffer.getBank().getCredits()}" th:value="${credit.id}" th:text="${credit}" th:selected="${credit.id}"></option>
+        </select>
+        <br>
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{bank}" />
         <input type="hidden" th:field="*{client}" />
         <input type="hidden" th:field="*{percentSum}" />
         <input type="hidden" th:field="*{paymentSchedules}" />
-        <input type="hidden" th:field="*{credit}" />
-        <select class="form-control" id="choice-box-menu-item">
-             <option value="0">Select Credit</option>
-             <option th:each="credit : ${creditOffer.getBank().getCredits()}" th:value="${creditOffer.setCredit(credit)}" th:text="${credit.getTitle()}"></option>
-         </select>
-         <br>
-         <br>
-         <div style="color:red" th:if="${#fields.hasErrors('named')}" th:errors="*{named}">named error</div>
-         <input type="text" th:field="*{named}" placeholder="Named" class="form-control mb-4 col-4">
-         <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount error</div>
-         <input type="text" th:field="*{amount}" placeholder="Amount" class="form-control mb-4 col-4">
-         <div style="color:red" th:if="${#fields.hasErrors('periodInMonths')}" th:errors="*{periodInMonths}">periodInMonths error</div>
-         <input type="text" th:field="*{periodInMonths}" placeholder="Period In Months" class="form-control mb-4 col-4">
-         <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
-         <input type="text" th:field="*{firstPay}" placeholder="First Pay" class="form-control mb-4 col-4">
-         <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
-     </form>
-     <hr>
-     <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Back to Credit Offers List</a>
- </div>
- </body>
- </html>
+        <br>
+        <div style="color:red" th:if="${#fields.hasErrors('named')}" th:errors="*{named}">named error</div>
+        <input type="text" th:field="*{named}" placeholder="Named" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount error</div>
+        <input type="text" th:field="*{amount}" placeholder="Amount" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('periodInMonths')}" th:errors="*{periodInMonths}">periodInMonths error</div>
+        <input type="text" th:field="*{periodInMonths}" placeholder="Period In Months" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
+        <input type="text" th:field="*{firstPay}" placeholder="First Pay" class="form-control mb-4 col-4">
+        <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
+    </form>
+    <hr>
+    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Back to Credit Offers List</a>
+</div>
+</body>
+</html>

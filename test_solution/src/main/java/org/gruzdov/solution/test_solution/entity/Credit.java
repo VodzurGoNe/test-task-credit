@@ -49,8 +49,9 @@ public class Credit {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credit")
     private List<CreditOffer> creditOffers;
 
-    @Override public String toString() {
-        return "Title: " + title + "\nLimit: " + limit + "\nInterest rate (%): " + percent;
+    @Override
+    public String toString() {
+        return String.format("Title: %s, %nLimit: %.2f, %nInterest rate (%%): %.2f", title, limit, percent);
     }
 }
 

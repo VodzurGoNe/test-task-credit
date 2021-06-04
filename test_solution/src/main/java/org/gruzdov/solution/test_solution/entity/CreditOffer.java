@@ -51,6 +51,7 @@ public class CreditOffer {
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
+    @NotNull(message = "Credit is required field")
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "CREDIT_ID")
