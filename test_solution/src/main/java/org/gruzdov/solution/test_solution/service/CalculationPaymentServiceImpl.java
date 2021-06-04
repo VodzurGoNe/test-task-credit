@@ -48,12 +48,10 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                 monthlyPaymentToPercentCredit, creditOffer);
     }
 
-    @Override
-    public void calculationAndCreatePaymentSchedule(Integer periodInMonths, BigDecimal remains,
+    private void calculationAndCreatePaymentSchedule(Integer periodInMonths, BigDecimal remains,
                                            BigDecimal monthlyPaymentToBodyCredit,
                                            BigDecimal monthlyPaymentToPercentCredit, CreditOffer creditOffer) {
-        BigDecimal monthPay;
-        BigDecimal percentSum = BigDecimal.ZERO;
+        BigDecimal monthPay, percentSum = BigDecimal.ZERO;
         List<PaymentSchedule> paymentScheduleList = new ArrayList<>(periodInMonths);
         for (int i = 0; i < periodInMonths; i++) {
             percentSum = percentSum.add(monthlyPaymentToPercentCredit);
