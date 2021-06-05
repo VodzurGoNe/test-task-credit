@@ -7,7 +7,10 @@ import java.util.UUID;
 
 public interface CreditService {
     void saveCredit(Credit credit);
+
     Credit getCredit(UUID id);
+
     void deleteCredit(UUID id);
+
     List<Credit> findByBankId(UUID bankId);
 }

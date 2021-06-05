@@ -7,9 +7,14 @@ import java.util.UUID;
 
 public interface PaymentScheduleService {
     void savePaymentSchedule(PaymentSchedule paymentSchedule);
+
     void saveAllPaymentSchedules(List<PaymentSchedule> paymentScheduleList);
+
     PaymentSchedule getPaymentSchedule(UUID id);
+
     void deletePaymentSchedule(UUID id);
+
     void deleteAllByCreditOfferId(UUID creditOfferId);
+
     List<PaymentSchedule> findByCreditOfferId(UUID creditOfferId);
 }

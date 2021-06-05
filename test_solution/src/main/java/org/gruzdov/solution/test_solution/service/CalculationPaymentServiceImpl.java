@@ -32,37 +32,37 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         if (creditOffer.getId() != null) {
             creditOffer = mergeAndClearPaymentScheduleList(creditOffer);
         }
-        BigDecimal creditOfferAmount = creditOffer.getAmount();
         BigDecimal firstPay = creditOffer.getFirstPay() != null ? creditOffer.getFirstPay() : BigDecimal.ZERO;
-        BigDecimal percent = creditOffer.getCredit().getPercent();
-        Integer periodInMonths = creditOffer.getPeriodInMonths();
-        BigDecimal remains = creditOfferAmount.subtract(firstPay);
-        BigDecimal monthlyPaymentToBodyCredit = remains.divide(BigDecimal.valueOf(periodInMonths),
-                2, RoundingMode.HALF_EVEN);
-        BigDecimal interestRatePerMonth = percent.divide(BigDecimal.valueOf(12),
-                4, RoundingMode.HALF_EVEN);
-        BigDecimal monthlyPaymentToPercentCredit = remains.multiply(interestRatePerMonth)
+        BigDecimal remainingCreditAmount = creditOffer.getAmount().subtract(firstPay);
+        BigDecimal monthlyPaymentToBodyCredit = remainingCreditAmount
+                .divide(BigDecimal.valueOf(creditOffer.getPeriodInMonths()),2, RoundingMode.HALF_EVEN);
+        BigDecimal interestRatePerMonth = creditOffer.getCredit().getPercent()
+                .divide(BigDecimal.valueOf(12),4, RoundingMode.HALF_EVEN);
+        BigDecimal monthlyPaymentToPercentCredit = remainingCreditAmount.multiply(interestRatePerMonth)
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
-        calculateAndCreatePaymentSchedules(periodInMonths, remains, monthlyPaymentToBodyCredit,
+        calculateAndCreatePaymentSchedules(remainingCreditAmount, monthlyPaymentToBodyCredit,
                 monthlyPaymentToPercentCredit, creditOffer);
     }
 
-    private void calculateAndCreatePaymentSchedules(Integer periodInMonths, BigDecimal remains,
+    private void calculateAndCreatePaymentSchedules(BigDecimal remainingCreditAmount,
                                                     BigDecimal monthlyPaymentToBodyCredit,
                                                     BigDecimal monthlyPaymentToPercentCredit, CreditOffer creditOffer) {
+        Integer periodInMonths = creditOffer.getPeriodInMonths();
         BigDecimal monthPay, percentSum = BigDecimal.ZERO;
         List<PaymentSchedule> paymentScheduleList = new ArrayList<>(periodInMonths);
         for (int i = 0; i < periodInMonths; i++) {
-            percentSum = percentSum.add(monthlyPaymentToPercentCredit);
             monthPay = monthlyPaymentToBodyCredit.add(monthlyPaymentToPercentCredit);
-            remains = remains.subtract(monthlyPaymentToBodyCredit);
+            percentSum = percentSum.add(monthlyPaymentToPercentCredit);
+            remainingCreditAmount = remainingCreditAmount.subtract(monthlyPaymentToBodyCredit);
             paymentScheduleList.add(
                     PaymentSchedule.builder()
                             .paymentAmount(monthPay)
                             .paymentDate(LocalDate.now().plusMonths(i + 1))
                             .amountOfTheBody(monthlyPaymentToBodyCredit)
                             .amountOfThePercent(monthlyPaymentToPercentCredit)
-                            .remains(remains.compareTo(BigDecimal.ZERO) > 0 ? remains : BigDecimal.ZERO)
+                            .remains(remainingCreditAmount.compareTo(BigDecimal.ZERO) > 0
+                                    ? remainingCreditAmount
+                                    : BigDecimal.ZERO)
                             .creditOffer(creditOffer)
                             .build()
             );

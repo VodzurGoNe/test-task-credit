@@ -7,7 +7,10 @@ import java.util.UUID;
 
 public interface BankService {
     void saveBank(Bank bank);
+
     Bank getBank(UUID id);
+
     void deleteBank(UUID id);
+
     List<Bank> getAllBanks();
 }
