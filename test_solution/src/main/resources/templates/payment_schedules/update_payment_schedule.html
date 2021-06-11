@@ -16,7 +16,7 @@
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{creditOffer}" />
         <input type="hidden" th:field="*{remains}" />
-        <div style="color:red" th:if="${#fields.hasErrors('paymentDate')}" th:errors="*{paymentDate}">paymentDate error</div>
+        <div style="color:red" th:if="${#fields.hasErrors('paymentDate')}">Please use pattern "yyyy-MM-dd" for example "2021-12-28"</div>
         <input type="text" th:field="*{paymentDate}" placeholder="Payment Date" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('paymentAmount')}" th:errors="*{paymentAmount}">paymentAmount error</div>
         <input type="text" th:field="*{paymentAmount}" placeholder="Payment Amount" class="form-control mb-4 col-4">
