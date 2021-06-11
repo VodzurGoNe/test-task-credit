@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -30,11 +27,13 @@ public class Credit {
     @Column(name = "CREDIT_TITLE")
     private String title;
 
+    @NotNull(message = "Credit limit is required field")
     @Min(value = 1, message = "Must be greater than 1")
     @Max(value = 200030001, message = "Must be less than 200030001")
     @Column(name = "CREDIT_LIMIT")
     private BigDecimal limit;
 
+    @NotNull(message = "Loan interest rate per year is required field")
     @Min(value = 5, message = "Must be greater than 5")
     @Max(value = 360, message = "Must be less than 360")
     @Column(name = "CREDIT_PERCENT")
