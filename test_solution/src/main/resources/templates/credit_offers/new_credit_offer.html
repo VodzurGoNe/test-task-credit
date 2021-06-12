@@ -34,10 +34,13 @@
         <input type="text" th:field="*{periodInMonths}" placeholder="Period In Months" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
         <input type="text" th:field="*{firstPay}" placeholder="First Pay" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Create Credit Offer</button>
+        <button type="submit" class="btn btn-success col-2"> Create Credit Offer</button>
     </form>
     <hr>
-    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Show a List Of Credit Offers For This Client</a>
+    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}" class="btn btn-info btn-sm mb-3">Show a List Of Credit Offers For This Client</a>
+    <br>
+    <br>
+    <a th:href="@{/}">Start Page</a>
 </div>
 </body>
 </html>

@@ -22,10 +22,13 @@
         <input type="text" th:field="*{limit}" placeholder="Credit Limit" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('percent')}" th:errors="*{percent}">percent error</div>
         <input type="text" th:field="*{percent}" placeholder="Loan Interest Rate Per Year (%)" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Create Credit</button>
+        <button type="submit" class="btn btn-success col-2"> Create Credit</button>
     </form>
     <hr>
-    <a th:href = "@{/credits/credits_list/{id}(id=${credit.bank.id})}"> Back to Credit List</a>
+    <a th:href = "@{/credits/credits_list/{id}(id=${credit.bank.id})}">Back to Credit List</a>
+    <br>
+    <br>
+    <a th:href="@{/}">Start Page</a>
 </div>
 </body>
 </html>

@@ -33,10 +33,13 @@
         <input type="text" th:field="*{periodInMonths}" placeholder="Period In Months" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('firstPay')}" th:errors="*{firstPay}">firstPay error</div>
         <input type="text" th:field="*{firstPay}" placeholder="First Pay" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Update Credit Offer</button>
+        <button type="submit" class="btn btn-success col-2"> Update Credit Offer</button>
     </form>
     <hr>
-    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}"> Back to Credit Offers List</a>
+    <a th:href = "@{/credit_offers/credit_offers_list/{id}(id=${creditOffer.client.id})}">Back to Credit Offers List</a>
+    <br>
+    <br>
+    <a th:href="@{/}">Start Page</a>
 </div>
 </body>
 </html>

@@ -24,10 +24,13 @@
         <input type="text" th:field="*{amountOfTheBody}" placeholder="Amount Of The Body" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('amountOfThePercent')}" th:errors="*{amountOfThePercent}">amountOfThePercent error</div>
         <input type="text" th:field="*{amountOfThePercent}" placeholder="Amount Of The Percent" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Update Payment Schedule</button>
+        <button type="submit" class="btn btn-success col-2"> Update Payment Schedule</button>
     </form>
     <hr>
-    <a th:href = "@{/credits_offers/credit_offers_list}"> Back to Credit Offers List</a>
+    <a th:href = "@{/credits_offers/credit_offers_list}">Back to Credit Offers List</a>
+    <br>
+    <br>
+    <a th:href="@{/}">Start Page</a>
 </div>
 </body>
 </html>

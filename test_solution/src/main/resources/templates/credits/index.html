@@ -32,7 +32,10 @@
         </tr>
         </tbody>
     </table>
-    <a th:if="${!listCredits.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listCredits.get(0).bank.id})}" class="btn btn-success btn-sm mb-3"> Show Bank </a>
+    <a th:if="${!listCredits.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listCredits.get(0).bank.id})}">Show Bank</a>
+    <br>
+    <br>
+    <a th:href="@{/}">Start Page</a>
 </div>
 </body>
 </html>
