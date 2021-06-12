@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "PAYMENT_SCHEDULE")
-public class PaymentSchedule {
+public class PaymentSchedule implements Serializable {
     private static final long serialVersionUID = -5150857881422152651L;
 
     @Id

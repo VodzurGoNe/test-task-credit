@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "BANK")
-public class Bank {
+public class Bank implements Serializable {
     private static final long serialVersionUID = -1150857821422152651L;
 
     @Id
