@@ -44,12 +44,10 @@ public class Client {
     @Column(name = "CLIENT_PASSPORT_NUMBER")
     private String passportNumber;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private List<CreditOffer> creditOffers;
 

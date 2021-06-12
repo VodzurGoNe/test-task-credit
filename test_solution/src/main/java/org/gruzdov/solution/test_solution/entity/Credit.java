@@ -39,12 +39,10 @@ public class Credit {
     @Column(name = "CREDIT_PERCENT")
     private BigDecimal percent;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
 
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credit")
     private List<CreditOffer> creditOffers;
 

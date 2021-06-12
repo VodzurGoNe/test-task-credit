@@ -27,11 +27,9 @@ public class Bank {
     @Column(name = "BANK_TITLE")
     private String title;
 
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bank")
     private List<Credit> credits;
 
-    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bank")
     private List<Client> clients;
 
