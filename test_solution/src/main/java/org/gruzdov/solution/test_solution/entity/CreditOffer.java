@@ -29,8 +29,10 @@ public class CreditOffer implements Serializable {
     private String named;
 
     @NotNull(message = "Amount is required field")
-    @Min(value = 1, message = "Must be greater than 1")
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMin(value = "1.00", message = "Must be greater than 1.00")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "CREDIT_OFFER_AMOUNT")
     private BigDecimal amount;
 
@@ -40,7 +42,9 @@ public class CreditOffer implements Serializable {
     @Column(name = "CREDIT_OFFER_PERIOD_IN_MONTHS")
     private Integer periodInMonths;
 
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "CREDIT_OFFER_FIRST_PAY")
     private BigDecimal firstPay;
 

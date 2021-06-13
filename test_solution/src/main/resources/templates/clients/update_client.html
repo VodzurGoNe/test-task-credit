@@ -23,7 +23,7 @@
         <input type="text" th:field="*{email}" placeholder="Email" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">passportNumber error</div>
         <input type="text" th:field="*{passportNumber}" placeholder="Passport Number" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Update Client</button>
+        <button type="submit" class="btn btn-info col-2">Update Client</button>
     </form>
     <hr>
     <a th:href = "@{/clients/clients_list/{id}(id=${client.bank.id})}">Back to Client List</a>

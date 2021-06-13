@@ -18,7 +18,7 @@
             <th>Phone Number</th>
             <th>Email</th>
             <th>Passport Number</th>
-            <th> Actions </th>
+            <th>Actions </th>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
             </td>
         </tr>
         <hr>
-        <a th:if="${!listClients.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listClients.get(0).bank.id})}" class="btn btn-info btn-sm mb-3"> Go Back To The Bank Menu</a>
+        <a th:if="${!listClients.isEmpty()}" th:href = "@{/show_bank/{id}(id=${listClients.get(0).bank.id})}" class="btn btn-info btn-sm mb-3">Go Back To The Bank Menu</a>
         </tbody>
     </table>
     <a th:href="@{/}">Start Page</a>

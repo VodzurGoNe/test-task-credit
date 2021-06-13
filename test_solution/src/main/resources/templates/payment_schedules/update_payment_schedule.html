@@ -19,11 +19,11 @@
         <div style="color:red" th:if="${#fields.hasErrors('paymentDate')}">Please use pattern "yyyy-MM-dd" for example "2021-12-28"</div>
         <input type="text" th:field="*{paymentDate}" placeholder="Payment Date" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('paymentAmount')}" th:errors="*{paymentAmount}">paymentAmount error</div>
-        <input type="text" th:field="*{paymentAmount}" placeholder="Payment Amount" class="form-control mb-4 col-4">
+        <input type="number" step="0.01" min="0" th:field="*{paymentAmount}" placeholder="Payment Amount" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('amountOfTheBody')}" th:errors="*{amountOfTheBody}">amountOfTheBody error</div>
-        <input type="text" th:field="*{amountOfTheBody}" placeholder="Amount Of The Body" class="form-control mb-4 col-4">
+        <input type="number" step="0.01" min="0" th:field="*{amountOfTheBody}" placeholder="Amount Of The Body" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('amountOfThePercent')}" th:errors="*{amountOfThePercent}">amountOfThePercent error</div>
-        <input type="text" th:field="*{amountOfThePercent}" placeholder="Amount Of The Percent" class="form-control mb-4 col-4">
+        <input type="number" step="0.01" min="0" th:field="*{amountOfThePercent}" placeholder="Amount Of The Percent" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-success col-2"> Update Payment Schedule</button>
     </form>
     <hr>

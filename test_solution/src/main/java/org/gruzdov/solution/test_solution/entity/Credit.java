@@ -28,14 +28,18 @@ public class Credit implements Serializable {
     private String title;
 
     @NotNull(message = "Credit limit is required field")
-    @Min(value = 1, message = "Must be greater than 1")
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMin(value = "1.00", message = "Must be greater than 1.00")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "CREDIT_LIMIT")
     private BigDecimal limit;
 
     @NotNull(message = "Loan interest rate per year is required field")
-    @Min(value = 5, message = "Must be greater than 5")
-    @Max(value = 360, message = "Must be less than 360")
+    @DecimalMin(value = "5.00", message = "Must be greater than 5.00")
+    @DecimalMax(value = "360.00", message = "Must be less than 360.00")
+    @Digits(integer = 3, fraction = 2, message = "The numbers before the dot must be no more than 3 and " +
+            "after no more than 2, for example: 359.99")
     @Column(name = "CREDIT_PERCENT")
     private BigDecimal percent;
 

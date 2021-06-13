@@ -16,13 +16,13 @@
     <br>
     <br>
     <h1 th:text="${bank.title}">Bank Title</h1>
-    <a th:href = "@{/credits/show_new_credit_form/{id}(id=${bank.getId()})}" class="btn btn-success btn-sm mb-3"> Create Credit</a>
-    <a th:href = "@{/clients/show_new_client_form/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3"> Add Client</a>
+    <a th:href = "@{/credits/show_new_credit_form/{id}(id=${bank.getId()})}" class="btn btn-success btn-sm mb-3">Create Credit</a>
+    <a th:href = "@{/clients/show_new_client_form/{id}(id=${bank.getId()})}" class="btn btn-primary btn-sm mb-3">Add Client</a>
     <hr>
-    <a th:href = "@{/credits/credits_list/{id}(id=${bank.getId()})}" class="btn btn-info btn-sm mb-3"> Show Credit</a>
-    <a th:href = "@{/clients/clients_list/{id}(id=${bank.getId()})}" class="btn btn-info btn-sm mb-3"> Show Client</a>
+    <a th:href = "@{/credits/credits_list/{id}(id=${bank.getId()})}" class="btn btn-info btn-sm mb-3">Show Credit</a>
+    <a th:href = "@{/clients/clients_list/{id}(id=${bank.getId()})}" class="btn btn-info btn-sm mb-3">Show Client</a>
     <hr>
-    <a th:href = "@{/bank_list}"> Back to Bank List</a>
+    <a th:href = "@{/bank_list}">Back to Bank List</a>
 </div>
 </body>
 </html>

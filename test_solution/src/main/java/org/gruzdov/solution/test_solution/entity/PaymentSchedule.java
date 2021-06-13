@@ -4,9 +4,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,20 +30,26 @@ public class PaymentSchedule implements Serializable {
     private LocalDate paymentDate;
 
     @NotNull(message = "Payment amount limit is required field")
-    @Min(value = 1, message = "Must be greater than 1")
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMin(value = "1.00", message = "Must be greater than 1.00")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "PAYMENT_SCHEDULE_PAYMENT_AMOUNT")
     private BigDecimal paymentAmount;
 
     @NotNull(message = "Amount of the body is required field")
-    @Min(value = 1, message = "Must be greater than 1")
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMin(value = "1.00", message = "Must be greater than 1.00")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "PAYMENT_SCHEDULE_AMOUNT_OF_THE_BODY")
     private BigDecimal amountOfTheBody;
 
     @NotNull(message = "Amount of the percent is required field")
-    @Min(value = 1, message = "Must be greater than 1")
-    @Max(value = 200030001, message = "Must be less than 200030001")
+    @DecimalMin(value = "1.00", message = "Must be greater than 1.00")
+    @DecimalMax(value = "200030001.00", message = "Must be less than 200030001.00")
+    @Digits(integer = 9, fraction = 2, message = "The numbers before the dot must be no more than 9 and " +
+            "after no more than 2, for example: 200030000.99")
     @Column(name = "PAYMENT_SCHEDULE_AMOUNT_OF_THE_PERCENT")
     private BigDecimal amountOfThePercent;
 
