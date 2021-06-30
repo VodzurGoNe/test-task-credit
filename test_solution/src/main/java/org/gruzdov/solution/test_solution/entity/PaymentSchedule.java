@@ -1,18 +1,25 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
 @Entity
 @Table(name = "PAYMENT_SCHEDULE")
@@ -60,4 +67,18 @@ public class PaymentSchedule implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CREDIT_OFFER_ID")
     private CreditOffer creditOffer;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        PaymentSchedule that = (PaymentSchedule) o;
+
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentDate, paymentAmount, amountOfTheBody, amountOfThePercent, remains);
+    }
 }

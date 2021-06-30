@@ -1,16 +1,20 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Table(name = "CLIENT")
 public class Client implements Serializable {
@@ -50,11 +54,26 @@ public class Client implements Serializable {
     private Bank bank;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
+    @ToString.Exclude
     private List<CreditOffer> creditOffers;
 
     @Override
     public String toString() {
         return "Last Name, First Name, Middle Name: \n" + fio;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Client client = (Client) o;
+
+        return id != null && id.equals(client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fio, phoneNumber, email, passportNumber);
     }
 }
 
