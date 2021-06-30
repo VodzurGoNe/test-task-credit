@@ -12,6 +12,7 @@ public class BankEntityEqualsTest {
         firstBank.setTitle("KSK");
         Bank secondBank = new Bank();
         secondBank.setTitle("JBC");
+        Assertions.assertTrue(firstBank.hashCode() != secondBank.hashCode());
         Assertions.assertNotEquals(firstBank, secondBank);
     }
 }
