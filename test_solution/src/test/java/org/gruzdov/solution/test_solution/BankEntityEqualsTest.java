@@ -1,4 +1,4 @@
-package org.gruadov.solution.test_solution;
+package org.gruzdov.solution.test_solution;
 
 import org.gruzdov.solution.test_solution.entity.Bank;
 import org.junit.jupiter.api.Assertions;
