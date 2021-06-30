@@ -1,17 +1,21 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
 @Entity
 @Table(name = "CREDIT_OFFER")
@@ -70,4 +74,18 @@ public class CreditOffer implements Serializable {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creditOffer")
     private List<PaymentSchedule> paymentSchedules;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CreditOffer that = (CreditOffer) o;
+
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(named, amount, periodInMonths, firstPay, percentSum);
+    }
 }

@@ -1,17 +1,20 @@
 package org.gruzdov.solution.test_solution.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Table(name = "CREDIT")
 public class Credit implements Serializable {
@@ -53,6 +56,20 @@ public class Credit implements Serializable {
     @Override
     public String toString() {
         return String.format("Title: %s, %nLimit: %.2f, %nInterest rate (%%): %.2f", title, limit, percent);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Credit credit = (Credit) o;
+
+        return id != null && id.equals(credit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, limit, percent);
     }
 }
 
