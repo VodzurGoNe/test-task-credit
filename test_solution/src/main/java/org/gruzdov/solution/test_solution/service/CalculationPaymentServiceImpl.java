@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 @Service
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
     private final CreditOfferService creditOfferService;
@@ -27,6 +26,7 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         this.entityManager = entityManager;
     }
 
+    @Transactional
     @Override
     public void collectDataAboutCreditOffer(CreditOffer creditOffer) {
         if (creditOffer.getId() != null) {
@@ -42,6 +42,19 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
         calculateAndCreatePaymentSchedules(remainingCreditAmount, monthlyPaymentToBodyCredit,
                 monthlyPaymentToPercentCredit, creditOffer);
+    }
+
+    @Transactional
+    protected void saveAll(CreditOffer creditOffer, List<PaymentSchedule> paymentScheduleList) {
+        creditOfferService.saveCreditOffer(creditOffer);
+        paymentScheduleService.saveAllPaymentSchedules(paymentScheduleList);
+    }
+
+    @Transactional
+    protected CreditOffer mergeAndClearPaymentScheduleList(CreditOffer creditOffer) {
+        creditOffer = entityManager.merge(creditOffer);
+        paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
+        return creditOffer;
     }
 
     private void calculateAndCreatePaymentSchedules(BigDecimal remainingCreditAmount,
@@ -69,16 +82,5 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         }
         creditOffer.setPercentSum(percentSum);
         saveAll(creditOffer, paymentScheduleList);
-    }
-
-    private void saveAll(CreditOffer creditOffer, List<PaymentSchedule> paymentScheduleList) {
-        creditOfferService.saveCreditOffer(creditOffer);
-        paymentScheduleService.saveAllPaymentSchedules(paymentScheduleList);
-    }
-
-    private CreditOffer mergeAndClearPaymentScheduleList(CreditOffer creditOffer) {
-        creditOffer = entityManager.merge(creditOffer);
-        paymentScheduleService.deleteAllByCreditOfferId(creditOffer.getId());
-        return creditOffer;
     }
 }
