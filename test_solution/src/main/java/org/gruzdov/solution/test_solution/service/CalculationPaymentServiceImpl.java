@@ -1,5 +1,6 @@
 package org.gruzdov.solution.test_solution.service;
 
+import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.springframework.stereotype.Service;
@@ -12,19 +13,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class CalculationPaymentServiceImpl implements CalculationPaymentService {
+
     private final CreditOfferService creditOfferService;
     private final PaymentScheduleService paymentScheduleService;
     private final EntityManager entityManager;
-
-    public CalculationPaymentServiceImpl(CreditOfferService creditOfferService,
-                                         PaymentScheduleService paymentScheduleService,
-                                         EntityManager entityManager) {
-        this.creditOfferService = creditOfferService;
-        this.paymentScheduleService = paymentScheduleService;
-        this.entityManager = entityManager;
-    }
 
     @Transactional
     @Override
@@ -32,14 +27,21 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
         if (creditOffer.getId() != null) {
             creditOffer = mergeAndClearPaymentScheduleList(creditOffer);
         }
-        BigDecimal firstPay = creditOffer.getFirstPay() != null ? creditOffer.getFirstPay() : BigDecimal.ZERO;
+        BigDecimal firstPay = creditOffer.getFirstPay() != null
+                ? creditOffer.getFirstPay()
+                : BigDecimal.ZERO;
+
         BigDecimal remainingCreditAmount = creditOffer.getAmount().subtract(firstPay);
+
         BigDecimal monthlyPaymentToBodyCredit = remainingCreditAmount
                 .divide(BigDecimal.valueOf(creditOffer.getPeriodInMonths()),2, RoundingMode.HALF_EVEN);
+
         BigDecimal interestRatePerMonth = creditOffer.getCredit().getPercent()
                 .divide(BigDecimal.valueOf(12),4, RoundingMode.HALF_EVEN);
+
         BigDecimal monthlyPaymentToPercentCredit = remainingCreditAmount.multiply(interestRatePerMonth)
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
+
         calculateAndCreatePaymentSchedules(remainingCreditAmount, monthlyPaymentToBodyCredit,
                 monthlyPaymentToPercentCredit, creditOffer);
     }
@@ -60,8 +62,9 @@ public class CalculationPaymentServiceImpl implements CalculationPaymentService 
     private void calculateAndCreatePaymentSchedules(BigDecimal remainingCreditAmount,
                                                     BigDecimal monthlyPaymentToBodyCredit,
                                                     BigDecimal monthlyPaymentToPercentCredit, CreditOffer creditOffer) {
-        Integer periodInMonths = creditOffer.getPeriodInMonths();
+        int periodInMonths = creditOffer.getPeriodInMonths();
         BigDecimal monthPay, percentSum = BigDecimal.ZERO;
+
         List<PaymentSchedule> paymentScheduleList = new ArrayList<>(periodInMonths);
         for (int i = 0; i < periodInMonths; i++) {
             monthPay = monthlyPaymentToBodyCredit.add(monthlyPaymentToPercentCredit);

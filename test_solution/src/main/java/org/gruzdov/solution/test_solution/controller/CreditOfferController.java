@@ -1,9 +1,10 @@
 package org.gruzdov.solution.test_solution.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.Client;
 import org.gruzdov.solution.test_solution.entity.CreditOffer;
 import org.gruzdov.solution.test_solution.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.gruzdov.solution.test_solution.service.CalculationPaymentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,23 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/credit_offers")
 public class CreditOfferController {
+
     private final ClientService clientService;
     private final BankService bankService;
     private final CreditOfferService creditOfferService;
     private final CalculationPaymentService calculationPaymentService;
-
-    @Autowired
-    public CreditOfferController(ClientService clientService, BankService bankService,
-                                 CreditOfferService creditOfferService,
-                                 CalculationPaymentService calculationPaymentService) {
-        this.clientService = clientService;
-        this.bankService = bankService;
-        this.creditOfferService = creditOfferService;
-        this.calculationPaymentService = calculationPaymentService;
-    }
 
     @GetMapping("/credit_offers_list/{clientId}")
     public String viewHomePage(@PathVariable("clientId") UUID clientId, Model model) {

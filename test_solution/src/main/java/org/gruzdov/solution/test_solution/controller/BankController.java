@@ -1,8 +1,8 @@
 package org.gruzdov.solution.test_solution.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.Bank;
 import org.gruzdov.solution.test_solution.service.BankService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Controller
 public class BankController {
-    private final BankService bankService;
 
-    @Autowired
-    public BankController(BankService bankService) {
-        this.bankService = bankService;
-    }
+    private final BankService bankService;
 
     @GetMapping({"/", "/bank_list"})
     public String viewHomePage(Model model) {

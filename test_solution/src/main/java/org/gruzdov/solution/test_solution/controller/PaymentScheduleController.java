@@ -1,8 +1,8 @@
 package org.gruzdov.solution.test_solution.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import org.gruzdov.solution.test_solution.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/payment_schedules")
 public class PaymentScheduleController {
-    private final PaymentScheduleService paymentScheduleService;
 
-    @Autowired
-    public PaymentScheduleController(PaymentScheduleService paymentScheduleService) {
-        this.paymentScheduleService = paymentScheduleService;
-    }
+    private final PaymentScheduleService paymentScheduleService;
 
     @GetMapping("/payment_schedules_list/{creditOfferId}")
     public String viewHomePage(@PathVariable("creditOfferId") UUID creditOfferId, Model model) {

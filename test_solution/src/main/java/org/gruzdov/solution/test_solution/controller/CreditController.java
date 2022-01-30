@@ -1,9 +1,9 @@
 package org.gruzdov.solution.test_solution.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.Credit;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.gruzdov.solution.test_solution.service.CreditService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,17 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/credits")
 public class CreditController {
+
     private final BankService bankService;
     private final CreditService creditService;
-
-    @Autowired
-    public CreditController(BankService bankService, CreditService creditService) {
-        this.bankService = bankService;
-        this.creditService = creditService;
-    }
 
     @GetMapping("/credits_list/{bankId}")
     public String viewHomePage(@PathVariable("bankId") UUID bankId, Model model) {

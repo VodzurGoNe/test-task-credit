@@ -1,22 +1,19 @@
 package org.gruzdov.solution.test_solution.service;
 
-import org.gruzdov.solution.test_solution.dao.ClientRepository;
+import lombok.RequiredArgsConstructor;
+import org.gruzdov.solution.test_solution.repository.ClientRepository;
 import org.gruzdov.solution.test_solution.entity.Client;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class ClientServiceImpl implements ClientService {
-    private final ClientRepository clientRepository;
 
-    @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
+    private final ClientRepository clientRepository;
 
     @Override
     public void saveClient(Client client) {

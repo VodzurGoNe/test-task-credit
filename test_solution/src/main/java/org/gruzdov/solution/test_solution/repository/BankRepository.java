@@ -1,4 +1,4 @@
-package org.gruzdov.solution.test_solution.dao;
+package org.gruzdov.solution.test_solution.repository;
 
 import org.gruzdov.solution.test_solution.entity.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;

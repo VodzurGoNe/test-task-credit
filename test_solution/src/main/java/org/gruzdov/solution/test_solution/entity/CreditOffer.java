@@ -20,6 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "CREDIT_OFFER")
 public class CreditOffer implements Serializable {
+
     private static final long serialVersionUID = -4750857881422152651L;
 
     @Id

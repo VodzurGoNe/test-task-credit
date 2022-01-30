@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PaymentScheduleService {
+
     void savePaymentSchedule(PaymentSchedule paymentSchedule);
 
     void saveAllPaymentSchedules(List<PaymentSchedule> paymentScheduleList);

@@ -24,6 +24,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "PAYMENT_SCHEDULE")
 public class PaymentSchedule implements Serializable {
+
     private static final long serialVersionUID = -5150857881422152651L;
 
     @Id

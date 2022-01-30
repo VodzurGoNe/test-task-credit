@@ -18,6 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "BANK")
 public class Bank implements Serializable {
+
     private static final long serialVersionUID = -1150857821422152651L;
 
     @Id
