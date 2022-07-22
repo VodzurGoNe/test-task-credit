@@ -1,9 +1,11 @@
 package org.gruzdov.solution.test_solution.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.gruzdov.solution.test_solution.entity.Bank;
 import org.gruzdov.solution.test_solution.entity.Client;
+import org.gruzdov.solution.test_solution.global.factory.SimpleFactory;
 import org.gruzdov.solution.test_solution.service.BankService;
 import org.gruzdov.solution.test_solution.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,13 +14,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+/**
+ * @author Vladislav Gruzdov
+ */
 @Controller
 @RequestMapping("/clients")
 public class ClientController {
 
     private final ClientService clientService;
     private final BankService bankService;
+
+    @Autowired
+    public ClientController(ClientService clientService, BankService bankService) {
+        this.clientService = clientService;
+        this.bankService = bankService;
+    }
 
     @GetMapping("/clients_list/{bankId}")
     public String viewHomePage(@PathVariable("bankId") UUID bankId, Model model) {
@@ -28,8 +38,10 @@ public class ClientController {
 
     @GetMapping("/show_new_client_form/{bankId}")
     public String showNewClientForm(@PathVariable("bankId") UUID bankId, Model model) {
-        Client client = new Client();
-        client.setBank(bankService.getBank(bankId));
+        Client client = SimpleFactory.create(Client.class);
+        Bank bank = bankService.getBank(bankId);
+        client.setBank(bank);
+
         model.addAttribute("client", client);
         return "clients/new_client";
     }
@@ -39,6 +51,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             return client.getId() == null ? "/clients/new_client" : "/clients/update_client";
         }
+
         clientService.saveClient(client);
         return String.format("redirect:/clients/clients_list/%s", client.getBank().getId());
     }

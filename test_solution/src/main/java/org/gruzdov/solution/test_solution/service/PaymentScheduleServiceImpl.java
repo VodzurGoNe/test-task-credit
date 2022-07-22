@@ -1,19 +1,26 @@
 package org.gruzdov.solution.test_solution.service;
 
-import lombok.RequiredArgsConstructor;
-import org.gruzdov.solution.test_solution.repository.PaymentScheduleRepository;
 import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
+import org.gruzdov.solution.test_solution.repository.PaymentScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+/**
+ * @author Vladislav Gruzdov
+ */
 @Service
 public class PaymentScheduleServiceImpl implements PaymentScheduleService {
 
     private final PaymentScheduleRepository paymentScheduleRepository;
+
+    @Autowired
+    public PaymentScheduleServiceImpl(PaymentScheduleRepository paymentScheduleRepository) {
+        this.paymentScheduleRepository = paymentScheduleRepository;
+    }
 
     @Override
     public void savePaymentSchedule(PaymentSchedule paymentSchedule) {
@@ -28,7 +35,8 @@ public class PaymentScheduleServiceImpl implements PaymentScheduleService {
     @Nullable
     @Override
     public PaymentSchedule getPaymentSchedule(UUID id) {
-        return paymentScheduleRepository.findById(id).orElse(null);
+        return paymentScheduleRepository.findById(id)
+                .orElse(null);
     }
 
     @Override

@@ -1,16 +1,16 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 @Getter
 @Setter
 @ToString
@@ -19,14 +19,9 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "CREDIT_OFFER")
-public class CreditOffer implements Serializable {
+public class CreditOffer extends BaseUuidEntity {
 
     private static final long serialVersionUID = -4750857881422152651L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CREDIT_OFFER_ID")
-    private UUID id;
 
     @NotBlank(message = "Named is required field")
     @Size(min = 2, message = "Named must be min 2 symbols")
@@ -76,17 +71,4 @@ public class CreditOffer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creditOffer")
     private List<PaymentSchedule> paymentSchedules;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CreditOffer that = (CreditOffer) o;
-
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(named, amount, periodInMonths, firstPay, percentSum);
-    }
 }

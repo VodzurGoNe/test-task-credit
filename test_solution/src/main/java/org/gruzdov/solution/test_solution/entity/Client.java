@@ -1,30 +1,25 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "CLIENT")
-public class Client implements Serializable {
+public class Client extends BaseUuidEntity {
 
     private static final long serialVersionUID = -2150857881422153651L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CLIENT_ID")
-    private UUID id;
 
     @NotBlank(message = "FIO is required field")
     @Pattern(regexp = "^[a-zA-ZА-Яа-я '-]{2,}([-][a-zA-ZА-ЯЁ][а-яё]{2,})?\\s[a-zA-ZА-ЯЁ][a-zA-ZАа-яё]{2,}" +
@@ -63,19 +58,7 @@ public class Client implements Serializable {
         return "Last Name, First Name, Middle Name: \n" + fio;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Client client = (Client) o;
-
-        return id != null && id.equals(client.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(fio, phoneNumber, email, passportNumber);
-    }
 }
+
 
 

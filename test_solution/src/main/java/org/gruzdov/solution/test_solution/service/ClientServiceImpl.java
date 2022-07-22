@@ -1,19 +1,26 @@
 package org.gruzdov.solution.test_solution.service;
 
-import lombok.RequiredArgsConstructor;
-import org.gruzdov.solution.test_solution.repository.ClientRepository;
 import org.gruzdov.solution.test_solution.entity.Client;
+import org.gruzdov.solution.test_solution.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+/**
+ * @author Vladislav Gruzdov
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public void saveClient(Client client) {
@@ -23,7 +30,8 @@ public class ClientServiceImpl implements ClientService {
     @Nullable
     @Override
     public Client getClient(UUID id) {
-        return clientRepository.findById(id).orElse(null);
+        return clientRepository.findById(id)
+                .orElse(null);
     }
 
     @Override

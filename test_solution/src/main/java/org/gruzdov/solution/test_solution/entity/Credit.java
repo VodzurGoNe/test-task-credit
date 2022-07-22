@@ -1,30 +1,28 @@
 package org.gruzdov.solution.test_solution.entity;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "CREDIT")
-public class Credit implements Serializable {
+public class Credit extends BaseUuidEntity {
 
     private static final long serialVersionUID = -3150854881422152651L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CREDIT_ID")
-    private UUID id;
 
     @NotBlank(message = "Title is required field")
     @Size(min = 2, message = "Title must be min 2 symbols")
@@ -59,19 +57,6 @@ public class Credit implements Serializable {
         return String.format("Title: %s, %nLimit: %.2f, %nInterest rate (%%): %.2f", title, limit, percent);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Credit credit = (Credit) o;
-
-        return id != null && id.equals(credit.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, limit, percent);
-    }
 }
 
 

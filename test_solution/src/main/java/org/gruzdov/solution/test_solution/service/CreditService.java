@@ -5,6 +5,9 @@ import org.gruzdov.solution.test_solution.entity.Credit;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 public interface CreditService {
 
     void saveCredit(Credit credit);

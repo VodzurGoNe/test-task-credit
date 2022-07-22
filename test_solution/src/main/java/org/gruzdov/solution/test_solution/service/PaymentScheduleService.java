@@ -5,6 +5,9 @@ import org.gruzdov.solution.test_solution.entity.PaymentSchedule;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 public interface PaymentScheduleService {
 
     void savePaymentSchedule(PaymentSchedule paymentSchedule);

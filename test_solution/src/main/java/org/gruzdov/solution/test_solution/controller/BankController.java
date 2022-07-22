@@ -1,21 +1,32 @@
 package org.gruzdov.solution.test_solution.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.gruzdov.solution.test_solution.entity.Bank;
+import org.gruzdov.solution.test_solution.global.factory.SimpleFactory;
 import org.gruzdov.solution.test_solution.service.BankService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+/**
+ * @author Vladislav Gruzdov
+ */
 @Controller
 public class BankController {
 
     private final BankService bankService;
+
+    @Autowired
+    public BankController(BankService bankService) {
+        this.bankService = bankService;
+    }
 
     @GetMapping({"/", "/bank_list"})
     public String viewHomePage(Model model) {
@@ -25,7 +36,7 @@ public class BankController {
 
     @GetMapping("/show_new_bank_form")
     public String showNewBankForm(Model model) {
-        model.addAttribute("bank", new Bank());
+        model.addAttribute("bank", SimpleFactory.create(Bank.class));
         return "new_bank";
     }
 
@@ -34,6 +45,7 @@ public class BankController {
         if (bindingResult.hasErrors()) {
             return bank.getId() == null ? "new_bank" : "update_bank";
         }
+
         bankService.saveBank(bank);
         return "redirect:/bank_list";
     }

@@ -1,20 +1,23 @@
 package org.gruzdov.solution.test_solution.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 @Getter
 @Setter
 @ToString
@@ -23,14 +26,9 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "PAYMENT_SCHEDULE")
-public class PaymentSchedule implements Serializable {
+public class PaymentSchedule extends BaseUuidEntity {
 
     private static final long serialVersionUID = -5150857881422152651L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PAYMENT_SCHEDULE_ID")
-    private UUID id;
 
     @NotNull(message = "Payment date is required field")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -69,17 +67,4 @@ public class PaymentSchedule implements Serializable {
     @JoinColumn(name = "CREDIT_OFFER_ID")
     private CreditOffer creditOffer;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PaymentSchedule that = (PaymentSchedule) o;
-
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(paymentDate, paymentAmount, amountOfTheBody, amountOfThePercent, remains);
-    }
 }

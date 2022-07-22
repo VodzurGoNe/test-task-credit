@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Vladislav Gruzdov
+ */
 @Repository
 public interface CreditRepository extends JpaRepository<Credit, UUID> {
 
